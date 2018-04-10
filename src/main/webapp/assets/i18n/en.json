@@ -1,0 +1,50 @@
+{
+  "button": {
+    "function": "Function",
+    "add": "Add",
+    "delete": "Delete",
+    "login": "Login",
+    "update": "Update",
+    "save" : "Save"
+  },
+  "login-logout": {
+    "title": "Login form",
+    "login": "Login",
+    "password": "Password"
+  },
+  "main": {
+    "title": "Translation demo {{title}}",
+    "text": "There can be text in different languages"
+  },
+  "student": {
+    "naming": "Student",
+    "title": "Create student entity",
+    "fio": "Fio",
+    "workGroup": "Work Group",
+    "yearsOld": "Years Old",
+    "teacherId": "Teacher Id"
+  },
+  "teacher": {
+    "naming": "Teacher",
+    "title": "Create teacher entity",
+    "fio": "Fio",
+    "experience": "Experience",
+    "studentsNumber": "Students Number"
+  },
+  "car": {
+    "naming": "Car",
+    "title": "Create car entity",
+    "mark": "Mark",
+    "mileage": "Mileage",
+    "regNum": "Reg number"
+  },
+  "tabs": {
+    "create": "Create",
+    "read": "Read",
+    "update": "Update",
+    "delete": "Delete"
+  },
+  "navigate": {
+    "title": "Choose entity type"
+  }
+}
