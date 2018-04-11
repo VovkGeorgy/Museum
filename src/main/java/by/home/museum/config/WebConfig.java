@@ -21,7 +21,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @ComponentScan("by.home.museum")
-public class WebConfig extends WebMvcConfigurerAdapter{
+public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -32,7 +32,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     }
 
     @Bean
-    public MessageSource messageSource () {
+    public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("messages");
         messageSource.setDefaultEncoding("UTF-8");
@@ -40,7 +40,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     }
 
     @Bean
-    public Locale locale(){
+    public Locale locale() {
         Locale defaultLocale = new Locale("en", "US");
         Locale.setDefault(defaultLocale);
         return defaultLocale;
@@ -58,6 +58,12 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         registry.addViewController("/guides/*").setViewName("forward:/index.html");
         registry.addViewController("/aboutUs/*").setViewName("forward:/index.html");
         registry.addViewController("/login/*").setViewName("forward:/index.html");
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper;
     }
 
 }
