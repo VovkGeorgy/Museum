@@ -52,7 +52,7 @@ public class TourExhibitEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tour_id", referencedColumnName = "tour_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "tour_id", referencedColumnName = "tour_id", nullable = false, insertable = false, updatable = false)
     public TourEntity getTourByTourId() {
         return tourByTourId;
     }
@@ -62,7 +62,7 @@ public class TourExhibitEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "exhibit_id", referencedColumnName = "exhibit_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "exhibit_id", referencedColumnName = "exhibit_id", nullable = false, insertable = false, updatable = false)
     public ExhibitEntity getExhibitByExhibitId() {
         return exhibitByExhibitId;
     }

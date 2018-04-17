@@ -1,6 +1,7 @@
 package by.home.museum.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tour", schema = "public", catalog = "museum")
@@ -10,6 +11,9 @@ public class TourEntity {
     private String typeOfExhibits;
     private Short duration;
     private Double cost;
+    private Collection<GuideEntity> guidesByTourId;
+    private Collection<TourExhibitEntity> tourExhibitsByTourId;
+    private Collection<TourVisitorEntity> tourVisitorsByTourId;
 
     @Id
     @Column(name = "tour_id", nullable = false)
@@ -86,5 +90,32 @@ public class TourEntity {
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "tourByTourId")
+    public Collection<GuideEntity> getGuidesByTourId() {
+        return guidesByTourId;
+    }
+
+    public void setGuidesByTourId(Collection<GuideEntity> guidesByTourId) {
+        this.guidesByTourId = guidesByTourId;
+    }
+
+    @OneToMany(mappedBy = "tourByTourId")
+    public Collection<TourExhibitEntity> getTourExhibitsByTourId() {
+        return tourExhibitsByTourId;
+    }
+
+    public void setTourExhibitsByTourId(Collection<TourExhibitEntity> tourExhibitsByTourId) {
+        this.tourExhibitsByTourId = tourExhibitsByTourId;
+    }
+
+    @OneToMany(mappedBy = "tourByTourId")
+    public Collection<TourVisitorEntity> getTourVisitorsByTourId() {
+        return tourVisitorsByTourId;
+    }
+
+    public void setTourVisitorsByTourId(Collection<TourVisitorEntity> tourVisitorsByTourId) {
+        this.tourVisitorsByTourId = tourVisitorsByTourId;
     }
 }

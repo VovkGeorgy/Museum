@@ -2,6 +2,7 @@ package by.home.museum.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "exhibit", schema = "public", catalog = "museum")
@@ -12,6 +13,7 @@ public class ExhibitEntity {
     private String material;
     private String archiveNum;
     private String description;
+    private Collection<TourExhibitEntity> tourExhibitsByExhibitId;
 
     @Id
     @Column(name = "exhibit_id", nullable = false)
@@ -99,5 +101,14 @@ public class ExhibitEntity {
         result = 31 * result + (archiveNum != null ? archiveNum.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "exhibitByExhibitId")
+    public Collection<TourExhibitEntity> getTourExhibitsByExhibitId() {
+        return tourExhibitsByExhibitId;
+    }
+
+    public void setTourExhibitsByExhibitId(Collection<TourExhibitEntity> tourExhibitsByExhibitId) {
+        this.tourExhibitsByExhibitId = tourExhibitsByExhibitId;
     }
 }

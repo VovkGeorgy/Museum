@@ -10,6 +10,8 @@ public class GuideEntity {
     private Short age;
     private Short experience;
     private String languages;
+    private Long tourId;
+    private TourEntity tourByTourId;
 
     @Id
     @Column(name = "guide_id", nullable = false)
@@ -61,6 +63,16 @@ public class GuideEntity {
         this.languages = languages;
     }
 
+    @Basic
+    @Column(name = "tour_id", nullable = true)
+    public Long getTourId() {
+        return tourId;
+    }
+
+    public void setTourId(Long tourId) {
+        this.tourId = tourId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +85,7 @@ public class GuideEntity {
         if (age != null ? !age.equals(that.age) : that.age != null) return false;
         if (experience != null ? !experience.equals(that.experience) : that.experience != null) return false;
         if (languages != null ? !languages.equals(that.languages) : that.languages != null) return false;
+        if (tourId != null ? !tourId.equals(that.tourId) : that.tourId != null) return false;
 
         return true;
     }
@@ -84,6 +97,17 @@ public class GuideEntity {
         result = 31 * result + (age != null ? age.hashCode() : 0);
         result = 31 * result + (experience != null ? experience.hashCode() : 0);
         result = 31 * result + (languages != null ? languages.hashCode() : 0);
+        result = 31 * result + (tourId != null ? tourId.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tour_id", referencedColumnName = "tour_id", insertable = false, updatable = false)
+    public TourEntity getTourByTourId() {
+        return tourByTourId;
+    }
+
+    public void setTourByTourId(TourEntity tourByTourId) {
+        this.tourByTourId = tourByTourId;
     }
 }

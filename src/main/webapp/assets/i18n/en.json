@@ -7,7 +7,7 @@
     "update": "Update",
     "save" : "Save"
   },
-  "login-logout": {
+  "login": {
     "title": "Login form",
     "login": "Login",
     "password": "Password"

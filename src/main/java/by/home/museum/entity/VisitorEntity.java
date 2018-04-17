@@ -1,6 +1,7 @@
 package by.home.museum.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "visitor", schema = "public", catalog = "museum")
@@ -10,6 +11,7 @@ public class VisitorEntity {
     private String fio;
     private Long age;
     private String email;
+    private Collection<TourVisitorEntity> tourVisitorsByVisitorId;
 
     @Id
     @Column(name = "visitor_id", nullable = false)
@@ -85,5 +87,14 @@ public class VisitorEntity {
         result = 31 * result + (age != null ? age.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "visitorByVisitorId")
+    public Collection<TourVisitorEntity> getTourVisitorsByVisitorId() {
+        return tourVisitorsByVisitorId;
+    }
+
+    public void setTourVisitorsByVisitorId(Collection<TourVisitorEntity> tourVisitorsByVisitorId) {
+        this.tourVisitorsByVisitorId = tourVisitorsByVisitorId;
     }
 }

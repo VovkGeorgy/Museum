@@ -9,6 +9,7 @@ public class TourVisitorEntity {
     private Integer tourId;
     private Integer visitorId;
     private TourEntity tourByTourId;
+    private VisitorEntity visitorByVisitorId;
 
     @Id
     @Column(name = "tour_id", nullable = false)
@@ -51,12 +52,22 @@ public class TourVisitorEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tour_id", referencedColumnName = "tour_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "tour_id", referencedColumnName = "tour_id", nullable = false, insertable = false, updatable = false)
     public TourEntity getTourByTourId() {
         return tourByTourId;
     }
 
     public void setTourByTourId(TourEntity tourByTourId) {
         this.tourByTourId = tourByTourId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "visitor_id", referencedColumnName = "visitor_id", nullable = false, insertable = false, updatable = false)
+    public VisitorEntity getVisitorByVisitorId() {
+        return visitorByVisitorId;
+    }
+
+    public void setVisitorByVisitorId(VisitorEntity visitorByVisitorId) {
+        this.visitorByVisitorId = visitorByVisitorId;
     }
 }

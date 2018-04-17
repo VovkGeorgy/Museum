@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface GuideEntityRepository extends JpaRepository<GuideEntity, Integer> {
+public interface GuideRepository extends JpaRepository<GuideEntity, Integer> {
 
     /**
      * Saves GuideEntity and flushes changes instantly.
@@ -39,7 +39,7 @@ public interface GuideEntityRepository extends JpaRepository<GuideEntity, Intege
 //    int updateStudentEntityYearsOld(int studentYearsOld, String studentFio);
 
     /**
-     * This method delete Guide Entity
+     * This method del Guide Entity
      *
      * @param guideId - Guide Entity id
      * @return GuideEntity

@@ -18,7 +18,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:database.properties")
+@PropertySource("classpath:app.properties")
 @ComponentScan({"by.home.museum.service"})
 @EnableJpaRepositories("by.home.museum.repository")
 public class DataConfig {

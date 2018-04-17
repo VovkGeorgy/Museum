@@ -7,7 +7,7 @@
     "update": "Обновить",
     "save" : "Сохранить"
   },
-  "login-logout": {
+  "login": {
     "title": "Форма для входа",
     "login": "Логин",
     "password": "Пароль"
