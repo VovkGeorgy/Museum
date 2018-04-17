@@ -5,6 +5,7 @@ import by.home.museum.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,66 +18,62 @@ public class TourController {
     @Autowired
     TourService tourService;
 
-//    /**
-//     * Method add Student entity with @params
-//     *
-//     * @param fio       - student fio
-//     * @param workGroup - student working group
-//     * @param yearsOld  - student age
-//     * @param teacherId - student teacher
-//     * @return - message
-//     * {@link Deprecated}
-//     */
-//    @RequestMapping(value = "/addEntity", method = RequestMethod.POST)
-//    public String getStudentEntity(String fio, int workGroup, int yearsOld, int teacherId) {
-//        StudentEntity stud = new StudentEntity();
-//        stud.setFio(fio);
-//        stud.setWorkGroup(workGroup);
-//        try {
-//            if (yearsOld < 18) throw new Exception();
-//        } catch (Exception e) {
-//            logger.error(messageSource.getMessage("object.field.updating.error", new Object[]{stud}, Locale.getDefault()), e);
-//        }
-//        stud.setYearsOld(yearsOld);
-//        stud.setTeacher(teacherService.getOne(teacherId));
-//        studentService.saveAndFlush(stud);
-//        logger.info(messageSource.getMessage("object.create.ok", new Object[]{stud}, Locale.getDefault()));
-//        return messageSource.getMessage("object.create.ok", new Object[]{stud}, Locale.getDefault());
-//    }
-
-    @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
-    public ResponseEntity<TourEntity> addStudent(@RequestBody TourEntity tour) {
-        TourEntity newTour = new TourEntity();
-        if (tour != null) {
-            newTour.setTheme(tour.getTheme());
-            newTour.setCost(tour.getCost());
-            newTour.setDuration(tour.getDuration());
-            newTour.setTypeOfExhibits(tour.getTypeOfExhibits());
-            tourService.save(newTour);
-        }
-        return new ResponseEntity<TourEntity>(newTour, HttpStatus.OK);
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/tours
+     * HTTP method: GET
+     */
+    @RequestMapping(value = "/tours", method = RequestMethod.GET)
+    public ResponseEntity<?> getTours() {
+        Iterable<TourEntity> tourList = tourService.findAll();
+        return new ResponseEntity<>(tourList, HttpStatus.OK);
     }
 
     /**
-     * Method return all students entity from dataBase to view page at JSON format
-     *
-     * @param model - model
-     * @return List<StudentEntity>
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/crm-oauth2/api/customers/{customerId}
+     * HTTP method: GET
      */
-//    @RequestMapping(value = "/getAllStudents", method = RequestMethod.GET)
-//    public List<StudentEntity> getStudentsNames(ModelMap model) {
-//        List<StudentEntity> all = studentService.findAll();
-//        return all;
-//    }
-    @RequestMapping(value = "/getAllStudents", method = RequestMethod.GET)
-    public List<TourEntity> getStudentsNames(ModelMap model) {
-        List<TourEntity> all = (List<TourEntity>) tourService.findAll();
-        return all;
+    @RequestMapping(value = "/tours/{tourId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCustomer(@PathVariable long tourId) {
+        TourEntity tour = tourService.findOne(tourId);
+        return new ResponseEntity<>(tour, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/deleteT", method = RequestMethod.POST)
-    public void deleteTour(@RequestBody TourEntity tour) {
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/tours
+     * HTTP method: POST
+     */
+    @RequestMapping(value = "/tours/add", method = RequestMethod.POST)
+    public ResponseEntity<?> addTour(@RequestBody TourEntity tour) {
+        TourEntity newTour = tourService.save(tour);
+        return new ResponseEntity<>(newTour, HttpStatus.CREATED);
+    }
+
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/crm-oauth2/api/customers/customerId
+     * HTTP method: PUT
+     */
+    @RequestMapping(value = "/tours/update/{tourId}", method = RequestMethod.POST)
+    public ResponseEntity<?> updateTour(@PathVariable long tourId,
+                                        @RequestBody TourEntity tour) {
+        TourEntity updatedCustomer = tourService.save(tour);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    }
+
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/crm-oauth2/api/customers/customerId
+     * HTTP method: DELETE
+     */
+    @RequestMapping(value = "/tours/delete/{tourId}", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> deleteCustomer(@PathVariable long tourId) {
+        TourEntity tour = tourService.findOne(tourId);
         tourService.delete(tour);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

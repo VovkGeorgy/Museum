@@ -1,8 +1,8 @@
 
 INSERT INTO tour (theme, type_of_exhibits, duration, cost) VALUES
-  ('Italian Renaissance', 'paintings', '1 hours 30 minutes', 300),
-  ('The Art of Eating','paintings', '2 hours 35 minutes', 200),
-  ('On Horseback through the Louvre', 'paintings', '1 hours 5 minutes', 250);
+  ('Italian Renaissance', 'paintings', '1', 300.30),
+  ('The Art of Eating','paintings', '2', 200.50),
+  ('On Horseback through the Louvre', 'paintings', '1', 250.75);
   
 INSERT INTO guide (fio, age, experience, languages, tour_id) VALUES
   ('Guide 1 1', 21, 2, 'EN,FR', 1),

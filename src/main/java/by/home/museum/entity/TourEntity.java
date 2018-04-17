@@ -1,5 +1,7 @@
 package by.home.museum.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -92,6 +94,7 @@ public class TourEntity {
         return result;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tourByTourId")
     public Collection<GuideEntity> getGuidesByTourId() {
         return guidesByTourId;
@@ -101,6 +104,7 @@ public class TourEntity {
         this.guidesByTourId = guidesByTourId;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tourByTourId")
     public Collection<TourExhibitEntity> getTourExhibitsByTourId() {
         return tourExhibitsByTourId;
@@ -110,6 +114,7 @@ public class TourEntity {
         this.tourExhibitsByTourId = tourExhibitsByTourId;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tourByTourId")
     public Collection<TourVisitorEntity> getTourVisitorsByTourId() {
         return tourVisitorsByTourId;

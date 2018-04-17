@@ -44,52 +44,7 @@ CREATE TABLE tour_visitor (
   PRIMARY KEY (tour_id, visitor_id)
 );
 
-
-<==============================================================>
-
-DROP TABLE exhibit, guide, tour_exhibit, tour_visitor, tour, visitor
-
-<==============================================================>
-
-
-CREATE TABLE users (
-  user_id   BIGSERIAL PRIMARY KEY,
-  user_name TEXT    NOT NULL UNIQUE,
-  password  TEXT    NOT NULL,
-  enabled   BOOLEAN NOT NULL DEFAULT TRUE
-);
-
-CREATE SEQUENCE user_roles_seq;
-
-CREATE TABLE user_roles (
-  user_role_id BIGINT      NOT NULL DEFAULT NEXTVAL('user_roles_seq'),
-  user_name    VARCHAR(45) NOT NULL,
-  role         VARCHAR(45) NOT NULL,
-  PRIMARY KEY (user_role_id),
-  CONSTRAINT uni_username_role UNIQUE (role, user_name)
-  ,
-  CONSTRAINT fk_username FOREIGN KEY (user_name) REFERENCES users (user_name)
-);
-
-CREATE INDEX fk_username_idx
-  ON user_roles (user_name);
-
-oRRRRRRRRRRRRRRRRRR
-
-CREATE TABLE user_roles (
-  user_role_id BIGSERIAL   NOT NULL,
-  user_name    VARCHAR(45) NOT NULL,
-  role         VARCHAR(45) NOT NULL,
-  PRIMARY KEY (user_role_id),
-  CONSTRAINT uni_username_role UNIQUE (role, user_name)
-  ,
-  CONSTRAINT fk_username FOREIGN KEY (user_name) REFERENCES users (user_name)
-);
-
-
-<===========================================================>
-
-JWT
+DROP TABLE exhibit, guide, tour_exhibit, tour_visitor, tour, visitor;
 
 CREATE TABLE users (
   id       BIGSERIAL PRIMARY KEY,
