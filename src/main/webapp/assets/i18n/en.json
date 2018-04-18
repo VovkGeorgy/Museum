@@ -16,13 +16,13 @@
     "title": "Translation demo {{title}}",
     "text": "There can be text in different languages"
   },
-  "student": {
-    "naming": "Student",
-    "title": "Create student entity",
+  "guide": {
+    "naming": "Guide",
+    "title": "Create guide entity",
     "fio": "Fio",
-    "workGroup": "Work Group",
-    "yearsOld": "Years Old",
-    "teacherId": "Teacher Id"
+    "age": "Age",
+    "experience": "Experience",
+    "languages": "Languages"
   },
   "teacher": {
     "naming": "Teacher",

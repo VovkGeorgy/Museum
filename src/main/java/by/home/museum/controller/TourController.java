@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/tour")
@@ -31,7 +28,7 @@ public class TourController {
 
     /**
      * this method maps the following URL & http method
-     * URL: http://hostname:port/crm-oauth2/api/customers/{customerId}
+     * URL: http://hostname:port/tours/{tourId}
      * HTTP method: GET
      */
     @RequestMapping(value = "/tours/{tourId}", method = RequestMethod.GET)

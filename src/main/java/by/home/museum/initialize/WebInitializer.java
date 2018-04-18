@@ -4,8 +4,6 @@ import by.home.museum.config.AppConfig;
 import by.home.museum.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.Filter;
-
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override

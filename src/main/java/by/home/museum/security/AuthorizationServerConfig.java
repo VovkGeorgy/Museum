@@ -47,8 +47,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 //		clients.jdbc(dataSource);
         clients.inMemory()
-                .withClient("crmClient1")
-                .secret("crmSuperSecret")
+                .withClient("MuseumClient")
+                .secret("MuseumSecret")
                 .authorizedGrantTypes("password", "refresh_token")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
