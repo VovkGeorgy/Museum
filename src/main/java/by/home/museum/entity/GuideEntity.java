@@ -15,6 +15,17 @@ public class GuideEntity {
     private Long tourId;
     private TourEntity tourByTourId;
 
+    public GuideEntity(){
+    }
+
+    public GuideEntity(String fio, Short age, Short experience, String languages, Long tourId) {
+        this.fio = fio;
+        this.age = age;
+        this.experience = experience;
+        this.languages = languages;
+        this.tourId = tourId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "guide_id", nullable = false)

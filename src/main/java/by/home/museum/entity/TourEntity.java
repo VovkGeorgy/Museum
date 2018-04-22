@@ -18,6 +18,17 @@ public class TourEntity {
     private Collection<TourExhibitEntity> tourExhibitsByTourId;
     private Collection<TourVisitorEntity> tourVisitorsByTourId;
 
+    public TourEntity(){
+    }
+
+    public TourEntity(String theme, String typeOfExhibits, Short duration, Double cost, String imageUrl) {
+        this.theme = theme;
+        this.typeOfExhibits = typeOfExhibits;
+        this.duration = duration;
+        this.cost = cost;
+        this.imageUrl = imageUrl;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tour_id", nullable = false)

@@ -32,42 +32,42 @@ public class TourController {
      * HTTP method: GET
      */
     @RequestMapping(value = "/tours/{tourId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCustomer(@PathVariable long tourId) {
+    public ResponseEntity<?> getTour(@PathVariable long tourId) {
         TourEntity tour = tourService.findOne(tourId);
         return new ResponseEntity<>(tour, HttpStatus.OK);
     }
 
     /**
      * this method maps the following URL & http method
-     * URL: http://hostname:port/tours
+     * URL: http://hostname:port/tour/tours/add
      * HTTP method: POST
      */
     @RequestMapping(value = "/tours/add", method = RequestMethod.POST)
     public ResponseEntity<?> addTour(@RequestBody TourEntity tour) {
         TourEntity newTour = tourService.save(tour);
-        return new ResponseEntity<>(newTour, HttpStatus.CREATED);
+        return new ResponseEntity<>(newTour, HttpStatus.OK);
     }
 
     /**
      * this method maps the following URL & http method
-     * URL: http://hostname:port/crm-oauth2/api/customers/customerId
-     * HTTP method: PUT
+     * URL: http://hostname:port/tours/update/{tourId}
+     * HTTP method: POST
      */
     @RequestMapping(value = "/tours/update/{tourId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateTour(@PathVariable long tourId,
                                         @RequestBody TourEntity tour) {
-        TourEntity updatedCustomer = tourService.save(tour);
-        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+        TourEntity updatedTour = tourService.save(tour);
+        return new ResponseEntity<>(updatedTour, HttpStatus.OK);
     }
 
     /**
      * this method maps the following URL & http method
-     * URL: http://hostname:port/crm-oauth2/api/customers/customerId
-     * HTTP method: DELETE
+     * URL: http://hostname:port/tours/delete/{tourId}
+     * HTTP method: POST
      */
     @RequestMapping(value = "/tours/delete/{tourId}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> deleteCustomer(@PathVariable long tourId) {
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> deleteTour(@PathVariable long tourId) {
         TourEntity tour = tourService.findOne(tourId);
         tourService.delete(tour);
         return new ResponseEntity<>(HttpStatus.OK);

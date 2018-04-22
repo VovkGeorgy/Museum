@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/exhibit")
-public class ExhibitsController {
+public class ExhibitController {
 
     @Autowired
     ExhibitService exhibitService;
