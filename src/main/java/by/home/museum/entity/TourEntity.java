@@ -13,11 +13,13 @@ public class TourEntity {
     private String typeOfExhibits;
     private Short duration;
     private Double cost;
+    private String imageUrl;
     private Collection<GuideEntity> guidesByTourId;
     private Collection<TourExhibitEntity> tourExhibitsByTourId;
     private Collection<TourVisitorEntity> tourVisitorsByTourId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tour_id", nullable = false)
     public Long getTourId() {
         return tourId;
@@ -65,6 +67,16 @@ public class TourEntity {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    @Basic
+    @Column(name = "image_url", nullable = true, length = -1)
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
@@ -123,4 +135,6 @@ public class TourEntity {
     public void setTourVisitorsByTourId(Collection<TourVisitorEntity> tourVisitorsByTourId) {
         this.tourVisitorsByTourId = tourVisitorsByTourId;
     }
+
+
 }

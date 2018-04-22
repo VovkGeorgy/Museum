@@ -50,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  	.antMatchers("/oauth/token").permitAll()
 	  	.antMatchers("/tour/**").permitAll()
 	  	.antMatchers("/guide/**").permitAll()
+	  	.antMatchers("/exhibit/**").permitAll()
+	  	.antMatchers("/visitor/**").permitAll()
 	  	//.antMatchers("/api/**").authenticated()
 	  	.anyRequest().authenticated()
 	  	.and()

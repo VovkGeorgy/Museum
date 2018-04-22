@@ -1,5 +1,7 @@
 package by.home.museum.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
@@ -9,13 +11,15 @@ import java.util.Collection;
 public class ExhibitEntity {
     private Long exhibitId;
     private String title;
-    private Date dated;
+    private String dated;
     private String material;
     private String archiveNum;
     private String description;
+    private String imageUrl;
     private Collection<TourExhibitEntity> tourExhibitsByExhibitId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exhibit_id", nullable = false)
     public Long getExhibitId() {
         return exhibitId;
@@ -37,11 +41,11 @@ public class ExhibitEntity {
 
     @Basic
     @Column(name = "dated", nullable = true)
-    public Date getDated() {
+    public String getDated() {
         return dated;
     }
 
-    public void setDated(Date dated) {
+    public void setDated(String dated) {
         this.dated = dated;
     }
 
@@ -75,6 +79,16 @@ public class ExhibitEntity {
         this.description = description;
     }
 
+    @Basic
+    @Column(name = "image_url", nullable = true, length = -1)
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,6 +117,7 @@ public class ExhibitEntity {
         return result;
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "exhibitByExhibitId")
     public Collection<TourExhibitEntity> getTourExhibitsByExhibitId() {
         return tourExhibitsByExhibitId;
@@ -111,4 +126,6 @@ public class ExhibitEntity {
     public void setTourExhibitsByExhibitId(Collection<TourExhibitEntity> tourExhibitsByExhibitId) {
         this.tourExhibitsByExhibitId = tourExhibitsByExhibitId;
     }
+
+
 }

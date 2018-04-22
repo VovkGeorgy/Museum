@@ -66,7 +66,7 @@ public class GuideController {
      * HTTP method: POST
      */
     @RequestMapping(value = "/guides/delete/{guideId}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteCustomer(@PathVariable long guideId) {
         GuideEntity guide = guideService.findOne(guideId);
         guideService.delete(guide);

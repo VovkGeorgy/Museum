@@ -47,13 +47,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 //		clients.jdbc(dataSource);
         clients.inMemory()
-                .withClient("MuseumClient")
-                .secret("MuseumSecret")
+                .withClient("Client")
+                .secret("Secret")
                 .authorizedGrantTypes("password", "refresh_token")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 //.accessTokenValiditySeconds(ONE_DAY)
-                .accessTokenValiditySeconds(3000)
+                .accessTokenValiditySeconds(300)
                 .refreshTokenValiditySeconds(THIRTY_DAYS);
     }
 

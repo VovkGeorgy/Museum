@@ -1,5 +1,7 @@
 package by.home.museum.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class GuideEntity {
     private TourEntity tourByTourId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "guide_id", nullable = false)
     public Long getGuideId() {
         return guideId;
@@ -102,6 +105,7 @@ public class GuideEntity {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "tour_id", referencedColumnName = "tour_id", insertable = false, updatable = false)
     public TourEntity getTourByTourId() {
         return tourByTourId;

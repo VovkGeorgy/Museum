@@ -1,70 +1,54 @@
+INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url) VALUES
+  ('Italian Renaissance', 'paintings', '1', 300.30,
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338'),
+  ('The Art of Eating', 'paintings', '2', 200.50,
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60854.jpg?1308122198'),
+  ('On Horseback through the Louvre', 'paintings', '1', 250.75,
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60111.jpeg?1308120727'),
+  ('The Da Vinci Code', 'paintings', '3', 400.75,
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_64583.jpg?1308124152'),
+  ('Osiris, An Ancient Egyptian God', 'antiquities', '1', 150.75,
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_1308_0.jpg?1309860410');
 
-INSERT INTO tour (theme, type_of_exhibits, duration, cost) VALUES
-  ('Italian Renaissance', 'paintings', '1', 300.30),
-  ('The Art of Eating','paintings', '2', 200.50),
-  ('On Horseback through the Louvre', 'paintings', '1', 250.75);
-  
 INSERT INTO guide (fio, age, experience, languages, tour_id) VALUES
   ('Guide 1 1', 21, 2, 'EN,FR', 1),
   ('Guide 2 2', 22, 3, 'EN,FR,PL', 2),
-  ('Guide 3 3', 23, 4, 'EN,RU,CHN', 3);
+  ('Guide 3 3', 23, 4, 'EN', 3),
+  ('Guide 4 4', 23, 4, 'RU,CHN', 4),
+  ('Guide 5 5', 23, 4, 'EN,RU,CHN', 5);
 
 
-<==========================================================>
+INSERT INTO exhibit (title, dated, material, archive_num, description, image_url) VALUES
+  ('St. Francis of Assisi Receiving the Stigmata', '1300', 'canvas', 'as2d21s',
+   'The theme of this altarpiece, painted in 1300 for a church in Pisa, is a well-known episode from the life of St. Francis of Assisi related by his companions: the miracle of the stigmata on Mount La Verna. Giotto''s vision was in harmony with Franciscan spirituality, and having to appeal to the greatest number of believers, he set the main scene in a landscape of trees and rocks.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-francois-d039assise-recevant.jpg?1519275049'),
+  ('The Coronation of the Virgin', '1435', 'canvas', 'as2d2w12f1s',
+   'Painted before 1435 for the church of San Domenico in Fiesole, where Fra Angelico had taken his vows, the theme of this altarpiece was not drawn from the canonical Gospels, but from the Apocrypha. The scene occurs in Paradise, and the Virgin is crowned by Christ, surrounded by the heavenly host of angelic musicians, saints and martyrs.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-couronnement-vierge_0.jpg?1519274996'),
+  ('The Battle of San Romano', '1432', 'canvas', 'as12121f1s',
+   'Commissioned by the Salimbeni, a Florentine family, Paolo Uccello painted three panels on the theme of the Battle of San Romano, a skirmish between Florentine and Sienese mercenaries that took place in 1432. These three works were later hung in the Palazzo Medici, in Via Larga. Today they are divided between the Uffizi, Florence, the National Gallery, London, and the Louvre.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-bataille-san-romano-contre.jpg?1519269219'),
+  ('The Wedding Feast at Cana', '1562', 'canvas', '2f13g12',
+   'In Venice during the 16th century, the banquet was a veritable spectacle. The U-shaped table made it possible for musicians and jesters to perform in the center. Meals were served in six to eight carefully ordered courses, organized by a steward.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-les-noces-cana.jpg?1519269004'),
+  ('The Peasant Meal', '17th', 'canvas', 'f4hjl8',
+   'In the 17th century, genre scenes like this Peasant Meal often had a symbolic meaning. Were they accurate portrayals of contemporary peasant life or religious metaphors? The bread and wine, depicted alone on a table, recall the eucharist. The central figure in these works can often be seen as Christ.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-repas-paysans.jpg?1321828496'),
+  ('The Hunt Luncheon', '18th', 'canvas', '14f4ff',
+   'In 18th-century France, meals were elaborate affairs, with an ordered sequence of dishes and a particular way of serving them. There were numerous dishes, which were brought to the table in a series of waves, called services. Soup and appetizers were followed by roasts and salads, which were followed by desserts. The meal ended with fruit.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-dejeuner-chasse.jpg?1519274597');
 
-<==========================================================>
+
+INSERT INTO visitor (username, password, fio, age, email) VALUES
+  ('Visitor1', '12345', 'Namiek F.A.', '22', 'namiek@mail.com'),
+  ('Visitor2', '54321', 'Migewf K.R.', '42', 'migewf@mail.com'),
+  ('Visitor3', '12r2121e', 'Kirmis L.D.', '53', 'kirmis53@mail.com'),
+  ('Visitor4', 'g22r44e11', 'Jingle R.T.', '13', 'jingle@mail.com');
 
 
-INSERT INTO car (mark, reg_number, mileage)
-VALUES ('Daewoo', '2003-KA-4', 222000),
-  ('Chevrolet', '3742-KB-4', 120000),
-  ('Daewoo', '3722-KB-4', 10000),
-  ('Kia', '2432-KB-4', 40000),
-  ('Vaz', '4333-KB-4', NULL),
-  ('Volkswagen', '2200-KB-4', 158000);
 
-INSERT INTO teacher (fio, experience, students_number, car_id)
-VALUES ('Zognin A.E.', 20, 22, 1),
-  ('Shved D.G.', 12, 21, 2),
-  ('Kurmash D.C.', 3, NULL, NULL),
-  ('Ulianov V.I.', 22, 18, 3);
 
-INSERT INTO exam (exam_type, exam_topic, ticket_number)
-VALUES ('Credit', 'Topic_1', 20),
-  ('Credit', 'Topic_2', 20),
-  ('Credit', 'Topic_3', 10),
-  ('Exam', 'Pre_Final', 30),
-  ('Exam', 'Final', 30);
 
-INSERT INTO student (fio, work_group, years_old, teacher_id)
-VALUES ('Vovk G.A.', 21, 22, 2),
-  ('Ignatenko V.A.', 11, 24, 3),
-  ('Trafim O.E.', 44, 34, 1),
-  ('Gorbach E.T.', 22, 25, 3),
-  ('Surmach D.D.', 21, 33, 3),
-  ('Hudoy O.O.', NULL, 23, NULL),
-  ('Poveday C.V.', 11, 31, 2);
-  
 
-INSERT INTO result_of_exam (student_id, exam_id, passing)
-VALUES (1, 2, TRUE),
-  (1, 1, TRUE),
-  (1, 3, NULL),
-  (2, 1, FALSE),
-  (2, 2, FALSE),
-  (3, 1, TRUE),
-  (3, 2, TRUE),
-  (3, 3, FALSE);
-			
 
-INSERT INTO users(username,password,enabled)
-VALUES ('admin','11111', true);
-INSERT INTO users(username,password,enabled)
-VALUES ('user','11111', true);
 
-INSERT INTO user_roles (username, role)
-VALUES ('admin', 'ROLE_USER');
-INSERT INTO user_roles (username, role)
-VALUES ('admin', 'ROLE_ADMIN');
-INSERT INTO user_roles (username, role)
-VALUES ('user', 'ROLE_USER');

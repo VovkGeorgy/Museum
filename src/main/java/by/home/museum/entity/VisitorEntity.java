@@ -1,5 +1,7 @@
 package by.home.museum.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -7,13 +9,15 @@ import java.util.Collection;
 @Table(name = "visitor", schema = "public", catalog = "museum")
 public class VisitorEntity {
     private Long visitorId;
-    private String login;
+    private String username;
+    private String password;
     private String fio;
     private Long age;
     private String email;
     private Collection<TourVisitorEntity> tourVisitorsByVisitorId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "visitor_id", nullable = false)
     public Long getVisitorId() {
         return visitorId;
@@ -24,13 +28,23 @@ public class VisitorEntity {
     }
 
     @Basic
-    @Column(name = "login", nullable = true, length = -1)
-    public String getLogin() {
-        return login;
+    @Column(name = "username", nullable = true, length = -1)
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Basic
+    @Column(name = "password", nullable = true, length = -1)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Basic
@@ -71,7 +85,7 @@ public class VisitorEntity {
         VisitorEntity that = (VisitorEntity) o;
 
         if (visitorId != null ? !visitorId.equals(that.visitorId) : that.visitorId != null) return false;
-        if (login != null ? !login.equals(that.login) : that.login != null) return false;
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (fio != null ? !fio.equals(that.fio) : that.fio != null) return false;
         if (age != null ? !age.equals(that.age) : that.age != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
@@ -82,7 +96,7 @@ public class VisitorEntity {
     @Override
     public int hashCode() {
         int result = visitorId != null ? visitorId.hashCode() : 0;
-        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (fio != null ? fio.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
@@ -90,6 +104,7 @@ public class VisitorEntity {
     }
 
     @OneToMany(mappedBy = "visitorByVisitorId")
+    @JsonIgnore
     public Collection<TourVisitorEntity> getTourVisitorsByVisitorId() {
         return tourVisitorsByVisitorId;
     }
@@ -97,4 +112,5 @@ public class VisitorEntity {
     public void setTourVisitorsByVisitorId(Collection<TourVisitorEntity> tourVisitorsByVisitorId) {
         this.tourVisitorsByVisitorId = tourVisitorsByVisitorId;
     }
+
 }

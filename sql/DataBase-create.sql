@@ -3,7 +3,8 @@ CREATE TABLE tour (
   theme            TEXT,
   type_of_exhibits TEXT,
   duration         SMALLINT,
-  cost             DOUBLE PRECISION CONSTRAINT positive_price CHECK (cost > 0)
+  cost             DOUBLE PRECISION CONSTRAINT positive_price CHECK (cost > 0),
+  image_url        TEXT
 );
 
 CREATE TABLE guide (
@@ -12,16 +13,17 @@ CREATE TABLE guide (
   age        SMALLINT CONSTRAINT adult_only CHECK (age > 18),
   experience SMALLINT,
   languages  TEXT,
-  tour_id    BIGINT UNIQUE REFERENCES tour (tour_id)
+  tour_id    BIGINT REFERENCES tour (tour_id)
 );
 
 CREATE TABLE exhibit (
   exhibit_id  BIGSERIAL PRIMARY KEY,
   title       TEXT,
-  dated       DATE,
+  dated       TEXT,
   material    TEXT,
   archive_num TEXT UNIQUE,
-  description TEXT
+  description TEXT,
+  image_url   TEXT
 );
 
 CREATE TABLE tour_exhibit (
@@ -32,7 +34,8 @@ CREATE TABLE tour_exhibit (
 
 CREATE TABLE visitor (
   visitor_id BIGSERIAL PRIMARY KEY,
-  login      TEXT,
+  username   TEXT NOT NULL UNIQUE,
+  password   TEXT NOT NULL,
   fio        TEXT,
   age        BIGINT CONSTRAINT adult_only CHECK (age > 0),
   email      TEXT

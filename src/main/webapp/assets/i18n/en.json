@@ -22,7 +22,8 @@
     "fio": "Fio",
     "age": "Age",
     "experience": "Experience",
-    "languages": "Languages"
+    "languages": "Languages",
+    "tourId": "TourId"
   },
   "teacher": {
     "naming": "Teacher",
