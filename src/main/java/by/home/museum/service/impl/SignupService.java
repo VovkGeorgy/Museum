@@ -14,31 +14,33 @@ import java.util.Arrays;
 @Service
 @Transactional
 public class SignupService {
-	
-	@Autowired
-	private UsersRepository userRepository;
 
-	@Autowired
+    @Autowired
+    private UsersRepository userRepository;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
-	
-	public UsersEntity addUser(UsersEntity user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepository.save(user);
-	}
-	
-	/**
-	 * 
-	 * set up a default customer with two roles USER and ADMIN
-	 * 
-	 */
-	@PostConstruct
-	private void setupDefaultUser() {
-		//-- just to make sure there is an ADMIN user exist in the database for testing purpose
-			if (userRepository.count() == 0) {
-				userRepository.save(new UsersEntity("admin",
-										passwordEncoder.encode("11111"),
-										Arrays.asList(new RolesEntity("USER"), new RolesEntity("ADMIN"))));
-			}
-	}
-	
+
+    public UsersEntity addUser(UsersEntity user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+    public void delUser(UsersEntity user) {
+        userRepository.delete(user.getId());
+    }
+
+    /**
+     * set up a default customer with two roles USER and ADMIN
+     */
+    @PostConstruct
+    private void setupDefaultUser() {
+        //-- just to make sure there is an ADMIN user exist in the database for testing purpose
+        if (userRepository.count() == 0) {
+            userRepository.save(new UsersEntity("admin",
+                    passwordEncoder.encode("11111"),
+                    Arrays.asList(new RolesEntity("USER"), new RolesEntity("ADMIN"))));
+        }
+    }
+
 }

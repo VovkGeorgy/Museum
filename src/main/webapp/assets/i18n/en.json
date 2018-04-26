@@ -1,20 +1,19 @@
 {
   "button": {
     "function": "Function",
+    "log-in": "Log in",
     "add": "Add",
     "delete": "Delete",
     "login": "Login",
     "update": "Update",
-    "save" : "Save"
+    "save": "Save"
   },
   "login": {
     "title": "Login form",
-    "login": "Login",
+    "username": "Username",
     "password": "Password"
   },
   "main": {
-    "title": "Translation demo {{title}}",
-    "text": "There can be text in different languages"
   },
   "guide": {
     "naming": "Guide",
@@ -25,19 +24,22 @@
     "languages": "Languages",
     "tourId": "TourId"
   },
-  "teacher": {
-    "naming": "Teacher",
+  "tours": {
+    "naming": "Tours",
     "title": "Create teacher entity",
     "fio": "Fio",
     "experience": "Experience",
     "studentsNumber": "Students Number"
   },
-  "car": {
-    "naming": "Car",
+  "exhibits": {
+    "naming": "Exhibits",
     "title": "Create car entity",
     "mark": "Mark",
     "mileage": "Mileage",
     "regNum": "Reg number"
+  },
+  "visitors": {
+    "naming": "Visitors"
   },
   "tabs": {
     "create": "Create",
@@ -45,7 +47,10 @@
     "update": "Update",
     "delete": "Delete"
   },
-  "navigate": {
-    "title": "Choose entity type"
+  "navbar": {
+    "home": "Home",
+    "title": "Choose entity type",
+    "main": "Main",
+    "aboutUs": "About us"
   }
 }

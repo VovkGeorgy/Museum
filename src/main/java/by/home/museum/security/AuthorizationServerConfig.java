@@ -53,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 //.accessTokenValiditySeconds(ONE_DAY)
-                .accessTokenValiditySeconds(300)
+                .accessTokenValiditySeconds(3000)
                 .refreshTokenValiditySeconds(THIRTY_DAYS);
     }
 

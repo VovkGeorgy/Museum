@@ -28,102 +28,93 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //	@Autowired
 //	private DataSource dataSource;
-	
-	@Autowired
-	private ClientDetailsService clientDetailsService;
 
-	@Autowired
-	private CrmUserDetailsService crmUserDetailsService;	
-	
+    @Autowired
+    private ClientDetailsService clientDetailsService;
+
+    @Autowired
+    private CrmUserDetailsService crmUserDetailsService;
+
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
     protected void configure(HttpSecurity http) throws Exception {
-		http
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-		.csrf().disable()
-	  	.authorizeRequests()
-	  	.antMatchers("/about").permitAll()
-	  	.antMatchers("/whoiam").hasRole("USER")
-	  	.antMatchers("/signup").permitAll()
-	  	.antMatchers("/oauth/token").permitAll()
-	  	.antMatchers("/tour/**").permitAll()
-	  	.antMatchers("/guide/**").permitAll()
-	  	.antMatchers("/exhibit/**").permitAll()
-	  	.antMatchers("/visitor/**").permitAll()
-	  	//.antMatchers("/api/**").authenticated()
-	  	.anyRequest().authenticated()
-	  	.and()
-	  	.httpBasic()
-	  		.realmName("MUSEUM_REALM");
+        http
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/about").permitAll()
+                .antMatchers("/**").permitAll()
+                .antMatchers("/whoiam").hasRole("USER")
+                .antMatchers("/signup").permitAll()
+                .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/tour/**").hasRole("USER")
+                .antMatchers("/guide/**").hasRole("ADMIN")
+                .antMatchers("/exhibit/**").hasRole("USER")
+                .antMatchers("/visitor/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic()
+                .realmName("MUSEUM_REALM");
     }
 
-    
+
     @Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    	auth.userDetailsService(crmUserDetailsService)
-    		.passwordEncoder(passwordEncoder());
-	}
-    
-	
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(crmUserDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
+
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-	//-- use the JdbcTokenStore to store tokens
-    /*
-	@Bean
-	public JdbcTokenStore tokenStore() {
-		return new JdbcTokenStore(dataSource);
-	}
-    */
-    
-	//-- use the JwtTokenStore instead of JdbcTokenStore
-	@Bean
-	public TokenStore tokenStore() {
-		//return new JdbcTokenStore(dataSource);
-		return new JwtTokenStore(jwtTokenEnhancer());
-	}
-	
-	@Bean
-	protected JwtAccessTokenConverter jwtTokenEnhancer() {
-		/*
+    @Bean
+    public TokenStore tokenStore() {
+        //return new JdbcTokenStore(dataSource);
+        return new JwtTokenStore(jwtTokenEnhancer());
+    }
+
+    @Bean
+    protected JwtAccessTokenConverter jwtTokenEnhancer() {
+        /*
 	    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "mySecretKey".toCharArray());
 	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 	    converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
 	    */
-		//-- for the simple demo purpose, used the secret for signing.
-		//-- for production, it is recommended to use public/private key pair
-	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-	    converter.setSigningKey("Demo-Key-1");
-	    
-	    return converter;
-	}	
+        //-- for the simple demo purpose, used the secret for signing.
+        //-- for production, it is recommended to use public/private key pair
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey("Demo-Key-1");
 
-	@Bean
-	@Autowired
-	public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore){
-		TokenStoreUserApprovalHandler handler = new TokenStoreUserApprovalHandler();
-		handler.setTokenStore(tokenStore);
-		handler.setRequestFactory(new DefaultOAuth2RequestFactory(clientDetailsService));
-		handler.setClientDetailsService(clientDetailsService);
-		return handler;
-	}
-	
-	@Bean
-	@Autowired
-	public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
-		TokenApprovalStore store = new TokenApprovalStore();
-		store.setTokenStore(tokenStore);
-		return store;
-	}
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
-	}	
-	
+        return converter;
+    }
+
+    @Bean
+    @Autowired
+    public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore) {
+        TokenStoreUserApprovalHandler handler = new TokenStoreUserApprovalHandler();
+        handler.setTokenStore(tokenStore);
+        handler.setRequestFactory(new DefaultOAuth2RequestFactory(clientDetailsService));
+        handler.setClientDetailsService(clientDetailsService);
+        return handler;
+    }
+
+    @Bean
+    @Autowired
+    public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
+        TokenApprovalStore store = new TokenApprovalStore();
+        store.setTokenStore(tokenStore);
+        return store;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

@@ -15,25 +15,30 @@ import java.util.Arrays;
 
 @RestController
 public class SignupController {
-	
-	@Autowired
-	private SignupService signupService;
 
-	@Autowired
-	private RolesService rolesService;
+    @Autowired
+    private SignupService signupService;
+
+    @Autowired
+    private RolesService rolesService;
 
     /**
-     * 
      * user signup
-     * @param user
-     * @return
+     *
+     * @param user - new user
+     * @return - status 200-OK
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody UsersEntity user) {
 //   		user.setRoles(Arrays.asList(new RolesEntity("USER")));
-   		user.setRoles(Arrays.asList(rolesService.getByName("USER")));
-		UsersEntity newUser = signupService.addUser(user);
-    	return new ResponseEntity<>(HttpStatus.CREATED);
+        user.setRoles(Arrays.asList(rolesService.getByName("USER")));
+        UsersEntity newUser = signupService.addUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+
+    @RequestMapping(value = "/delUser", method = RequestMethod.POST)
+    public ResponseEntity<?> delUser(@RequestBody UsersEntity user) {
+        signupService.delUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
