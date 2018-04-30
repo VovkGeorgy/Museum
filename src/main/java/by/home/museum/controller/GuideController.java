@@ -3,6 +3,7 @@ package by.home.museum.controller;
 import by.home.museum.entity.GuideEntity;
 import by.home.museum.entity.UsersEntity;
 import by.home.museum.service.GuideService;
+import by.home.museum.service.UserService;
 import by.home.museum.service.impl.RolesService;
 import by.home.museum.service.impl.SignupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class GuideController {
 
     @Autowired
     GuideService guideService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     private RolesService rolesService;
@@ -70,6 +74,9 @@ public class GuideController {
     public ResponseEntity<?> updateGuide(@PathVariable long guideId,
                                         @RequestBody GuideEntity guide) {
         GuideEntity updatedGuide = guideService.save(guide);
+        UsersEntity usersEntity = userService.findByUsername(updatedGuide.getUsername());
+        usersEntity.setPassword(updatedGuide.getPassword());
+        signupService.addUser(usersEntity);
         return new ResponseEntity<>(updatedGuide, HttpStatus.OK);
     }
 

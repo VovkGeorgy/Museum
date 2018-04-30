@@ -1,12 +1,15 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.ExhibitEntity;
+import by.home.museum.entity.TourExhibitEntity;
 import by.home.museum.service.ExhibitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/exhibit")
@@ -35,6 +38,18 @@ public class ExhibitController {
     public ResponseEntity<?> getExhibit(@PathVariable long exhibitId) {
         ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
         return new ResponseEntity<>(exhibit, HttpStatus.OK);
+    }
+
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/tours/exhibits
+     * HTTP method: GET
+     */
+    @RequestMapping(value = "/tours/{exhibitId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getExhibitTours(@PathVariable long exhibitId) {
+        ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
+        Collection<TourExhibitEntity> toursList = exhibit.getTourExhibitsByExhibitId();
+        return new ResponseEntity<>(toursList, HttpStatus.OK);
     }
 
     /**

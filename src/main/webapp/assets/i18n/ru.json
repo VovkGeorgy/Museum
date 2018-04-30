@@ -19,22 +19,26 @@
     "login": "Логин",
     "update": "Обновить",
     "save": "Сохранить",
-    "logout": "Logout",
+    "logout": "Выйти",
     "view": "Смотреть",
     "edit": "Изменить",
     "editProfile": "Профиль",
     "signup": "Зарегистрироваться"
   },
   "tours": {
+    "theme": "Тематика",
     "naming": "Туры",
     "createTitle": "Создать тур",
     "typeOfExhibits": "Тип экспонатов",
     "duration": "Длительность",
-    "cost": "Стоимость"
+    "cost": "Стоимость",
+    "imageUrl": "URL Картинки"
   },
   "guide": {
     "naming": "Экскурсоводы",
     "title": "Добавить экскурсовода",
+    "username": "Имя",
+    "password": "Пароль",
     "fio": "Фио",
     "age": "Возраст",
     "experience": "Опыт",
@@ -47,7 +51,8 @@
     "dated": "Датировка",
     "material": "Материал",
     "archiveNum": "Номер в архиве",
-    "description": "Описание"
+    "description": "Описание",
+    "imageUrl": "URL Картинки"
   },
   "visitor": {
     "title": "Добавить посетителя",

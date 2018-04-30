@@ -48,7 +48,7 @@ public class TourController {
      * HTTP method: GET
      */
     @RequestMapping(value = "/exhibits/{tourId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getTourGuides(@PathVariable long tourId) {
+    public ResponseEntity<?> getTourExhibits(@PathVariable long tourId) {
         TourEntity tour = tourService.findOne(tourId);
         Collection<TourExhibitEntity> exhibitList = tour.getTourExhibitsByTourId();
         return new ResponseEntity<>(exhibitList, HttpStatus.OK);

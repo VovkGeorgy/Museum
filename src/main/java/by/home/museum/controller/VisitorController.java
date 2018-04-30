@@ -20,7 +20,6 @@ public class VisitorController {
     @Autowired
     VisitorService visitorService;
 
-
     @Autowired
     UserService userService;
 

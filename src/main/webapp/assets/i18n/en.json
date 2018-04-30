@@ -26,15 +26,19 @@
     "signup": "Sign up"
   },
   "tours": {
+    "theme": "Theme",
     "naming": "Tours",
     "createTitle": "Create tour",
     "typeOfExhibits": "Type of exhibits",
     "duration": "Duration",
-    "cost": "Cost"
+    "cost": "Cost",
+    "imageUrl": "Image URL"
   },
   "guide": {
     "naming": "Guide",
     "title": "Create guide",
+    "username": "Username",
+    "password": "Password",
     "fio": "Fio",
     "age": "Age",
     "experience": "Experience",
@@ -47,7 +51,8 @@
     "dated": "Dated",
     "material": "Material",
     "archiveNum": "Archive Number",
-    "description": "Description"
+    "description": "Description",
+    "imageUrl": "Image URL"
   },
   "visitor": {
     "title": "Create visitor",
