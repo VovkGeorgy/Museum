@@ -16,6 +16,17 @@ public class VisitorEntity {
     private String email;
     private Collection<TourVisitorEntity> tourVisitorsByVisitorId;
 
+    public VisitorEntity(){
+    }
+
+    public VisitorEntity(String username, String password, String fio, Long age, String email) {
+        this.username = username;
+        this.password = password;
+        this.fio = fio;
+        this.age = age;
+        this.email = email;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "visitor_id", nullable = false)

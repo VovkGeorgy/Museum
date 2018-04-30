@@ -8,6 +8,8 @@ import javax.persistence.*;
 @Table(name = "guide", schema = "public", catalog = "museum")
 public class GuideEntity {
     private Long guideId;
+    private String username;
+    private String password;
     private String fio;
     private Short age;
     private Short experience;
@@ -15,10 +17,13 @@ public class GuideEntity {
     private Long tourId;
     private TourEntity tourByTourId;
 
-    public GuideEntity(){
+    public GuideEntity() {
     }
 
-    public GuideEntity(String fio, Short age, Short experience, String languages, Long tourId) {
+    public GuideEntity(String username, String password, String fio, Short age, Short experience, String languages,
+                       Long tourId) {
+        this.username = username;
+        this.password = password;
         this.fio = fio;
         this.age = age;
         this.experience = experience;
@@ -35,6 +40,26 @@ public class GuideEntity {
 
     public void setGuideId(Long guideId) {
         this.guideId = guideId;
+    }
+
+    @Basic
+    @Column(name = "username", nullable = true, length = -1)
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Basic
+    @Column(name = "password", nullable = true, length = -1)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Basic
@@ -125,4 +150,6 @@ public class GuideEntity {
     public void setTourByTourId(TourEntity tourByTourId) {
         this.tourByTourId = tourByTourId;
     }
+
+
 }

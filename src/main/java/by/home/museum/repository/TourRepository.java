@@ -1,7 +1,11 @@
 package by.home.museum.repository;
 
+import by.home.museum.entity.ExhibitEntity;
 import by.home.museum.entity.TourEntity;
+import by.home.museum.entity.TourExhibitEntity;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.Collection;
 
 public interface TourRepository extends CrudRepository<TourEntity, Long> {
 

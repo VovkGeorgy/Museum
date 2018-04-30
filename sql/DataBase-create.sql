@@ -9,6 +9,8 @@ CREATE TABLE tour (
 
 CREATE TABLE guide (
   guide_id   BIGSERIAL PRIMARY KEY,
+  username   TEXT NOT NULL UNIQUE,
+  password   TEXT NOT NULL,
   fio        TEXT,
   age        SMALLINT CONSTRAINT adult_only CHECK (age > 18),
   experience SMALLINT,
@@ -47,29 +49,29 @@ CREATE TABLE tour_visitor (
   PRIMARY KEY (tour_id, visitor_id)
 );
 
-DROP TABLE exhibit, guide, tour_exhibit, tour_visitor, tour, visitor;
 
 CREATE TABLE users (
-  id       BIGSERIAL PRIMARY KEY,
-  username TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL
+id       BIGSERIAL PRIMARY KEY,
+username TEXT NOT NULL UNIQUE,
+password TEXT NOT NULL
 );
 
 CREATE TABLE roles (
-  id   BIGSERIAL PRIMARY KEY,
-  name TEXT NOT NULL UNIQUE
+id   BIGSERIAL PRIMARY KEY,
+name TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE users_roles (
-  id      BIGSERIAL PRIMARY KEY,
-  user_id BIGINT REFERENCES users (id),
-  role_id BIGINT REFERENCES roles (id),
-  CONSTRAINT uni_user_role UNIQUE (user_id, role_id)
+id      BIGSERIAL PRIMARY KEY,
+user_id BIGINT REFERENCES users (id),
+role_id BIGINT REFERENCES roles (id),
+CONSTRAINT uni_user_role UNIQUE (user_id, role_id)
 );
 
 
 
 
+DROP TABLE exhibit, guide, tour_exhibit, tour_visitor, tour, visitor, users, roles, users_roles;
 
 
 

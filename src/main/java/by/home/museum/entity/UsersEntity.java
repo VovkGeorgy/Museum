@@ -17,6 +17,11 @@ public class UsersEntity {
     public UsersEntity() {
     }
 
+    public UsersEntity(String userName, String password) {
+        this.username = userName;
+        this.password = password;
+    }
+
     public UsersEntity(String userName, String password, List<RolesEntity> roles) {
         this.username = userName;
         this.password = password;
@@ -35,11 +40,11 @@ public class UsersEntity {
     }
 
     @Column(name = "username")
-    public String getName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setName(String userName) {
+    public void setUsername(String userName) {
         this.username = userName;
     }
 
@@ -52,6 +57,7 @@ public class UsersEntity {
         this.password = password;
     }
 
+//    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",

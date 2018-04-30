@@ -6,6 +6,7 @@ import by.home.museum.service.impl.SignupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,4 +42,13 @@ public class SignupController {
         signupService.delUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
+//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> addAdmin(@RequestBody UsersEntity user) {
+        user.setRoles(Arrays.asList(rolesService.getByName("ADMIN")));
+        UsersEntity newUser = signupService.addUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

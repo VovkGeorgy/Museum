@@ -40,7 +40,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private CrmUserDetailsService crmUserDetailsService;
+    private MuseumUserDetailsService museumUserDetailsService;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -53,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 //.accessTokenValiditySeconds(ONE_DAY)
-                .accessTokenValiditySeconds(3000)
+                .accessTokenValiditySeconds(900) // 15 min
                 .refreshTokenValiditySeconds(THIRTY_DAYS);
     }
 
@@ -70,7 +70,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(tokenStore).tokenEnhancer(jwtTokenEnhancer).userApprovalHandler(userApprovalHandler)
                 .authenticationManager(authenticationManager)
-                .userDetailsService(crmUserDetailsService);
+                .userDetailsService(museumUserDetailsService);
     }
 
 

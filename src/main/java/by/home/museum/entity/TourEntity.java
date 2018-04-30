@@ -128,7 +128,7 @@ public class TourEntity {
     }
 
     @JsonIgnore
-    @OneToMany(mappedBy = "tourByTourId")
+    @OneToMany(mappedBy = "tourByTourId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Collection<TourExhibitEntity> getTourExhibitsByTourId() {
         return tourExhibitsByTourId;
     }

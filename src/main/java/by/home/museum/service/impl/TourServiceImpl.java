@@ -1,11 +1,13 @@
 package by.home.museum.service.impl;
 
 import by.home.museum.entity.TourEntity;
+import by.home.museum.entity.TourExhibitEntity;
 import by.home.museum.repository.TourRepository;
 import by.home.museum.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service

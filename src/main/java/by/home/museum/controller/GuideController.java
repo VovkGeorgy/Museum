@@ -1,12 +1,16 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.GuideEntity;
+import by.home.museum.entity.UsersEntity;
 import by.home.museum.service.GuideService;
+import by.home.museum.service.impl.RolesService;
+import by.home.museum.service.impl.SignupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/guide")
@@ -14,6 +18,12 @@ public class GuideController {
 
     @Autowired
     GuideService guideService;
+
+    @Autowired
+    private RolesService rolesService;
+
+    @Autowired
+    private SignupService signupService;
 
     /**
      * this method maps the following URL & http method
@@ -45,6 +55,9 @@ public class GuideController {
     @RequestMapping(value = "/guides/add", method = RequestMethod.POST)
     public ResponseEntity<?> addGuide(@RequestBody GuideEntity guide) {
         GuideEntity newGuide = guideService.save(guide);
+        UsersEntity newAdmin = new UsersEntity(guide.getUsername(), guide.getPassword());
+        newAdmin.setRoles(Arrays.asList(rolesService.getByName("ADMIN")));
+        signupService.addUser(newAdmin);
         return new ResponseEntity<>(newGuide, HttpStatus.OK);
     }
 

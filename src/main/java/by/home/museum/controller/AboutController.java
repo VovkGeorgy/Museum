@@ -34,7 +34,7 @@ public class AboutController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String temp = ("" + authentication.getAuthorities());
 
-        //CrmUserDetails principal = (CrmUserDetails) authentication.getPrincipal();
+        //MuseumUserDetails principal = (MuseumUserDetails) authentication.getPrincipal();
         //System.out.println("logged in user name:: " + principal.getUsername());
 
         return new ResponseEntity<>(authentication.getAuthorities(), HttpStatus.OK);

@@ -26,14 +26,11 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//	@Autowired
-//	private DataSource dataSource;
-
     @Autowired
     private ClientDetailsService clientDetailsService;
 
     @Autowired
-    private CrmUserDetailsService crmUserDetailsService;
+    private MuseumUserDetailsService museumUserDetailsService;
 
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -44,15 +41,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/about").permitAll()
+//                .antMatchers("/about").permitAll()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/whoiam").hasRole("USER")
+                .antMatchers("/whoiam").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/oauth/token").permitAll()
-                .antMatchers("/tour/**").hasRole("USER")
-                .antMatchers("/guide/**").hasRole("ADMIN")
-                .antMatchers("/exhibit/**").hasRole("USER")
-                .antMatchers("/visitor/**").hasRole("ADMIN")
+                .antMatchers("/tour/**").permitAll()
+                .antMatchers("/guide/**").permitAll()
+                .antMatchers("/exhibit/**").permitAll()
+//                .antMatchers("/visitor/**").hasRole("ADMIN")
+                //.antMatchers("/api/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
@@ -62,8 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(crmUserDetailsService)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(museumUserDetailsService);
+//                .passwordEncoder(passwordEncoder());
     }
 
 
@@ -81,16 +79,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
-        /*
-	    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "mySecretKey".toCharArray());
-	    JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-	    converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
-	    */
         //-- for the simple demo purpose, used the secret for signing.
         //-- for production, it is recommended to use public/private key pair
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("Demo-Key-1");
-
         return converter;
     }
 
@@ -112,9 +104,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return store;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 }

@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CrmUserDetailsService implements UserDetailsService {
+public class MuseumUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	private UsersRepository userRepository;
@@ -25,11 +25,11 @@ public class CrmUserDetailsService implements UserDetailsService {
 //    		userRepository.save(new User("crmuser", passwordEncoder.encode("crmpass"), Arrays.asList(new UserRole("USER"))));
 //    	}
     	
-        UsersEntity user = userRepository.findByName(userName);
+        UsersEntity user = userRepository.findByUsername(userName);
         if(user == null){
             throw new UsernameNotFoundException("UserName "+userName+" not found");
         }
-        return new CrmUserDetails(user);
+        return new MuseumUserDetails(user);
     }	
 
 }

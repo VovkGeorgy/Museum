@@ -36,4 +36,7 @@ public interface VisitorService {
      * @return the saved entity
      */
     VisitorEntity save(VisitorEntity persisted);
+
+    VisitorEntity findByUsername(String username);
+
 }

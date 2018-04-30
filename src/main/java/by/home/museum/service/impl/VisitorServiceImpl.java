@@ -58,4 +58,9 @@ public class VisitorServiceImpl implements VisitorService {
     public VisitorEntity save(VisitorEntity persisted) {
         return repository.save(persisted);
     }
+
+    @Override
+    public VisitorEntity findByUsername(String username) {
+        return repository.findByUsername(username);
+    }
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CrmUserDetails implements UserDetails {
+public class MuseumUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = 1L; 
 	private Collection<? extends GrantedAuthority> authorities;
@@ -18,8 +18,8 @@ public class CrmUserDetails implements UserDetails {
 	private String username; 
 
 
-	public CrmUserDetails(UsersEntity user) {
-		this.username = user.getName();
+	public MuseumUserDetails(UsersEntity user) {
+		this.username = user.getUsername();
 		this.password = user.getPassword(); 
 		this.authorities = translate(user.getRoles()); 
 	} 

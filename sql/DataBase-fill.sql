@@ -3,19 +3,19 @@ INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url) VALUES
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338'),
   ('The Art of Eating', 'paintings', '2', 200.50,
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60854.jpg?1308122198'),
-  ('On Horseback through the Louvre', 'paintings', '1', 250.75,
+  ('On Horseback through the Louvre', 'different', '1', 250.75,
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60111.jpeg?1308120727'),
   ('The Da Vinci Code', 'paintings', '3', 400.75,
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_64583.jpg?1308124152'),
   ('Osiris, An Ancient Egyptian God', 'antiquities', '1', 150.75,
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_1308_0.jpg?1309860410');
 
-INSERT INTO guide (fio, age, experience, languages, tour_id) VALUES
-  ('Guide 1 1', 21, 2, 'EN,FR', 1),
-  ('Guide 2 2', 22, 3, 'EN,FR,PL', 2),
-  ('Guide 3 3', 23, 4, 'EN', 3),
-  ('Guide 4 4', 23, 4, 'RU,CHN', 4),
-  ('Guide 5 5', 23, 4, 'EN,RU,CHN', 5);
+INSERT INTO guide (username, password, fio, age, experience, languages, tour_id) VALUES
+  ('guide1', '11111', 'Guide 1 1', 21, 2, 'EN,FR', 1),
+  ('guide2', '11111', 'Guide 2 2', 22, 3, 'EN,FR,PL', 2),
+  ('guide3', '11111', 'Guide 3 3', 23, 4, 'EN', 3),
+  ('guide4', '11111', 'Guide 4 4', 23, 4, 'RU,CHN', 4),
+  ('guide5', '11111', 'Guide 5 5', 23, 4, 'EN,RU,CHN', 5);
 
 
 INSERT INTO exhibit (title, dated, material, archive_num, description, image_url) VALUES
@@ -36,7 +36,20 @@ INSERT INTO exhibit (title, dated, material, archive_num, description, image_url
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-repas-paysans.jpg?1321828496'),
   ('The Hunt Luncheon', '18th', 'canvas', '14f4ff',
    'In 18th-century France, meals were elaborate affairs, with an ordered sequence of dishes and a particular way of serving them. There were numerous dishes, which were brought to the table in a series of waves, called services. Soup and appetizers were followed by roasts and salads, which were followed by desserts. The meal ended with fruit.',
-   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-dejeuner-chasse.jpg?1519274597');
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-dejeuner-chasse.jpg?1519274597'),
+  ('The Breakfast', '1800', 'canvas', '2r32i3f',
+   'This is an everyday scene in the life of a rich bourgeois family in the 18th century. In France at this time, Le Déjeuner (the French title of this painting) was eaten in the morning, followed by the dîner at lunchtime and the souper in the evening. The use of chocolate and coffee, which came from the colonies, became increasingly widespread in the wealthy society of the time.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-dejeuner.jpg?1519273984'),
+  ('Leaf of a diptych', '1800', 'steel', '2r13h83',
+   'This proud horse, pawing the air with his front hooves, looks as if he wants to break free from the ivory plaque holding him back. See how similar the horse and his rider look. Both are turning towards us, looking in the same direction, and their eyes are the same.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-feuillet-diptyque-cinq-parties.jpg?1519272468'),
+  ('The Epsom Derby, 1821', '1834', 'canvas', 'g932hew',
+   'How many horses can you count? The only real difference between them is the color – chestnut, brown, gray, or bay. They are all galloping. Their legs are fully outstretched and they almost seem to be floating along above the ground. ',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-course-chevaux-dit-traditionnellementle.jpg?1321828467'),
+  ('Officer of the Chasseurs commanding a charge', '1834', 'canvas', 'fj302g', 'Charge! The rider turns to look back and urge his men into battle. See how the horse, the most important figure in the painting, occupies a bold diagonal line across the picture space. Its precarious, rearing pose and, specially, its terrified expression convey the fear of war, depicted in the distance.',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-officier-chasseurs-cheval-garde.jpg?1519268670'),
+  ('Horse bit', '1877', 'bronze', '1rkg39f', 'Can you see how this bronze bit fitted onto the horse’s head? The rider slipped the crossbar into the horse’s mouth and adjusted the plain inner surface of the side plaques against its cheeks. Can you see the rings where the reins went through?',
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-mors-barre-transversale-rigide.jpg?1321828466');
 
 
 INSERT INTO visitor (username, password, fio, age, email) VALUES
@@ -44,6 +57,34 @@ INSERT INTO visitor (username, password, fio, age, email) VALUES
   ('Visitor2', '54321', 'Migewf K.R.', '42', 'migewf@mail.com'),
   ('Visitor3', '12r2121e', 'Kirmis L.D.', '53', 'kirmis53@mail.com'),
   ('Visitor4', 'g22r44e11', 'Jingle R.T.', '13', 'jingle@mail.com');
+
+INSERT INTO tour_exhibit (tour_id, exhibit_id) VALUES
+  ('1', '1'),
+  ('1', '2'),
+  ('1', '3'),
+  ('1', '4'),
+  ('2', '4'),
+  ('2', '5'),
+  ('2', '6'),
+  ('2', '7'),
+  ('3', '8'),
+  ('3', '9'),
+  ('3', '10'),
+  ('3', '11');
+
+INSERT INTO users (username, password) VALUES
+  ('admin', '11111'),
+  ('user', '11111');
+
+INSERT INTO roles (name) VALUES
+  ('USER'),
+  ('ADMIN');
+
+INSERT INTO users_roles (user_id, role_id) VALUES
+  ('1', '1'),
+  ('1', '2'),
+  ('2', '1');
+
 
 
 
