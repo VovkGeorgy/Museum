@@ -71,13 +71,19 @@ public class VisitorController {
      * URL: http://hostname:port/crm-oauth2/api/customers/customerId
      * HTTP method: PUT
      */
+    @SuppressWarnings("Duplicates")
     @RequestMapping(value = "/visitors/update/{visitorId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateVisitor(@PathVariable long visitorId,
                                            @RequestBody VisitorEntity visitor) {
         VisitorEntity updatedVisitor = visitorService.save(visitor);
         UsersEntity usersEntity = userService.findByUsername(updatedVisitor.getUsername());
-        usersEntity.setPassword(updatedVisitor.getPassword());
-        signupService.addUser(usersEntity);
+        if (usersEntity == null) {
+            UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword());
+            signupService.addUser(newUser);
+        } else {
+            usersEntity.setPassword(updatedVisitor.getPassword());
+            signupService.addUser(usersEntity);
+        }
         return new ResponseEntity<>(updatedVisitor, HttpStatus.OK);
     }
 
@@ -91,6 +97,8 @@ public class VisitorController {
     public ResponseEntity<?> deleteVisitor(@PathVariable long visitorId) {
         VisitorEntity visitor = visitorService.findOne(visitorId);
         visitorService.delete(visitor);
+        UsersEntity usersEntity = userService.findByUsername(visitor.getUsername());
+        signupService.delUser(usersEntity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

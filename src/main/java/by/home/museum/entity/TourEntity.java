@@ -147,5 +147,4 @@ public class TourEntity {
         this.tourVisitorsByTourId = tourVisitorsByTourId;
     }
 
-
 }

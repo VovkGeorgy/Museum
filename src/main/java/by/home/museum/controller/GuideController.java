@@ -18,10 +18,10 @@ import java.util.Arrays;
 public class GuideController {
 
     @Autowired
-    GuideService guideService;
+    private GuideService guideService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     private RolesService rolesService;
@@ -70,13 +70,19 @@ public class GuideController {
      * URL: http://hostname:port//guides/update/guideId
      * HTTP method: POST
      */
+    @SuppressWarnings("Duplicates")
     @RequestMapping(value = "/guides/update/{guideId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateGuide(@PathVariable long guideId,
-                                        @RequestBody GuideEntity guide) {
+                                         @RequestBody GuideEntity guide) {
         GuideEntity updatedGuide = guideService.save(guide);
         UsersEntity usersEntity = userService.findByUsername(updatedGuide.getUsername());
-        usersEntity.setPassword(updatedGuide.getPassword());
-        signupService.addUser(usersEntity);
+        if (usersEntity == null) {
+            UsersEntity newUser = new UsersEntity(guide.getUsername(), guide.getPassword());
+            signupService.addUser(newUser);
+        } else {
+            usersEntity.setPassword(updatedGuide.getPassword());
+            signupService.addUser(usersEntity);
+        }
         return new ResponseEntity<>(updatedGuide, HttpStatus.OK);
     }
 
@@ -90,6 +96,8 @@ public class GuideController {
     public ResponseEntity<?> deleteGuide(@PathVariable long guideId) {
         GuideEntity guide = guideService.findOne(guideId);
         guideService.delete(guide);
+        UsersEntity usersEntity = userService.findByUsername(guide.getUsername());
+        signupService.delUser(usersEntity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -20,8 +20,7 @@ public class GuideEntity {
     public GuideEntity() {
     }
 
-    public GuideEntity(String username, String password, String fio, Short age, Short experience, String languages,
-                       Long tourId) {
+    public GuideEntity(String username, String password, String fio, Short age, Short experience, String languages, Long tourId) {
         this.username = username;
         this.password = password;
         this.fio = fio;

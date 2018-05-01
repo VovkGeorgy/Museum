@@ -1,14 +1,11 @@
 package by.home.museum.controller;
 
-import by.home.museum.entity.ExhibitEntity;
-import by.home.museum.entity.GuideEntity;
 import by.home.museum.entity.TourEntity;
 import by.home.museum.entity.TourExhibitEntity;
 import by.home.museum.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;

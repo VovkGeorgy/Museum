@@ -54,10 +54,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:/index.html");
+        registry.addViewController("/tours").setViewName("forward:/index.html");
         registry.addViewController("/tours/*").setViewName("forward:/index.html");
+        registry.addViewController("/guides").setViewName("forward:/index.html");
         registry.addViewController("/guides/*").setViewName("forward:/index.html");
-        registry.addViewController("/aboutUs/*").setViewName("forward:/index.html");
-        registry.addViewController("login/*").setViewName("forward:/index.html");
+        registry.addViewController("/exhibits/*").setViewName("forward:/index.html");
+        registry.addViewController("/visitors").setViewName("forward:/index.html");
+        registry.addViewController("/about").setViewName("forward:/index.html");
+        registry.addViewController("/login").setViewName("forward:/index.html");
+        registry.addViewController("/404").setViewName("forward:/index.html");
+        registry.addViewController("/403").setViewName("forward:/index.html");
     }
 
     @Bean

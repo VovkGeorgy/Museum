@@ -48,9 +48,9 @@ public class GuideControllerTest {
     public void getGuides() throws Exception {
 
         List<GuideEntity> guides = new ArrayList<>();
-        guides.add(new GuideEntity("TestFio1", (short) 50, (short)1, "TST,STS,TTT",(long)13));
-        guides.add(new GuideEntity("TestFio7", (short) 99, (short)100, "TST,STS,TTT",(long)33));
-        guides.add(new GuideEntity("TestFio44", (short) 40, (short)20, "TST,STS,TTT",(long)35));
+        guides.add(new GuideEntity("username1","passss","TestFio1", (short) 50, (short)1, "TST,STS,TTT",(long)13));
+        guides.add(new GuideEntity("username2","passss1","TestFio7", (short) 99, (short)100, "TST,STS,TTT",(long)33));
+        guides.add(new GuideEntity("username3","passss2","TestFio44", (short) 40, (short)20, "TST,STS,TTT",(long)35));
         when(guideService.findAll()).thenReturn(guides);
         mockMvc.perform(get("/guide/guides"))
                 .andExpect(status().isOk())
@@ -62,7 +62,7 @@ public class GuideControllerTest {
 
     @Test
     public void getGuide() throws Exception {
-        GuideEntity testGuide = new GuideEntity("TestFio1999", (short) 199, (short)5, "ABCDEFG",(long)102);
+        GuideEntity testGuide = new GuideEntity("username1","passss","TestFio1999", (short) 199, (short)5, "ABCDEFG",(long)102);
         when(guideService.findOne((long) 1)).thenReturn(testGuide);
         mockMvc.perform(get("/guide/guides/{guideId}", 1))
                 .andExpect(status().isOk())
@@ -73,7 +73,7 @@ public class GuideControllerTest {
 
     @Test
     public void addGuide() throws Exception {
-        GuideEntity testGuide = new GuideEntity("Test_Fio", (short) 29, (short)0, "ABC,DEF,G",(long)2111);
+        GuideEntity testGuide = new GuideEntity("username1","passss","Test_Fio", (short) 29, (short)0, "ABC,DEF,G",(long)2111);
         String jsonTestGuide = objectMapper.writeValueAsString(testGuide);
         when(guideService.save(testGuide)).thenReturn(testGuide);
         mockMvc.perform(post("/guide/guides/add").contentType(MediaType.APPLICATION_JSON).content(jsonTestGuide))
@@ -86,7 +86,7 @@ public class GuideControllerTest {
 
     @Test
     public void updateGuide() throws Exception {
-        GuideEntity testGuide = new GuideEntity("Testing-guide-fio", (short) 98, (short)33, "sasdasdasd",(long)14562);
+        GuideEntity testGuide = new GuideEntity("username1","passss","Testing-guide-fio", (short) 98, (short)33, "sasdasdasd",(long)14562);
         String jsonTestGuide = objectMapper.writeValueAsString(testGuide);
         when(guideService.save(testGuide)).thenReturn(testGuide);
         mockMvc.perform(post("/guide/guides/update/{guideId}", 1).contentType(MediaType.APPLICATION_JSON).content(jsonTestGuide))
@@ -98,7 +98,7 @@ public class GuideControllerTest {
 
     @Test
     public void deteleGuide() throws Exception {
-        GuideEntity testGuide = new GuideEntity("SomeFio", (short) 222, (short)13, "lang1, lang2, lang3",(long)1);
+        GuideEntity testGuide = new GuideEntity("username1","passss","SomeFio", (short) 222, (short)13, "lang1, lang2, lang3",(long)1);
         when(guideService.findOne((long) 1)).thenReturn(testGuide);
         mockMvc.perform(post("/guide/guides/delete/{guideId}", 1))
                 .andExpect(status().isOk());

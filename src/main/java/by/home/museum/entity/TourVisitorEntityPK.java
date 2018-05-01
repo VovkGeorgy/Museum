@@ -5,26 +5,26 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 public class TourVisitorEntityPK implements Serializable {
-    private Integer tourId;
-    private Integer visitorId;
+    private Long tourId;
+    private Long visitorId;
 
     @Column(name = "tour_id", nullable = false)
     @Id
-    public Integer getTourId() {
+    public Long getTourId() {
         return tourId;
     }
 
-    public void setTourId(Integer tourId) {
+    public void setTourId(Long tourId) {
         this.tourId = tourId;
     }
 
     @Column(name = "visitor_id", nullable = false)
     @Id
-    public Integer getVisitorId() {
+    public Long getVisitorId() {
         return visitorId;
     }
 
-    public void setVisitorId(Integer visitorId) {
+    public void setVisitorId(Long visitorId) {
         this.visitorId = visitorId;
     }
 

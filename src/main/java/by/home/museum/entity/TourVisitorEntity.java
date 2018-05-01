@@ -6,28 +6,28 @@ import javax.persistence.*;
 @Table(name = "tour_visitor", schema = "public", catalog = "museum")
 @IdClass(TourVisitorEntityPK.class)
 public class TourVisitorEntity {
-    private Integer tourId;
-    private Integer visitorId;
+    private Long tourId;
+    private Long visitorId;
     private TourEntity tourByTourId;
     private VisitorEntity visitorByVisitorId;
 
     @Id
     @Column(name = "tour_id", nullable = false)
-    public Integer getTourId() {
+    public Long getTourId() {
         return tourId;
     }
 
-    public void setTourId(Integer tourId) {
+    public void setTourId(Long tourId) {
         this.tourId = tourId;
     }
 
     @Id
     @Column(name = "visitor_id", nullable = false)
-    public Integer getVisitorId() {
+    public Long getVisitorId() {
         return visitorId;
     }
 
-    public void setVisitorId(Integer visitorId) {
+    public void setVisitorId(Long visitorId) {
         this.visitorId = visitorId;
     }
 

@@ -29,8 +29,8 @@ CREATE TABLE exhibit (
 );
 
 CREATE TABLE tour_exhibit (
-  tour_id    INT REFERENCES tour (tour_id),
-  exhibit_id INT REFERENCES exhibit (exhibit_id),
+  tour_id    BIGINT REFERENCES tour (tour_id),
+  exhibit_id BIGINT REFERENCES exhibit (exhibit_id),
   PRIMARY KEY (tour_id, exhibit_id)
 );
 
@@ -44,8 +44,8 @@ CREATE TABLE visitor (
 );
 
 CREATE TABLE tour_visitor (
-  tour_id    INT REFERENCES tour (tour_id),
-  visitor_id INT REFERENCES visitor (visitor_id),
+  tour_id    BIGINT REFERENCES tour (tour_id),
+  visitor_id BIGINT REFERENCES visitor (visitor_id),
   PRIMARY KEY (tour_id, visitor_id)
 );
 
