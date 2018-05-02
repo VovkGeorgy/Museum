@@ -1,6 +1,10 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.RolesEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,38 +15,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/abo")
 public class AboutController {
+
+    @Autowired
+    private MessageSource messageSource;
+
+    private static final Logger logger = LoggerFactory.getLogger(AboutController.class);
+
     /**
      * this method maps the following URL & http method
-     * URL: http://hostname:port/about
+     * URL: http://hostname:port/abo/whoiam
      * HTTP method: GET
+     * @return authentication of current user
      */
-    @RequestMapping(value = "/about", method = RequestMethod.GET)
-    public ResponseEntity<?> home() {
-        return new ResponseEntity<>("This is the about page for Museum application.", HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/whoiam", method = RequestMethod.GET)
     public ResponseEntity<?> getRole() {
-
-        /**
-         * Obtaining information about the current user
-         */
+        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String temp = ("" + authentication.getAuthorities());
-
-        //MuseumUserDetails principal = (MuseumUserDetails) authentication.getPrincipal();
-        //System.out.println("logged in user name:: " + principal.getUsername());
-
+        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{authentication}, Locale.getDefault()));
         return new ResponseEntity<>(authentication.getAuthorities(), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/protected", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> protect() {
-        return new ResponseEntity<>("This is ADMIN PAGE.", HttpStatus.OK);
     }
 }

@@ -23,6 +23,11 @@ import java.util.Locale;
 @ComponentScan("by.home.museum")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+    /**
+     * Add to converters a json message converter
+     *
+     * @param converters - converters
+     */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
@@ -31,6 +36,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         converters.add(converter);
     }
 
+    /**
+     * Been of messageSource, to success logging
+     *
+     * @return messageSource
+     */
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -39,6 +49,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return messageSource;
     }
 
+    /**
+     * Been of default locale, to success logging
+     *
+     * @return defaultLocale
+     */
     @Bean
     public Locale locale() {
         Locale defaultLocale = new Locale("en", "US");
@@ -46,11 +61,24 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return defaultLocale;
     }
 
+
+    /**
+     * Add resource handler in registry of resource handlers for serving static resources such as images,
+     * css files and others.
+     *
+     * @param registry - registry of resource handlers
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("*").addResourceLocations("");
     }
 
+    /**
+     * Map a view controller to the given URL path (or pattern) in order to render
+     * a response with a pre-configured status code and view.
+     *
+     * @param registry - registry of view controllers
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:/index.html");
@@ -66,6 +94,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/403").setViewName("forward:/index.html");
     }
 
+    /**
+     * Been of ObjectMapper wich provides functionality for reading and writing JSON
+     *
+     * @return objectMapper
+     */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();

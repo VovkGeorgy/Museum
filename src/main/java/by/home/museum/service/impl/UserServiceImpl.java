@@ -12,6 +12,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UsersRepository userRepository;
 
+    /**
+     * Find entity by username
+     *
+     * @param username - username
+     * @return entity
+     */
     @Override
     public UsersEntity findByUsername(String username) {
         return userRepository.findByUsername(username);

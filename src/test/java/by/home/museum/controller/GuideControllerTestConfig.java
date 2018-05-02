@@ -1,11 +1,9 @@
 package by.home.museum.controller;
 
-import by.home.museum.repository.RolesRepository;
-import by.home.museum.repository.UsersRepository;
 import by.home.museum.service.GuideService;
+import by.home.museum.service.RolesService;
+import by.home.museum.service.SignupService;
 import by.home.museum.service.UserService;
-import by.home.museum.service.impl.RolesService;
-import by.home.museum.service.impl.SignupService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -38,18 +36,8 @@ public class GuideControllerTestConfig {
     }
 
     @Bean
-    public RolesRepository rolesRepository() {
-        return mock(RolesRepository.class);
-    }
-
-    @Bean
-    public SignupService signupService(){
+    public SignupService signupService() {
         return mock(SignupService.class);
-    }
-
-    @Bean
-    public UsersRepository usersRepository() {
-        return mock(UsersRepository.class);
     }
 
     @Bean

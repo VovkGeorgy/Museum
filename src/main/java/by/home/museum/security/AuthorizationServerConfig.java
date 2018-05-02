@@ -24,9 +24,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private static final int THIRTY_DAYS = 60 * 60 * 24 * 30;
 
     @Autowired
-    private DataSource dataSource;
-
-    @Autowired
     private TokenStore tokenStore;
 
     @Autowired
@@ -42,30 +39,28 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private MuseumUserDetailsService museumUserDetailsService;
 
+    /**
+     * Method create inMemory client details for authorization
+     * @param clients - clients
+     * @throws Exception exp
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
-//		clients.jdbc(dataSource);
         clients.inMemory()
                 .withClient("Client")
                 .secret("Secret")
                 .authorizedGrantTypes("password", "refresh_token")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
-                //.accessTokenValiditySeconds(ONE_DAY)
-                .accessTokenValiditySeconds(900) // 15 min
+                .accessTokenValiditySeconds(ONE_DAY)
                 .refreshTokenValiditySeconds(THIRTY_DAYS);
     }
 
-	/*
-    @Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
-		.authenticationManager(authenticationManager)
-		.userDetailsService(crmUserDetailsService);
-	}
-	*/
-
+    /**
+     * Configure the properties and enhanced functionality of the Authorization Server endpoints.
+     * @param endpoints
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.tokenStore(tokenStore).tokenEnhancer(jwtTokenEnhancer).userApprovalHandler(userApprovalHandler)
@@ -74,6 +69,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
 
+    /**
+     * Config authorization server realm
+     * @param oauthServer
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer.realm(REALM);

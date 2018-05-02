@@ -33,13 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .sessionManagement()
+        http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-//                .antMatchers("/about").permitAll()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/whoiam").permitAll()
                 .antMatchers("/signup").permitAll()
@@ -48,21 +46,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/guide/**").permitAll()
                 .antMatchers("/exhibit/**").permitAll()
                 .antMatchers("/visitor/**").permitAll()
-//                .antMatchers("/visitor/**").hasRole("ADMIN")
-                //.antMatchers("/api/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
                 .realmName("MUSEUM_REALM");
     }
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(museumUserDetailsService);
-//                .passwordEncoder(passwordEncoder());
     }
-
 
     @Override
     @Bean
@@ -72,14 +65,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenStore tokenStore() {
-        //return new JdbcTokenStore(dataSource);
         return new JwtTokenStore(jwtTokenEnhancer());
     }
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
-        //-- for the simple demo purpose, used the secret for signing.
-        //-- for production, it is recommended to use public/private key pair
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("Demo-Key-1");
         return converter;
@@ -102,10 +92,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         store.setTokenStore(tokenStore);
         return store;
     }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 
 }

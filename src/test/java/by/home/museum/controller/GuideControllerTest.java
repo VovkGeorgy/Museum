@@ -1,7 +1,9 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.GuideEntity;
+import by.home.museum.entity.UsersEntity;
 import by.home.museum.service.GuideService;
+import by.home.museum.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +41,9 @@ public class GuideControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private UserService userService;
+
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(guideController).build();
@@ -57,7 +62,6 @@ public class GuideControllerTest {
                 .andExpect(jsonPath("$.length()").value(guides.size()))
                 .andExpect(jsonPath("$[0].fio").value(guides.get(0).getFio()));
         verify(guideService, times(1)).findAll();
-//        verifyNoMoreInteractions(guideService);
     }
 
     @Test
@@ -87,11 +91,13 @@ public class GuideControllerTest {
     @Test
     public void updateGuide() throws Exception {
         GuideEntity testGuide = new GuideEntity("username1","passss","Testing-guide-fio", (short) 98, (short)33, "sasdasdasd",(long)14562);
+        UsersEntity newUser = new UsersEntity(testGuide.getUsername(), testGuide.getPassword());
         String jsonTestGuide = objectMapper.writeValueAsString(testGuide);
         when(guideService.save(testGuide)).thenReturn(testGuide);
+        when(userService.findByUsername(testGuide.getUsername())).thenReturn(newUser);
         mockMvc.perform(post("/guide/guides/update/{guideId}", 1).contentType(MediaType.APPLICATION_JSON).content(jsonTestGuide))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.tourId").value(testGuide.getTourId()));
+                .andExpect(jsonPath("$.password").value(testGuide.getPassword()));
         verify(guideService, times(1)).save(testGuide);
         verifyNoMoreInteractions(guideService);
     }

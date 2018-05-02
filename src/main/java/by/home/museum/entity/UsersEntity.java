@@ -57,7 +57,6 @@ public class UsersEntity {
         this.password = password;
     }
 
-//    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",

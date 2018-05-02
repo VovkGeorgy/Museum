@@ -12,7 +12,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		//-- define URL patterns to enable OAuth2 security
 		http.
 		anonymous().disable()
 		.requestMatchers().antMatchers("/abo/**")

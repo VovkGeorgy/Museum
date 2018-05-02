@@ -47,6 +47,13 @@ public class DataConfig {
     @Value("${db.hibernate.schema}")
     private String hibernateSchema;
 
+    /**
+     * Been of DriverManagerDataSource which is configuring
+     * the JDBC DriverManager via bean properties, and returning
+     * a new Connection from every getConnection call.
+     *
+     * @return dataSource
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -57,6 +64,13 @@ public class DataConfig {
         return dataSource;
     }
 
+
+    /**
+     * Been of entityManagerFactoryBean, which allows configuration a JPA EntityManagerFactory
+     * in a Spring application context
+     *
+     * @return entityManagerFactoryBean
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -67,11 +81,23 @@ public class DataConfig {
         return entityManagerFactoryBean;
     }
 
+    /**
+     * Been of HibernateJpaVendorAdapter exposes Hibernate's persistence provider
+     * and EntityManager extension interface, and adapts AbstractJpaVendorAdapter's
+     * common configuration settings.
+     *
+     * @return HibernateJpaVendorAdapter
+     */
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         return new HibernateJpaVendorAdapter();
     }
 
+    /**
+     * Transaction manager is need for use our JPA EntityManagerFactory for transactional data access.
+     *
+     * @return transactionManager
+     */
     @Bean
     public JpaTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -79,6 +105,11 @@ public class DataConfig {
         return transactionManager;
     }
 
+    /**
+     * Define properties for JPA of hibernate config
+     *
+     * @return
+     */
     private Properties jpaProperties() {
         Properties properties = new Properties();
         properties.put("db.hibernate.dialect", hibernateDialect);
@@ -88,12 +119,4 @@ public class DataConfig {
         return properties;
     }
 
-//    @Bean
-//    public InternalResourceViewResolver viewResolver() {
-//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-//        viewResolver.setViewClass(JstlView.class);
-//        viewResolver.setPrefix("/WEB-INF/pages/");
-//        viewResolver.setSuffix(".jsp");
-//        return viewResolver;
-//    }
 }
