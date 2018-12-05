@@ -36,9 +36,9 @@ public class TourController {
      */
     @RequestMapping(value = "/tours", method = RequestMethod.GET)
     public ResponseEntity<?> getTours() {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         Iterable<TourEntity> tourList = tourService.findAll();
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{tourList}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{tourList}, Locale.getDefault()));
         return new ResponseEntity<>(tourList, HttpStatus.OK);
     }
 
@@ -52,9 +52,9 @@ public class TourController {
      */
     @RequestMapping(value = "/tours/{tourId}", method = RequestMethod.GET)
     public ResponseEntity<?> getTour(@PathVariable long tourId) {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{tour}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{tour}, Locale.getDefault()));
         return new ResponseEntity<>(tour, HttpStatus.OK);
     }
 
@@ -68,10 +68,10 @@ public class TourController {
      */
     @RequestMapping(value = "/exhibits/{tourId}", method = RequestMethod.GET)
     public ResponseEntity<?> getTourExhibits(@PathVariable long tourId) {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);
         Collection<TourExhibitEntity> exhibitList = tour.getTourExhibitsByTourId();
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{exhibitList}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibitList}, Locale.getDefault()));
         return new ResponseEntity<>(exhibitList, HttpStatus.OK);
     }
 
@@ -85,9 +85,9 @@ public class TourController {
      */
     @RequestMapping(value = "/tours/add", method = RequestMethod.POST)
     public ResponseEntity<?> addTour(@RequestBody TourEntity tour) {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{tour}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tour}, Locale.getDefault()));
         TourEntity newTour = tourService.save(tour);
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{newTour}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newTour}, Locale.getDefault()));
         return new ResponseEntity<>(newTour, HttpStatus.OK);
     }
 
@@ -103,9 +103,9 @@ public class TourController {
     @RequestMapping(value = "/tours/update/{tourId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateTour(@PathVariable long tourId,
                                         @RequestBody TourEntity tour) {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{tour}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tour}, Locale.getDefault()));
         TourEntity updatedTour = tourService.save(tour);
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{updatedTour}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedTour}, Locale.getDefault()));
         return new ResponseEntity<>(updatedTour, HttpStatus.OK);
     }
 
@@ -119,10 +119,10 @@ public class TourController {
     @RequestMapping(value = "/tours/delete/{tourId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteTour(@PathVariable long tourId) {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);
         tourService.delete(tour);
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

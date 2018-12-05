@@ -11,6 +11,16 @@ public class TourVisitorEntity {
     private TourEntity tourByTourId;
     private VisitorEntity visitorByVisitorId;
 
+    public TourVisitorEntity(){
+    }
+
+    public TourVisitorEntity(Long tourId, Long visitorId, TourEntity tourByTourId, VisitorEntity visitorByVisitorId) {
+        this.tourId = tourId;
+        this.visitorId = visitorId;
+        this.tourByTourId = tourByTourId;
+        this.visitorByVisitorId = visitorByVisitorId;
+    }
+
     @Id
     @Column(name = "tour_id", nullable = false)
     public Long getTourId() {

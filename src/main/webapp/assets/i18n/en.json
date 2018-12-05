@@ -4,12 +4,17 @@
     "aboutUs": "About us"
   },
   "home": {
-    "title": "Welcome to virtual museum!"
+    "title": "Welcome to virtual museum"
   },
   "login": {
     "title": "Login form",
     "username": "Username",
-    "password": "Password"
+    "password": "Password",
+    "profile": "Profile",
+    "message": "Please log in or sing up, to see more opportunities"
+  },
+  "modal": {
+    "changesSaved": "Changes has been saved"
   },
   "button": {
     "function": "Function",
@@ -23,7 +28,8 @@
     "view": "View",
     "edit": "Edit",
     "editProfile": "Profile",
-    "signup": "Sign up"
+    "signup": "Sign up",
+    "addToFavorites": "Add to favorites"
   },
   "tours": {
     "theme": "Theme",
@@ -31,6 +37,7 @@
     "createTitle": "Create tour",
     "typeOfExhibits": "Type of exhibits",
     "duration": "Duration",
+    "hour": "Hour(s)",
     "cost": "Cost",
     "imageUrl": "Image URL"
   },

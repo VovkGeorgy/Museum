@@ -1,5 +1,6 @@
 package by.home.museum.service;
 
+import by.home.museum.entity.TourVisitorEntity;
 import by.home.museum.entity.VisitorEntity;
 
 public interface VisitorService {
@@ -39,4 +40,7 @@ public interface VisitorService {
 
     VisitorEntity findByUsername(String username);
 
+    void addTourToVisitor(TourVisitorEntity tve);
+
+    void removeTourFromVisitor(TourVisitorEntity tve);
 }

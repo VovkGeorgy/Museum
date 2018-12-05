@@ -36,4 +36,11 @@ public interface GuideService {
      * @return the saved entity
      */
     GuideEntity save(GuideEntity persisted);
+
+    /**
+     * Find Guide entity in base by username
+     * @param username - username of needed guide
+     * @return guide entity
+     */
+    GuideEntity findByUsername(String username);
 }

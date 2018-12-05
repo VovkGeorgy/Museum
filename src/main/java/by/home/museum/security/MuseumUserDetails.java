@@ -31,14 +31,17 @@ public class MuseumUserDetails implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> translate(List<RolesEntity> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (RolesEntity role : roles) {
-            String name = role.getName().toUpperCase();
-            if (!name.startsWith("ROLE_")) {
-                name = "ROLE_" + name;
-            }
-            authorities.add(new SimpleGrantedAuthority(name));
-        }
+
+         roles.stream().map(role -> role.getName().toUpperCase())
+                .forEach(name -> authorities.add(getRole(name)));
         return authorities;
+    }
+
+    private SimpleGrantedAuthority getRole(String name) {
+        if (!name.startsWith("ROLE_")) {
+            name = "ROLE_" + name;
+        }
+        return new SimpleGrantedAuthority(name);
     }
 
     @Override

@@ -90,33 +90,6 @@ public class TourEntity {
         this.imageUrl = imageUrl;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TourEntity that = (TourEntity) o;
-
-        if (tourId != null ? !tourId.equals(that.tourId) : that.tourId != null) return false;
-        if (theme != null ? !theme.equals(that.theme) : that.theme != null) return false;
-        if (typeOfExhibits != null ? !typeOfExhibits.equals(that.typeOfExhibits) : that.typeOfExhibits != null)
-            return false;
-        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
-        if (cost != null ? !cost.equals(that.cost) : that.cost != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = tourId != null ? tourId.hashCode() : 0;
-        result = 31 * result + (theme != null ? theme.hashCode() : 0);
-        result = 31 * result + (typeOfExhibits != null ? typeOfExhibits.hashCode() : 0);
-        result = 31 * result + (duration != null ? duration.hashCode() : 0);
-        result = 31 * result + (cost != null ? cost.hashCode() : 0);
-        return result;
-    }
-
     @JsonIgnore
     @OneToMany(mappedBy = "tourByTourId")
     public Collection<GuideEntity> getGuidesByTourId() {
@@ -147,4 +120,30 @@ public class TourEntity {
         this.tourVisitorsByTourId = tourVisitorsByTourId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TourEntity that = (TourEntity) o;
+
+        if (tourId != null ? !tourId.equals(that.tourId) : that.tourId != null) return false;
+        if (theme != null ? !theme.equals(that.theme) : that.theme != null) return false;
+        if (typeOfExhibits != null ? !typeOfExhibits.equals(that.typeOfExhibits) : that.typeOfExhibits != null)
+            return false;
+        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
+        if (cost != null ? !cost.equals(that.cost) : that.cost != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = tourId != null ? tourId.hashCode() : 0;
+        result = 31 * result + (theme != null ? theme.hashCode() : 0);
+        result = 31 * result + (typeOfExhibits != null ? typeOfExhibits.hashCode() : 0);
+        result = 31 * result + (duration != null ? duration.hashCode() : 0);
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
+        return result;
+    }
 }

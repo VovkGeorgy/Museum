@@ -42,10 +42,10 @@ public class SignupController {
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody UsersEntity user) {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
         user.setRoles(Arrays.asList(rolesService.getByName("USER")));
         UsersEntity newUser = signupService.addUser(user);
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{newUser}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newUser}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -59,9 +59,9 @@ public class SignupController {
      */
     @RequestMapping(value = "/delUser", method = RequestMethod.POST)
     public ResponseEntity<?> delUser(@RequestBody UsersEntity user) {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
         signupService.delUser(user);
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -77,10 +77,10 @@ public class SignupController {
     @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> addAdmin(@RequestBody UsersEntity user) {
-        logger.info(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
         user.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("USER")));
         UsersEntity newUser = signupService.addUser(user);
-        logger.info(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

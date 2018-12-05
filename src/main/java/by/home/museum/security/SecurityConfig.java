@@ -42,14 +42,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/whoiam").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/oauth/token").permitAll()
-                .antMatchers("/tour/**").permitAll()
+                .antMatchers("/tour/**").authenticated()
                 .antMatchers("/guide/**").permitAll()
                 .antMatchers("/exhibit/**").permitAll()
                 .antMatchers("/visitor/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-                .realmName("MUSEUM_REALM");
+                .httpBasic().realmName("MUSEUM_REALM");
     }
 
     @Override

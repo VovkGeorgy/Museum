@@ -72,6 +72,11 @@ INSERT INTO tour_exhibit (tour_id, exhibit_id) VALUES
   ('3', '10'),
   ('3', '11');
 
+INSERT INTO tour_visitor (tour_id, visitor_id) VALUES
+  ('1', '1'),
+  ('1', '2'),
+  ('1', '3');
+
 INSERT INTO users (username, password) VALUES
   ('admin', '11111'),
   ('user', '11111');

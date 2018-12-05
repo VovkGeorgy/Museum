@@ -58,4 +58,15 @@ public class GuideServiceImpl implements GuideService {
     public GuideEntity save(GuideEntity persisted) {
         return repository.save(persisted);
     }
+
+    /**
+     * Find Guide entity in base by username
+     *
+     * @param username - username of needed guide
+     * @return guide entity
+     */
+    @Override
+    public GuideEntity findByUsername(String username) {
+        return repository.findByUsername(username);
+    }
 }

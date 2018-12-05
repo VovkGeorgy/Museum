@@ -12,14 +12,16 @@
     <properties>
 
         <!-- Hibernate / JPA -->
-        <hibernate.version>5.2.13.Final</hibernate.version>
+        <!--<hibernate.version>5.2.13.Final</hibernate.version>-->
+        <hibernate.version>5.3.6.Final</hibernate.version>
 
         <!-- Spring -->
         <spring.version>4.3.7.RELEASE</spring.version>
         <spring.security.version>4.1.1.RELEASE</spring.security.version>
         <springsecurityoauth2.version>2.0.10.RELEASE</springsecurityoauth2.version>
         <spring-security-jwt.version>1.0.5.RELEASE</spring-security-jwt.version>
-        <spring-data-jpa.version>1.11.4.RELEASE</spring-data-jpa.version>
+        <!--<spring-data-jpa.version>1.11.4.RELEASE</spring-data-jpa.version>-->
+        <spring-data-jpa.version>1.11.12.RELEASE</spring-data-jpa.version>
         <spring-test.version>4.3.9.RELEASE</spring-test.version>
 
         <!-- Logging -->
@@ -27,7 +29,8 @@
         <logback.version>1.1.2</logback.version>
 
         <!--PostgreSQL-->
-        <postgresql.version>9.3-1102-jdbc41</postgresql.version>
+        <!--<postgresql.version>9.3-1102-jdbc41</postgresql.version>-->
+        <postgresql.version>9.1-901.jdbc4</postgresql.version>
 
         <!--JSON - data-->
         <javax.servlet-api.version>4.0.0-b07</javax.servlet-api.version>
@@ -127,7 +130,7 @@
 
         <!--DATABASE-->
         <dependency>
-            <groupId>org.postgresql</groupId>
+            <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
