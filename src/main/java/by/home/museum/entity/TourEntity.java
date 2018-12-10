@@ -18,7 +18,7 @@ public class TourEntity {
     private Collection<TourExhibitEntity> tourExhibitsByTourId;
     private Collection<TourVisitorEntity> tourVisitorsByTourId;
 
-    public TourEntity(){
+    public TourEntity() {
     }
 
     public TourEntity(String theme, String typeOfExhibits, Short duration, Double cost, String imageUrl) {
@@ -127,23 +127,22 @@ public class TourEntity {
 
         TourEntity that = (TourEntity) o;
 
-        if (tourId != null ? !tourId.equals(that.tourId) : that.tourId != null) return false;
+        if (!tourId.equals(that.tourId)) return false;
         if (theme != null ? !theme.equals(that.theme) : that.theme != null) return false;
-        if (typeOfExhibits != null ? !typeOfExhibits.equals(that.typeOfExhibits) : that.typeOfExhibits != null)
-            return false;
+        if (typeOfExhibits != null ? !typeOfExhibits.equals(that.typeOfExhibits) : that.typeOfExhibits != null) return false;
         if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
         if (cost != null ? !cost.equals(that.cost) : that.cost != null) return false;
-
-        return true;
+        return imageUrl != null ? imageUrl.equals(that.imageUrl) : that.imageUrl == null;
     }
 
     @Override
     public int hashCode() {
-        int result = tourId != null ? tourId.hashCode() : 0;
+        int result = tourId.hashCode();
         result = 31 * result + (theme != null ? theme.hashCode() : 0);
         result = 31 * result + (typeOfExhibits != null ? typeOfExhibits.hashCode() : 0);
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
+        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
         return result;
     }
 }

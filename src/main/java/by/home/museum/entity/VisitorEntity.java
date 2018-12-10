@@ -14,9 +14,9 @@ public class VisitorEntity {
     private String fio;
     private Long age;
     private String email;
-    private Collection<TourVisitorEntity> tourVisitorsByVisitorId;
+    private Collection<TourVisitorEntity> visitorToursByVisitorId;
 
-    public VisitorEntity(){
+    public VisitorEntity() {
     }
 
     public VisitorEntity(String username, String password, String fio, Long age, String email) {
@@ -116,12 +116,20 @@ public class VisitorEntity {
 
     @OneToMany(mappedBy = "visitorByVisitorId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
-    public Collection<TourVisitorEntity> getTourVisitorsByVisitorId() {
-        return tourVisitorsByVisitorId;
+    public Collection<TourVisitorEntity> getVisitorToursByVisitorId() {
+        return visitorToursByVisitorId;
     }
 
-    public void setTourVisitorsByVisitorId(Collection<TourVisitorEntity> tourVisitorsByVisitorId) {
-        this.tourVisitorsByVisitorId = tourVisitorsByVisitorId;
+    public void setVisitorToursByVisitorId(Collection<TourVisitorEntity> visitorToursByVisitorId) {
+        this.visitorToursByVisitorId = visitorToursByVisitorId;
     }
+//    @OneToMany(mappedBy = "visitorByVisitorId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonIgnore
+//    public Collection<TourVisitorEntity> getTourVisitorsByVisitorId() {
+//        return tourVisitorsByVisitorId;
+//    }
 
+//    public void setTourVisitorsByVisitorId(Collection<TourVisitorEntity> tourVisitorsByVisitorId) {
+//        this.tourVisitorsByVisitorId = tourVisitorsByVisitorId;
+//    }
 }

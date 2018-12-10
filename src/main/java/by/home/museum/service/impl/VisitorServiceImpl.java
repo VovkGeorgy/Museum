@@ -77,8 +77,6 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public void removeTourFromVisitor(TourVisitorEntity tve) {
-//        TourVisitorEntity temp = TvRepository.findByVisitorId(tve.getVisitorId());
-//        TvRepository.deleteAll();
-        int temp = TvRepository.deleteTourOfVisitor(tve.getTourId(), tve.getVisitorId());
+        TvRepository.deleteTourOfVisitor(tve.getTourId(), tve.getVisitorId());
     }
 }

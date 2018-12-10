@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -179,10 +178,10 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/toursCheck", method = RequestMethod.POST)
-    public ResponseEntity<?> checkTourExhibits(@RequestBody TourVisitorEntity tourVisitorEntity) {
+    public ResponseEntity<?> isTourInFavourites(@RequestBody TourVisitorEntity tourVisitorEntity) {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourVisitorEntity}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(tourVisitorEntity.getVisitorId());
-        Collection<TourVisitorEntity> toursList = visitor.getTourVisitorsByVisitorId();
+        Collection<TourVisitorEntity> toursList = visitor.getVisitorToursByVisitorId();
         LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursList}, Locale.getDefault()));
         for (TourVisitorEntity tempObj : toursList) {
             if (Objects.equals(tempObj.getTourId(), tourVisitorEntity.getTourId())) {
@@ -191,14 +190,15 @@ public class VisitorController {
         }
         return new ResponseEntity<>(false, HttpStatus.OK);
     }
-//
-//    @RequestMapping(value = "/tours/{visitorId}", method = RequestMethod.GET)
-//    public ResponseEntity<?> checkTourExhibits(@PathVariable long visitorId) {
-//        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
-//        VisitorEntity visitor = visitorService.findOne(visitorId);
-//        Collection<TourVisitorEntity> toursList = visitor.getTourVisitorsByVisitorId();
-//        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursList}, Locale.getDefault()));
-//        return new ResponseEntity<>(toursList, HttpStatus.OK);
-//    }
+
+    @RequestMapping(value = "/tours/findAll", method = RequestMethod.POST)
+    public ResponseEntity<?> getVisitorTours(@RequestBody TourVisitorEntity tourVisitorEntity){
+        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourVisitorEntity}, Locale.getDefault()));
+        VisitorEntity visitor = visitorService.findOne(tourVisitorEntity.getVisitorId());
+        Collection<TourVisitorEntity> toursList = visitor.getVisitorToursByVisitorId();
+        HashSet<TourVisitorEntity> tvrSet = new HashSet<>(toursList);
+        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursList}, Locale.getDefault()));
+        return new ResponseEntity<>(tvrSet, HttpStatus.OK);
+    }
 }
 
