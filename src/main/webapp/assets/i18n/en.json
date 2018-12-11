@@ -68,7 +68,8 @@
     "password": "Password",
     "fio": "Fio",
     "age": "Age",
-    "email": "Email"
+    "email": "Email",
+    "favouriteTours": "Favourite Tours"
   },
   "tabs": {
     "create": "Create",

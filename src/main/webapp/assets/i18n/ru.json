@@ -68,7 +68,9 @@
     "password": "Пароль",
     "fio": "Фио",
     "age": "Возраст",
-    "email": "Email"
+    "email": "Email",
+    "favouriteTours": "Избранные туры"
+
   },
   "tabs": {
     "create": "Создать",

@@ -191,10 +191,10 @@ public class VisitorController {
         return new ResponseEntity<>(false, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/tours/findAll", method = RequestMethod.POST)
-    public ResponseEntity<?> getVisitorTours(@RequestBody TourVisitorEntity tourVisitorEntity){
-        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourVisitorEntity}, Locale.getDefault()));
-        VisitorEntity visitor = visitorService.findOne(tourVisitorEntity.getVisitorId());
+    @RequestMapping(value = "/tours/findAll/{visitorId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getVisitorTours(@PathVariable long visitorId){
+        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
+        VisitorEntity visitor = visitorService.findOne(visitorId);
         Collection<TourVisitorEntity> toursList = visitor.getVisitorToursByVisitorId();
         HashSet<TourVisitorEntity> tvrSet = new HashSet<>(toursList);
         LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursList}, Locale.getDefault()));
