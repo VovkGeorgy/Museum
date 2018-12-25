@@ -48,6 +48,22 @@ public class DataConfig {
     private String hibernateSchema;
 
     /**
+     * Been of entityManagerFactoryBean, which allows configuration a JPA EntityManagerFactory
+     * in a Spring application context
+     *
+     * @return entityManagerFactoryBean
+     */
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setPackagesToScan("by.home.museum.entity");
+        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
+        entityManagerFactoryBean.setJpaProperties(jpaProperties());
+        return entityManagerFactoryBean;
+    }
+
+    /**
      * Been of DriverManagerDataSource which is configuring
      * the JDBC DriverManager via bean properties, and returning
      * a new Connection from every getConnection call.
@@ -64,21 +80,18 @@ public class DataConfig {
         return dataSource;
     }
 
-
     /**
-     * Been of entityManagerFactoryBean, which allows configuration a JPA EntityManagerFactory
-     * in a Spring application context
+     * Define properties for JPA of hibernate config
      *
-     * @return entityManagerFactoryBean
+     * @return jpa properties
      */
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setPackagesToScan("by.home.museum.entity");
-        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
-        entityManagerFactoryBean.setJpaProperties(jpaProperties());
-        return entityManagerFactoryBean;
+    private Properties jpaProperties() {
+        Properties properties = new Properties();
+        properties.put("db.hibernate.dialect", hibernateDialect);
+        properties.put("db.hibernate.show_sql", hibernateShowSql);
+        properties.put("db.hibernate.hbm2ddl.auto", hibernateHBM2DD1auto);
+        properties.put("db.hibernate.schema", hibernateSchema);
+        return properties;
     }
 
     /**
@@ -103,20 +116,6 @@ public class DataConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
-    }
-
-    /**
-     * Define properties for JPA of hibernate config
-     *
-     * @return
-     */
-    private Properties jpaProperties() {
-        Properties properties = new Properties();
-        properties.put("db.hibernate.dialect", hibernateDialect);
-        properties.put("db.hibernate.show_sql", hibernateShowSql);
-        properties.put("db.hibernate.hbm2ddl.auto", hibernateHBM2DD1auto);
-        properties.put("db.hibernate.schema", hibernateSchema);
-        return properties;
     }
 
 }

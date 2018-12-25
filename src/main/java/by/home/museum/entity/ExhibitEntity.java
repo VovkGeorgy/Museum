@@ -18,6 +18,9 @@ public class ExhibitEntity {
     private String imageUrl;
     private Collection<TourExhibitEntity> tourExhibitsByExhibitId;
 
+    public ExhibitEntity() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exhibit_id", nullable = false)
@@ -126,6 +129,4 @@ public class ExhibitEntity {
     public void setTourExhibitsByExhibitId(Collection<TourExhibitEntity> tourExhibitsByExhibitId) {
         this.tourExhibitsByExhibitId = tourExhibitsByExhibitId;
     }
-
-
 }

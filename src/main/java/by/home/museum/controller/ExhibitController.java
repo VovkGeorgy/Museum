@@ -19,13 +19,16 @@ import java.util.Locale;
 @RequestMapping("/exhibit")
 public class ExhibitController {
 
-    @Autowired
-    private ExhibitService exhibitService;
-
-    @Autowired
-    private MessageSource messageSource;
+    private final ExhibitService exhibitService;
+    private final MessageSource messageSource;
 
     private static final Logger logger = LoggerFactory.getLogger(ExhibitController.class);
+
+    @Autowired
+    public ExhibitController(ExhibitService exhibitService, MessageSource messageSource) {
+        this.exhibitService = exhibitService;
+        this.messageSource = messageSource;
+    }
 
     /**
      * this method maps the following URL & http method
@@ -111,6 +114,7 @@ public class ExhibitController {
      * this method maps the following URL & http method
      * URL: http://hostname:port/exhibit/exhibits/delete/{exhibitId}
      * HTTP method: POST
+     *
      * @param exhibitId - Id of exhibit which need delete
      */
     @RequestMapping(value = "/exhibits/delete/{exhibitId}", method = RequestMethod.POST)
