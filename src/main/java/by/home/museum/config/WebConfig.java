@@ -61,7 +61,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return defaultLocale;
     }
 
-
     /**
      * Add resource handler in registry of resource handlers for serving static resources such as images,
      * css files and others.
@@ -96,5 +95,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper;
     }
-
 }

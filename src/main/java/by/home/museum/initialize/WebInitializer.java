@@ -5,12 +5,7 @@ import by.home.museum.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
- * {@link org.springframework.web.WebApplicationInitializer WebApplicationInitializer}
- * to register a DispatcherServlet and use Java-based Spring configuration.
- * <p>
- * Implementations are required to implement:
- * {@link #getRootConfigClasses()} -- for "root" application context configuration.
- * {@link #getServletConfigClasses()} -- for application context (Spring MVC infrastructure) configuration.
+ * Class need to register a DispatcherServlet and config spring application context
  */
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -28,5 +23,4 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
-
 }

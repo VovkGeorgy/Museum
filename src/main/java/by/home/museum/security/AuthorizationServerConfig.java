@@ -2,6 +2,7 @@ package by.home.museum.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -13,31 +14,30 @@ import org.springframework.security.oauth2.provider.approval.UserApprovalHandler
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-    private static String REALM = "MUSEUM_REALM";
+
     private static final int TEN_DAYS = 60 * 60 * 24 * 10;
     private static final int ONE_DAY = 60 * 60 * 24;
     private static final int THIRTY_DAYS = 60 * 60 * 24 * 30;
 
-    @Autowired
-    private TokenStore tokenStore;
+    @Value("${security.oauthServer.realm}")
+    private String REALM;
+    private final TokenStore tokenStore;
+    private final JwtAccessTokenConverter jwtTokenEnhancer;
+    private final UserApprovalHandler userApprovalHandler;
+    private final AuthenticationManager authenticationManager;
+    private final MuseumUserDetailsService museumUserDetailsService;
 
     @Autowired
-    private JwtAccessTokenConverter jwtTokenEnhancer;
-
-    @Autowired
-    private UserApprovalHandler userApprovalHandler;
-
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private MuseumUserDetailsService museumUserDetailsService;
+    public AuthorizationServerConfig(TokenStore tokenStore, JwtAccessTokenConverter jwtTokenEnhancer, UserApprovalHandler userApprovalHandler, @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, MuseumUserDetailsService museumUserDetailsService) {
+        this.tokenStore = tokenStore;
+        this.jwtTokenEnhancer = jwtTokenEnhancer;
+        this.userApprovalHandler = userApprovalHandler;
+        this.authenticationManager = authenticationManager;
+        this.museumUserDetailsService = museumUserDetailsService;
+    }
 
     /**
      * Method create inMemory client details for authorization

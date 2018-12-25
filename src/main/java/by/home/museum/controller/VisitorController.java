@@ -192,7 +192,7 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/tours/findAll/{visitorId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getVisitorTours(@PathVariable long visitorId){
+    public ResponseEntity<?> getVisitorTours(@PathVariable long visitorId) {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);
         Collection<TourVisitorEntity> toursList = visitor.getVisitorToursByVisitorId();
