@@ -1,21 +1,21 @@
-INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url) VALUES
+INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url, guide_id) VALUES
   ('Italian Renaissance', 'paintings', '1', 300.30,
-   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338'),
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338', 1),
   ('The Art of Eating', 'paintings', '2', 200.50,
-   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60854.jpg?1308122198'),
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60854.jpg?1308122198', 2),
   ('On Horseback through the Louvre', 'different', '1', 250.75,
-   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60111.jpeg?1308120727'),
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60111.jpeg?1308120727', 3),
   ('The Da Vinci Code', 'paintings', '3', 400.75,
-   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_64583.jpg?1308124152'),
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_64583.jpg?1308124152', 4),
   ('Osiris, An Ancient Egyptian God', 'antiquities', '1', 150.75,
-   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_1308_0.jpg?1309860410');
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_1308_0.jpg?1309860410', 5);
 
-INSERT INTO guide (username, password, fio, age, experience, languages, tour_id) VALUES
-  ('guide1', '11111', 'Guide 1 1', 21, 2, 'EN,FR', 1),
-  ('guide2', '11111', 'Guide 2 2', 22, 3, 'EN,FR,PL', 2),
-  ('guide3', '11111', 'Guide 3 3', 23, 4, 'EN', 3),
-  ('guide4', '11111', 'Guide 4 4', 23, 4, 'RU,CHN', 4),
-  ('guide5', '11111', 'Guide 5 5', 23, 4, 'EN,RU,CHN', 5);
+INSERT INTO guide (username, password, fio, age, experience, languages) VALUES
+  ('guide1', '11111', 'Guide 1 1', 21, 2, 'EN,FR'),
+  ('guide2', '11111', 'Guide 2 2', 22, 3, 'EN,FR,PL'),
+  ('guide3', '11111', 'Guide 3 3', 23, 4, 'EN'),
+  ('guide4', '11111', 'Guide 4 4', 23, 4, 'RU,CHN'),
+  ('guide5', '11111', 'Guide 5 5', 23, 4, 'EN,RU,CHN');
 
 
 INSERT INTO exhibit (title, dated, material, archive_num, description, image_url) VALUES

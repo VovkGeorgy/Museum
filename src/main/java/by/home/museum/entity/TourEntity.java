@@ -1,148 +1,59 @@
 package by.home.museum.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Data
 @Entity
 @Table(name = "tour", schema = "public", catalog = "museum")
 public class TourEntity {
-    private Long tourId;
-    private String theme;
-    private String typeOfExhibits;
-    private Short duration;
-    private Double cost;
-    private String imageUrl;
-    private Collection<GuideEntity> guidesByTourId;
-    private Collection<TourExhibitEntity> tourExhibitsByTourId;
-    private Collection<TourVisitorEntity> tourVisitorsByTourId;
-
-    public TourEntity() {
-    }
-
-    public TourEntity(String theme, String typeOfExhibits, Short duration, Double cost, String imageUrl) {
-        this.theme = theme;
-        this.typeOfExhibits = typeOfExhibits;
-        this.duration = duration;
-        this.cost = cost;
-        this.imageUrl = imageUrl;
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "tour_id", nullable = false)
-    public Long getTourId() {
-        return tourId;
-    }
-
-    public void setTourId(Long tourId) {
-        this.tourId = tourId;
-    }
+    private Long tourId;
 
     @Basic
     @Column(name = "theme", nullable = true, length = -1)
-    public String getTheme() {
-        return theme;
-    }
-
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
+    private String theme;
 
     @Basic
     @Column(name = "type_of_exhibits", nullable = true, length = -1)
-    public String getTypeOfExhibits() {
-        return typeOfExhibits;
-    }
-
-    public void setTypeOfExhibits(String typeOfExhibits) {
-        this.typeOfExhibits = typeOfExhibits;
-    }
+    private String typeOfExhibits;
 
     @Basic
     @Column(name = "duration", nullable = true)
-    public Short getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Short duration) {
-        this.duration = duration;
-    }
+    private Short duration;
 
     @Basic
     @Column(name = "cost", nullable = true, precision = 0)
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
+    private Double cost;
 
     @Basic
     @Column(name = "image_url", nullable = true, length = -1)
-    public String getImageUrl() {
-        return imageUrl;
-    }
+    private String imageUrl;
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="guide_id", nullable=false)
+    private GuideEntity guideEntity;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "tourByTourId")
-    public Collection<GuideEntity> getGuidesByTourId() {
-        return guidesByTourId;
-    }
-
-    public void setGuidesByTourId(Collection<GuideEntity> guidesByTourId) {
-        this.guidesByTourId = guidesByTourId;
-    }
-
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "tourByTourId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public Collection<TourExhibitEntity> getTourExhibitsByTourId() {
-        return tourExhibitsByTourId;
-    }
+    private Collection<TourExhibitEntity> tourExhibitsByTourId;
 
-    public void setTourExhibitsByTourId(Collection<TourExhibitEntity> tourExhibitsByTourId) {
-        this.tourExhibitsByTourId = tourExhibitsByTourId;
-    }
-
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JsonIgnore
-    @OneToMany(mappedBy = "tourByTourId")
-    public Collection<TourVisitorEntity> getTourVisitorsByTourId() {
-        return tourVisitorsByTourId;
-    }
-
-    public void setTourVisitorsByTourId(Collection<TourVisitorEntity> tourVisitorsByTourId) {
-        this.tourVisitorsByTourId = tourVisitorsByTourId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TourEntity that = (TourEntity) o;
-
-        if (!tourId.equals(that.tourId)) return false;
-        if (theme != null ? !theme.equals(that.theme) : that.theme != null) return false;
-        if (typeOfExhibits != null ? !typeOfExhibits.equals(that.typeOfExhibits) : that.typeOfExhibits != null) return false;
-        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
-        if (cost != null ? !cost.equals(that.cost) : that.cost != null) return false;
-        return imageUrl != null ? imageUrl.equals(that.imageUrl) : that.imageUrl == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = tourId.hashCode();
-        result = 31 * result + (theme != null ? theme.hashCode() : 0);
-        result = 31 * result + (typeOfExhibits != null ? typeOfExhibits.hashCode() : 0);
-        result = 31 * result + (duration != null ? duration.hashCode() : 0);
-        result = 31 * result + (cost != null ? cost.hashCode() : 0);
-        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
-        return result;
-    }
+    @OneToMany(mappedBy = "tourByTourId", cascade = CascadeType.ALL)
+    private Collection<TourVisitorEntity> tourVisitorsByTourId;
 }
