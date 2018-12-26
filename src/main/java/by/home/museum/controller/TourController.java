@@ -1,5 +1,6 @@
 package by.home.museum.controller;
 
+import by.home.museum.entity.ExhibitEntity;
 import by.home.museum.entity.TourEntity;
 import by.home.museum.entity.TourExhibitEntity;
 import by.home.museum.service.TourService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/tour")
@@ -70,7 +72,7 @@ public class TourController {
     public ResponseEntity<?> getTourExhibits(@PathVariable long tourId) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);
-        Collection<TourExhibitEntity> exhibitList = tour.getTourExhibitsByTourId();
+        Set<ExhibitEntity> exhibitList = tour.getExhibitEntitySet();
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibitList}, Locale.getDefault()));
         return new ResponseEntity<>(exhibitList, HttpStatus.OK);
     }

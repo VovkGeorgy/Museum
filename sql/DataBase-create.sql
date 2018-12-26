@@ -29,9 +29,9 @@ CREATE TABLE exhibit (
 );
 
 CREATE TABLE tour_exhibit (
-  tour_id    BIGINT REFERENCES tour (tour_id),
-  exhibit_id BIGINT REFERENCES exhibit (exhibit_id),
-  PRIMARY KEY (tour_id, exhibit_id)
+  tour_exhibit_id BIGSERIAL PRIMARY KEY,
+  tour_id         BIGINT REFERENCES tour (tour_id),
+  exhibit_id      BIGINT REFERENCES exhibit (exhibit_id)
 );
 
 CREATE TABLE visitor (

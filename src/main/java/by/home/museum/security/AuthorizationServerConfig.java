@@ -22,13 +22,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private static final int ONE_DAY = 60 * 60 * 24;
     private static final int THIRTY_DAYS = 60 * 60 * 24 * 30;
 
-    @Value("${security.oauthServer.realm}")
-    private String REALM;
     private final TokenStore tokenStore;
     private final JwtAccessTokenConverter jwtTokenEnhancer;
     private final UserApprovalHandler userApprovalHandler;
     private final AuthenticationManager authenticationManager;
     private final MuseumUserDetailsService museumUserDetailsService;
+
+    @Value("${security.oauthServer.realm}")
+    private String realm;
 
     @Autowired
     public AuthorizationServerConfig(TokenStore tokenStore, JwtAccessTokenConverter jwtTokenEnhancer, UserApprovalHandler userApprovalHandler, @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, MuseumUserDetailsService museumUserDetailsService) {
@@ -41,6 +42,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * Method create inMemory client details for authorization
+     *
      * @param clients - clients
      * @throws Exception exp
      */
@@ -58,6 +60,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * Configure the properties and enhanced functionality of the Authorization Server endpoints.
+     *
      * @param endpoints
      * @throws Exception
      */
@@ -68,14 +71,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .userDetailsService(museumUserDetailsService);
     }
 
-
     /**
      * Config authorization server realm
+     *
      * @param oauthServer
      * @throws Exception
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.realm(REALM);
+        oauthServer.realm(realm);
     }
 }

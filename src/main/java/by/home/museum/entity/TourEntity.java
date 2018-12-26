@@ -7,6 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -42,14 +44,17 @@ public class TourEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="guide_id", nullable=false)
+    @JoinColumn(name = "guide_id", nullable = false)
     private GuideEntity guideEntity;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
-    @OneToMany(mappedBy = "tourByTourId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Collection<TourExhibitEntity> tourExhibitsByTourId;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "tour_exhibit",
+            joinColumns = @JoinColumn(name = "tour_id"),
+            inverseJoinColumns = @JoinColumn(name = "exhibit_id"))
+    private Set<ExhibitEntity> exhibitEntitySet = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

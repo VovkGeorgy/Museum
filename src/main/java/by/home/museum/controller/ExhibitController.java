@@ -67,14 +67,14 @@ public class ExhibitController {
      *
      * @return toursList - all tours of current exhibit
      */
-    @RequestMapping(value = "/tours/{exhibitId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getExhibitTours(@PathVariable long exhibitId) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
-        ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
-        Collection<TourExhibitEntity> toursList = exhibit.getTourExhibitsByExhibitId();
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursList}, Locale.getDefault()));
-        return new ResponseEntity<>(toursList, HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/tours/{exhibitId}", method = RequestMethod.GET)
+//    public ResponseEntity<?> getExhibitTours(@PathVariable long exhibitId) {
+//        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+//        ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
+//        Collection<TourExhibitEntity> toursList = exhibit.getTourExhibitsByExhibitId();
+//        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursList}, Locale.getDefault()));
+//        return new ResponseEntity<>(toursList, HttpStatus.OK);
+//    }
 
     /**
      * this method maps the following URL & http method
