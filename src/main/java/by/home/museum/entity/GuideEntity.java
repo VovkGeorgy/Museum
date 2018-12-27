@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -48,5 +48,5 @@ public class GuideEntity {
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "guideEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<TourEntity> tourEntitySet;
+    private List<TourEntity> tourEntitySet = new ArrayList<>();
 }

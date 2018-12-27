@@ -6,10 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -51,5 +49,5 @@ public class ExhibitEntity {
     @JoinTable(name = "tour_exhibit",
             joinColumns = @JoinColumn(name = "exhibit_id"),
             inverseJoinColumns = @JoinColumn(name = "tour_id"))
-    private Set<TourEntity> tourEntitySet = new HashSet<>();
+    private List<TourEntity> tourEntitySet = new ArrayList<>();
 }

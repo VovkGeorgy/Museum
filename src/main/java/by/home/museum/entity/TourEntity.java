@@ -6,8 +6,9 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -22,23 +23,23 @@ public class TourEntity {
     private Long tourId;
 
     @Basic
-    @Column(name = "theme", nullable = true, length = -1)
+    @Column(name = "theme", length = -1)
     private String theme;
 
     @Basic
-    @Column(name = "type_of_exhibits", nullable = true, length = -1)
+    @Column(name = "type_of_exhibits", length = -1)
     private String typeOfExhibits;
 
     @Basic
-    @Column(name = "duration", nullable = true)
+    @Column(name = "duration")
     private Short duration;
 
     @Basic
-    @Column(name = "cost", nullable = true, precision = 0)
+    @Column(name = "cost")
     private Double cost;
 
     @Basic
-    @Column(name = "image_url", nullable = true, length = -1)
+    @Column(name = "image_url", length = -1)
     private String imageUrl;
 
     @ToString.Exclude
@@ -54,11 +55,14 @@ public class TourEntity {
     @JoinTable(name = "tour_exhibit",
             joinColumns = @JoinColumn(name = "tour_id"),
             inverseJoinColumns = @JoinColumn(name = "exhibit_id"))
-    private Set<ExhibitEntity> exhibitEntitySet = new HashSet<>();
+    private Set<ExhibitEntity> exhibitEntityList = new HashSet<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
-    @OneToMany(mappedBy = "tourByTourId", cascade = CascadeType.ALL)
-    private Collection<TourVisitorEntity> tourVisitorsByTourId;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "tour_visitor",
+            joinColumns = @JoinColumn(name = "tour_id"),
+            inverseJoinColumns = @JoinColumn(name = "visitor_id"))
+    private List<VisitorEntity> visitorEntityList = new ArrayList<>();
 }

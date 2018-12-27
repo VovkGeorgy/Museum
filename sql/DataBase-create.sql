@@ -44,9 +44,9 @@ CREATE TABLE visitor (
 );
 
 CREATE TABLE tour_visitor (
+  tour_visitor_id BIGSERIAL PRIMARY KEY,
   tour_id    BIGINT REFERENCES tour (tour_id),
-  visitor_id BIGINT REFERENCES visitor (visitor_id),
-  PRIMARY KEY (tour_id, visitor_id)
+  visitor_id BIGINT REFERENCES visitor (visitor_id)
 );
 
 
