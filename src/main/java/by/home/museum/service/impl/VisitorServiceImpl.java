@@ -1,8 +1,6 @@
 package by.home.museum.service.impl;
 
-import by.home.museum.entity.TourVisitorEntity;
 import by.home.museum.entity.VisitorEntity;
-import by.home.museum.repository.TourVisitorRepository;
 import by.home.museum.repository.VisitorRepository;
 import by.home.museum.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,8 @@ public class VisitorServiceImpl implements VisitorService {
     @Autowired
     VisitorRepository repository;
 
-    @Autowired
-    TourVisitorRepository TvRepository;
+//    @Autowired
+//    TourVisitorRepository TvRepository;
 
     @Override
     public void delete(VisitorEntity deleted) {
@@ -44,13 +42,13 @@ public class VisitorServiceImpl implements VisitorService {
         return repository.findByUsername(username);
     }
 
-    @Override
-    public void addTourToVisitor(TourVisitorEntity tve) {
-        TvRepository.save(tve);
-    }
+//    @Override
+//    public void addTourToVisitor(TourVisitorEntity tve) {
+//        TvRepository.save(tve);
+//    }
 
-    @Override
-    public void removeTourFromVisitor(TourVisitorEntity tve) {
-        TvRepository.deleteTourOfVisitor(tve.getTourId(), tve.getVisitorId());
-    }
+//    @Override
+//    public void removeTourFromVisitor(TourVisitorEntity tve) {
+//        TvRepository.deleteTourOfVisitor(tve.getTourId(), tve.getVisitorId());
+//    }
 }

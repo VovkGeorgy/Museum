@@ -1,7 +1,6 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.ExhibitEntity;
-import by.home.museum.entity.TourExhibitEntity;
 import by.home.museum.service.ExhibitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.Locale;
 
 @RestController
