@@ -118,7 +118,6 @@ public class TourController {
      * @param tourId - Id of tour which need delete
      */
     @RequestMapping(value = "/tours/delete/{tourId}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteTour(@PathVariable long tourId) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);

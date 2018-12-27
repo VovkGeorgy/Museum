@@ -15,12 +15,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.anonymous().disable()
                 .requestMatchers()
                 .antMatchers("/abo/**")
+                .antMatchers("/guide/**")
+                .antMatchers("/visitor/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/abo/**").access("hasRole('ADMIN') or hasRole('USER')")
-                .antMatchers("/visitor/**").access("hasRole('ADMIN')")
+                .antMatchers("/visitor/**").access("hasRole('ADMIN') or hasRole('GUIDE')")
+                .antMatchers("/guide/**").access("hasRole('ADMIN')")
+                .antMatchers("/abo/**").access("hasRole('ADMIN')")
                 .and()
                 .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
-
 }

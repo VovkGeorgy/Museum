@@ -1,6 +1,7 @@
 INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url, guide_id) VALUES
   ('Italian Renaissance', 'paintings', '1', 300.30,
-   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338', 1),
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338',
+   1),
   ('The Art of Eating', 'paintings', '2', 200.50,
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60854.jpg?1308122198', 2),
   ('On Horseback through the Louvre', 'different', '1', 250.75,
@@ -79,16 +80,21 @@ INSERT INTO tour_visitor (tour_id, visitor_id) VALUES
 
 INSERT INTO users (username, password) VALUES
   ('admin', '11111'),
+  ('guide', '11111'),
   ('user', '11111');
 
 INSERT INTO roles (name) VALUES
-  ('USER'),
+  ('VISITOR'),
+  ('GUIDE'),
   ('ADMIN');
 
 INSERT INTO users_roles (user_id, role_id) VALUES
   ('1', '1'),
   ('1', '2'),
-  ('2', '1');
+  ('1', '3'),
+  ('2', '1'),
+  ('2', '2'),
+  ('3', '1');
 
 
 

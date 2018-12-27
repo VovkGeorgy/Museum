@@ -24,11 +24,15 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private ClientDetailsService clientDetailsService;
+    private final ClientDetailsService clientDetailsService;
+
+    private final MuseumUserDetailsService museumUserDetailsService;
 
     @Autowired
-    private MuseumUserDetailsService museumUserDetailsService;
+    public SecurityConfig(ClientDetailsService clientDetailsService, MuseumUserDetailsService museumUserDetailsService) {
+        this.clientDetailsService = clientDetailsService;
+        this.museumUserDetailsService = museumUserDetailsService;
+    }
 
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -39,13 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/whoiam").permitAll()
-                .antMatchers("/signup").permitAll()
                 .antMatchers("/oauth/token").permitAll()
-                .antMatchers("/tour/**").authenticated()
-                .antMatchers("/guide/**").permitAll()
-                .antMatchers("/exhibit/**").permitAll()
-                .antMatchers("/visitor/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic().realmName("MUSEUM_REALM");

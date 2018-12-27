@@ -31,8 +31,7 @@ public class MuseumUserDetails implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> translate(List<RolesEntity> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-
-         roles.stream().map(role -> role.getName().toUpperCase())
+        roles.stream().map(role -> role.getName().toUpperCase())
                 .forEach(name -> authorities.add(getRole(name)));
         return authorities;
     }

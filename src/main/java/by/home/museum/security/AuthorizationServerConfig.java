@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    private static final int TEN_DAYS = 60 * 60 * 24 * 10;
     private static final int ONE_DAY = 60 * 60 * 24;
     private static final int THIRTY_DAYS = 60 * 60 * 24 * 30;
 
@@ -61,8 +60,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * Configure the properties and enhanced functionality of the Authorization Server endpoints.
      *
-     * @param endpoints
-     * @throws Exception
+     * @param endpoints endpoints
+     * @throws Exception some exception
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -74,8 +73,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * Config authorization server realm
      *
-     * @param oauthServer
-     * @throws Exception
+     * @param oauthServer oauth server
+     * @throws Exception some exception
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {

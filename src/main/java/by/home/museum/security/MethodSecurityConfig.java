@@ -13,6 +13,7 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
     /**
      * Method create OAuth2MethodSecurity expression handler that can handle default method security expressions plus
      * the set provided by OAuth2SecurityExpressionMethods using the variable oauth2 to access the methods.
+     *
      * @return OAuth2MethodSecurityExpressionHandler
      */
     @Override

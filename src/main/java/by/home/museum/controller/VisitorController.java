@@ -21,26 +21,23 @@ import java.util.Set;
 @RequestMapping("/visitor")
 public class VisitorController {
 
-    @Autowired
-    private VisitorService visitorService;
-
-    @Autowired
-    private TourService tourService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RolesService rolesService;
-
-    @Autowired
-    private SignupService signupService;
-
-    @Autowired
-    private MessageSource messageSource;
-
+    private final VisitorService visitorService;
+    private final TourService tourService;
+    private final UserService userService;
+    private final RolesService rolesService;
+    private final SignupService signupService;
+    private final MessageSource messageSource;
     private static final Logger LOGGER = LoggerFactory.getLogger(VisitorController.class);
 
+    @Autowired
+    public VisitorController(VisitorService visitorService, TourService tourService, UserService userService, RolesService rolesService, SignupService signupService, MessageSource messageSource) {
+        this.visitorService = visitorService;
+        this.tourService = tourService;
+        this.userService = userService;
+        this.rolesService = rolesService;
+        this.signupService = signupService;
+        this.messageSource = messageSource;
+    }
 
     /**
      * this method maps the following URL & http method
@@ -77,7 +74,7 @@ public class VisitorController {
      * this method maps the following URL & http method
      * URL: http://hostname:port/visitor/visitors/add
      * HTTP method: POST
-     * Method add a visitor as a entity, and as a USER
+     * Method add a visitor as a entity, and as a VISITOR
      *
      * @param visitor - entity to save
      * @return saved visitor
@@ -87,7 +84,7 @@ public class VisitorController {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitor}, Locale.getDefault()));
         VisitorEntity newVisitor = visitorService.save(visitor);
         UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword());
-        newUser.setRoles(Arrays.asList(rolesService.getByName("USER")));
+        newUser.setRoles(Arrays.asList(rolesService.getByName("VISITOR")));
         signupService.addUser(newUser);
         LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newVisitor}, Locale.getDefault()));
         return new ResponseEntity<>(newVisitor, HttpStatus.CREATED);
@@ -97,7 +94,7 @@ public class VisitorController {
      * this method maps the following URL & http method
      * URL: http://hostname:port/visitor/visitors/update/{visitorId}
      * HTTP method: POST
-     * Method update a visitor as a entity, and as a USER
+     * Method update a visitor as a entity, and as a VISITOR
      *
      * @param visitor - entity to update
      * @return updated visitor
@@ -111,7 +108,7 @@ public class VisitorController {
         UsersEntity usersEntity = userService.findByUsername(updatedVisitor.getUsername());
         if (usersEntity == null) {
             UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword());
-            newUser.setRoles(Arrays.asList(rolesService.getByName("USER")));
+            newUser.setRoles(Arrays.asList(rolesService.getByName("VISITOR")));
             signupService.addUser(newUser);
         } else {
             usersEntity.setPassword(updatedVisitor.getPassword());
@@ -129,8 +126,6 @@ public class VisitorController {
      * @param visitorId - Id of visitor which need delete
      */
     @RequestMapping(value = "/visitors/delete/{visitorId}", method = RequestMethod.POST)
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteVisitor(@PathVariable long visitorId) {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);

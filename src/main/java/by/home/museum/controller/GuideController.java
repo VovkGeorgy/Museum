@@ -74,7 +74,7 @@ public class GuideController {
      * this method maps the following URL & http method
      * URL: http://hostname:port/guide/guides/add
      * HTTP method: POST
-     * Method add guide as a entity, and as ADMIN
+     * Method add guide as a entity, and as GUIDE
      *
      * @param guide - entity to save
      * @return saved guide
@@ -84,7 +84,7 @@ public class GuideController {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
         GuideEntity newGuide = guideService.save(guide);
         UsersEntity newAdmin = new UsersEntity(guide.getUsername(), guide.getPassword());
-        newAdmin.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("USER")));
+        newAdmin.setRoles(Arrays.asList(rolesService.getByName("GUIDE"), rolesService.getByName("VISITOR")));
         signupService.addUser(newAdmin);
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newGuide}, Locale.getDefault()));
         return new ResponseEntity<>(newGuide, HttpStatus.OK);
@@ -94,7 +94,7 @@ public class GuideController {
      * this method maps the following URL & http method
      * URL: http://hostname:port//guides/update/guideId
      * HTTP method: POST
-     * Method update guide as a entity, and as ADMIN
+     * Method update guide as a entity, and as GUIDE
      *
      * @param guide   - entity to update
      * @param guideId - id of needed guide
@@ -109,7 +109,7 @@ public class GuideController {
         UsersEntity usersEntity = userService.findByUsername(updatedGuide.getUsername());
         if (usersEntity == null) {
             UsersEntity newUser = new UsersEntity(guide.getUsername(), guide.getPassword());
-            newUser.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("USER")));
+            newUser.setRoles(Arrays.asList(rolesService.getByName("GUIDE"), rolesService.getByName("VISITOR")));
             signupService.addUser(newUser);
         } else {
             usersEntity.setPassword(updatedGuide.getPassword());
@@ -123,12 +123,11 @@ public class GuideController {
      * this method maps the following URL & http method
      * URL: http://hostname:port/guide/guides/delete/{guideId}
      * HTTP method: POST
-     * Method delete guide as a entity, and as ADMIN
+     * Method delete guide as a entity, and as GUIDE
      *
      * @param guideId - Id of guide which need delete
      */
     @RequestMapping(value = "/guides/delete/{guideId}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteGuide(@PathVariable long guideId) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{guideId}, Locale.getDefault()));
         GuideEntity guide = guideService.findOne(guideId);

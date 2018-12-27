@@ -21,16 +21,17 @@ import java.util.Locale;
 @RestController
 public class SignupController {
 
-    @Autowired
-    private SignupService signupService;
-
-    @Autowired
-    private RolesService rolesService;
-
-    @Autowired
-    private MessageSource messageSource;
-
+    private final SignupService signupService;
+    private final RolesService rolesService;
+    private final MessageSource messageSource;
     private static final Logger logger = LoggerFactory.getLogger(SignupController.class);
+
+    @Autowired
+    public SignupController(SignupService signupService, RolesService rolesService, MessageSource messageSource) {
+        this.signupService = signupService;
+        this.rolesService = rolesService;
+        this.messageSource = messageSource;
+    }
 
     /**
      * this method maps the following URL & http method
@@ -43,7 +44,7 @@ public class SignupController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody UsersEntity user) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
-        user.setRoles(Arrays.asList(rolesService.getByName("USER")));
+        user.setRoles(Arrays.asList(rolesService.getByName("VISITOR")));
         UsersEntity newUser = signupService.addUser(user);
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newUser}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
@@ -58,6 +59,7 @@ public class SignupController {
      * @return - status 200-OK
      */
     @RequestMapping(value = "/delUser", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delUser(@RequestBody UsersEntity user) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
         signupService.delUser(user);
@@ -75,13 +77,12 @@ public class SignupController {
      * @return - status 200-OK
      */
     @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addAdmin(@RequestBody UsersEntity user) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
-        user.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("USER")));
+        user.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("GUIDE"), rolesService.getByName("VISITOR")));
         UsersEntity newUser = signupService.addUser(user);
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
