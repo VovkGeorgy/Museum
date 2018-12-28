@@ -1,6 +1,7 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.ExhibitEntity;
+import by.home.museum.entity.TourEntity;
 import by.home.museum.service.ExhibitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/exhibit")
@@ -19,7 +21,6 @@ public class ExhibitController {
 
     private final ExhibitService exhibitService;
     private final MessageSource messageSource;
-
     private static final Logger logger = LoggerFactory.getLogger(ExhibitController.class);
 
     @Autowired
@@ -65,14 +66,14 @@ public class ExhibitController {
      *
      * @return toursList - all tours of current exhibit
      */
-//    @RequestMapping(value = "/tours/{exhibitId}", method = RequestMethod.GET)
-//    public ResponseEntity<?> getExhibitTours(@PathVariable long exhibitId) {
-//        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
-//        ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
-//        Collection<TourExhibitEntity> toursList = exhibit.getTourExhibitsByExhibitId();
-//        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursList}, Locale.getDefault()));
-//        return new ResponseEntity<>(toursList, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/exhibits/tours/{exhibitId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getExhibitTours(@PathVariable long exhibitId) {
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
+        Set<TourEntity> tourSet = exhibit.getTourEntitySet();
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibit}, Locale.getDefault()));
+        return new ResponseEntity<>(tourSet, HttpStatus.OK);
+    }
 
     /**
      * this method maps the following URL & http method

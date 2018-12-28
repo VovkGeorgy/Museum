@@ -22,22 +22,22 @@ import java.util.Locale;
 @RequestMapping("/guide")
 public class GuideController {
 
-    @Autowired
-    private GuideService guideService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RolesService rolesService;
-
-    @Autowired
-    private SignupService signupService;
-
-    @Autowired
-    private MessageSource messageSource;
-
+    private final GuideService guideService;
+    private final UserService userService;
+    private final RolesService rolesService;
+    private final SignupService signupService;
+    private final MessageSource messageSource;
     private static final Logger logger = LoggerFactory.getLogger(GuideController.class);
+
+    @Autowired
+    public GuideController(GuideService guideService, UserService userService, RolesService rolesService,
+                           SignupService signupService, MessageSource messageSource) {
+        this.guideService = guideService;
+        this.userService = userService;
+        this.rolesService = rolesService;
+        this.signupService = signupService;
+        this.messageSource = messageSource;
+    }
 
     /**
      * this method maps the following URL & http method
@@ -148,7 +148,7 @@ public class GuideController {
      * @param username - username of guide which need
      */
     @RequestMapping(value = "/guides/getByUsername", method = RequestMethod.POST)
-    public ResponseEntity<?> getByUsername(@RequestBody String username){
+    public ResponseEntity<?> getByUsername(@RequestBody String username) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{username}, Locale.getDefault()));
         GuideEntity guide = guideService.findByUsername(username);
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));

@@ -1,6 +1,7 @@
 INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url, guide_id) VALUES
   ('Italian Renaissance', 'paintings', '1', 300.30,
-   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338', 1),
+   'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338',
+   1),
   ('The Art of Eating', 'paintings', '2', 200.50,
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60854.jpg?1308122198', 2),
   ('On Horseback through the Louvre', 'different', '1', 250.75,
@@ -11,6 +12,7 @@ INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url, guide_id) 
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_1308_0.jpg?1309860410', 5);
 
 INSERT INTO guide (username, password, fio, age, experience, languages) VALUES
+  ('guide', '11111', 'testGuide', 99, 1, 'Labudabudab'),
   ('guide1', '11111', 'Guide 1 1', 21, 2, 'EN,FR'),
   ('guide2', '11111', 'Guide 2 2', 22, 3, 'EN,FR,PL'),
   ('guide3', '11111', 'Guide 3 3', 23, 4, 'EN'),
@@ -53,6 +55,7 @@ INSERT INTO exhibit (title, dated, material, archive_num, description, image_url
 
 
 INSERT INTO visitor (username, password, fio, age, email) VALUES
+  ('visitor', '11111', 'testVisitor', '99', 'test@test.test'),
   ('Visitor1', '12345', 'Namiek F.A.', '22', 'namiek@mail.com'),
   ('Visitor2', '54321', 'Migewf K.R.', '42', 'migewf@mail.com'),
   ('Visitor3', '12r2121e', 'Kirmis L.D.', '53', 'kirmis53@mail.com'),
@@ -79,16 +82,30 @@ INSERT INTO tour_visitor (tour_id, visitor_id) VALUES
 
 INSERT INTO users (username, password) VALUES
   ('admin', '11111'),
-  ('user', '11111');
+  ('guide', '11111'),
+  ('visitor', '11111'),
+  ('Visitor1', '12345'),
+  ('Visitor2', '54321'),
+  ('Visitor3', '12r2121e'),
+  ('Visitor4', 'g22r44e11'),
+  ('guide1', '11111'),
+  ('guide2', '11111'),
+  ('guide3', '11111'),
+  ('guide4', '11111'),
+  ('guide5', '11111');
 
 INSERT INTO roles (name) VALUES
-  ('USER'),
+  ('VISITOR'),
+  ('GUIDE'),
   ('ADMIN');
 
 INSERT INTO users_roles (user_id, role_id) VALUES
   ('1', '1'),
   ('1', '2'),
-  ('2', '1');
+  ('1', '3'),
+  ('2', '1'),
+  ('2', '2'),
+  ('3', '1');
 
 
 

@@ -14,13 +14,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.anonymous().disable()
                 .requestMatchers()
+                .antMatchers("/**")
                 .antMatchers("/abo/**")
+                .antMatchers("/visitor/**")
+                .antMatchers("/exhibit/exhibits/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/abo/**").access("hasRole('ADMIN') or hasRole('USER')")
-                .antMatchers("/visitor/**").access("hasRole('ADMIN')")
+                .antMatchers("/visitor/delete").access("hasRole('ADMIN')")
                 .and()
                 .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
-
 }

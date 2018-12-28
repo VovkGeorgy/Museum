@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +19,19 @@ import java.util.Locale;
 @RequestMapping("/abo")
 public class AboutController {
 
-    @Autowired
-    private MessageSource messageSource;
-
+    private final MessageSource messageSource;
     private static final Logger LOGGER = LoggerFactory.getLogger(AboutController.class);
+
+    @Autowired
+    public AboutController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     /**
      * this method maps the following URL & http method
      * URL: http://hostname:port/abo/whoiam
      * HTTP method: GET
+     *
      * @return authentication of current user
      */
     @RequestMapping(value = "/whoiam", method = RequestMethod.GET)
@@ -35,5 +40,12 @@ public class AboutController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{authentication}, Locale.getDefault()));
         return new ResponseEntity<>(authentication.getAuthorities(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/adminOnly", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getAdminInfo() {
+        String message = "This is admin secured info";
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

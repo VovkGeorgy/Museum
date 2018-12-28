@@ -1,6 +1,7 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.TourEntity;
+import by.home.museum.entity.TourVisitorDao;
 import by.home.museum.entity.UsersEntity;
 import by.home.museum.entity.VisitorEntity;
 import by.home.museum.service.*;
@@ -21,26 +22,23 @@ import java.util.Set;
 @RequestMapping("/visitor")
 public class VisitorController {
 
-    @Autowired
-    private VisitorService visitorService;
-
-    @Autowired
-    private TourService tourService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RolesService rolesService;
-
-    @Autowired
-    private SignupService signupService;
-
-    @Autowired
-    private MessageSource messageSource;
-
+    private final VisitorService visitorService;
+    private final TourService tourService;
+    private final UserService userService;
+    private final RolesService rolesService;
+    private final SignupService signupService;
+    private final MessageSource messageSource;
     private static final Logger LOGGER = LoggerFactory.getLogger(VisitorController.class);
 
+    @Autowired
+    public VisitorController(VisitorService visitorService, TourService tourService, UserService userService, RolesService rolesService, SignupService signupService, MessageSource messageSource) {
+        this.visitorService = visitorService;
+        this.tourService = tourService;
+        this.userService = userService;
+        this.rolesService = rolesService;
+        this.signupService = signupService;
+        this.messageSource = messageSource;
+    }
 
     /**
      * this method maps the following URL & http method
@@ -86,8 +84,7 @@ public class VisitorController {
     public ResponseEntity<?> addVisitor(@RequestBody VisitorEntity visitor) {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitor}, Locale.getDefault()));
         VisitorEntity newVisitor = visitorService.save(visitor);
-        UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword());
-        newUser.setRoles(Arrays.asList(rolesService.getByName("USER")));
+        UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword(), Arrays.asList(rolesService.getByName("VISITOR")));
         signupService.addUser(newUser);
         LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newVisitor}, Locale.getDefault()));
         return new ResponseEntity<>(newVisitor, HttpStatus.CREATED);
@@ -102,7 +99,6 @@ public class VisitorController {
      * @param visitor - entity to update
      * @return updated visitor
      */
-    @SuppressWarnings("Duplicates")
     @RequestMapping(value = "/visitors/update/{visitorId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateVisitor(@PathVariable long visitorId,
                                            @RequestBody VisitorEntity visitor) {
@@ -110,8 +106,7 @@ public class VisitorController {
         VisitorEntity updatedVisitor = visitorService.save(visitor);
         UsersEntity usersEntity = userService.findByUsername(updatedVisitor.getUsername());
         if (usersEntity == null) {
-            UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword());
-            newUser.setRoles(Arrays.asList(rolesService.getByName("USER")));
+            UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword(), Arrays.asList(rolesService.getByName("VISITOR")));
             signupService.addUser(newUser);
         } else {
             usersEntity.setPassword(updatedVisitor.getPassword());
@@ -129,8 +124,6 @@ public class VisitorController {
      * @param visitorId - Id of visitor which need delete
      */
     @RequestMapping(value = "/visitors/delete/{visitorId}", method = RequestMethod.POST)
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteVisitor(@PathVariable long visitorId) {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);
@@ -157,50 +150,47 @@ public class VisitorController {
         return new ResponseEntity<>(neededVisitor, HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/visitors/addTour", method = RequestMethod.POST)
-//    public ResponseEntity<?> addTourToVisitor(@RequestBody TourVisitorEntity tourVisitorEntity) {
-//        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourVisitorEntity}, Locale.getDefault()));
-//        TourEntity tourEntity = tourService.findOne(tourVisitorEntity.getTourId());
-//        VisitorEntity visitorEntity = visitorService.findOne(tourVisitorEntity.getVisitorId());
-//        TourVisitorEntity newTourVisitor = new TourVisitorEntity(tourVisitorEntity.getTourId(), tourVisitorEntity.getVisitorId(), tourEntity, visitorEntity);
-//        visitorService.addTourToVisitor(newTourVisitor);
-//        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newTourVisitor}, Locale.getDefault()));
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/visitors/addTour", method = RequestMethod.POST)
+    public ResponseEntity<?> addTourToVisitor(@RequestBody TourVisitorDao tVd) {
+        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
+        VisitorEntity visitorEntity = visitorService.findOne(tVd.getVisitorId());
+        Set<TourEntity> visitorToursSet = visitorEntity.getTourEntitySet();
+        visitorToursSet.add(tourService.findOne(tVd.getTourId()));
+        visitorEntity.setTourEntitySet(visitorToursSet);
+        VisitorEntity updatedVisitor = visitorService.save(visitorEntity);
+        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{visitorToursSet}, Locale.getDefault()));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-//    @RequestMapping(value = "/visitors/removeTour", method = RequestMethod.POST)
-//    public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourVisitorEntity tourVisitorEntity) {
-//        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourVisitorEntity}, Locale.getDefault()));
-//        TourEntity tEntity = tourService.findOne(tourVisitorEntity.getTourId());
-//        VisitorEntity vEntity = visitorService.findOne(tourVisitorEntity.getVisitorId());
-//        TourVisitorEntity newTourVisitor = new TourVisitorEntity(tourVisitorEntity.getTourId(), tourVisitorEntity.getVisitorId(), tEntity, vEntity);
-//        visitorService.removeTourFromVisitor(newTourVisitor);
-//        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newTourVisitor}, Locale.getDefault()));
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/toursCheck", method = RequestMethod.POST)
+    public ResponseEntity<?> isTourInFavourites(@RequestBody TourVisitorDao tVd) {
+        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
+        VisitorEntity visitor = visitorService.findOne(tVd.getVisitorId());
+        Set<TourEntity> toursSet = visitor.getTourEntitySet();
+        TourEntity tourEntity = tourService.findOne(tVd.getTourId());
+        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursSet}, Locale.getDefault()));
+        return new ResponseEntity<>(toursSet.contains(tourEntity), HttpStatus.OK);
+    }
 
-//    @RequestMapping(value = "/toursCheck", method = RequestMethod.POST)
-//    public ResponseEntity<?> isTourInFavourites(@RequestBody TourVisitorEntity tourVisitorEntity) {
-//        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourVisitorEntity}, Locale.getDefault()));
-//        VisitorEntity visitor = visitorService.findOne(tourVisitorEntity.getVisitorId());
-//        Set<TourEntity> toursSet = visitor.getTourEntitySet();
-//        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursSet}, Locale.getDefault()));
-//        for (TourEntity tempObj : toursSet) {
-//            if (Objects.equals(tempObj.getTourId(), tourVisitorEntity.getTourId())) {
-//                return new ResponseEntity<>(true, HttpStatus.OK);
-//            }
-//        }
-//        return new ResponseEntity<>(false, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/visitors/removeTour", method = RequestMethod.POST)
+    public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourVisitorDao tVd) {
+        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
+        VisitorEntity visitorEntity = visitorService.findOne(tVd.getVisitorId());
+        Set<TourEntity> visitorToursSet = visitorEntity.getTourEntitySet();
+        visitorToursSet.remove(tourService.findOne(tVd.getTourId()));
+        visitorEntity.setTourEntitySet(visitorToursSet);
+        VisitorEntity updatedVisitor = visitorService.save(visitorEntity);
+        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedVisitor}, Locale.getDefault()));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/tours/findAll/{visitorId}", method = RequestMethod.GET)
     public ResponseEntity<?> getVisitorTours(@PathVariable long visitorId) {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);
-        Set<TourEntity> toursList = visitor.getTourEntitySet();
-        HashSet<TourEntity> tvrSet = new HashSet<>(toursList);
-        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursList}, Locale.getDefault()));
-        return new ResponseEntity<>(tvrSet, HttpStatus.OK);
+        Set<TourEntity> toursSet = visitor.getTourEntitySet();
+        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{toursSet}, Locale.getDefault()));
+        return new ResponseEntity<>(toursSet, HttpStatus.OK);
     }
 }
 

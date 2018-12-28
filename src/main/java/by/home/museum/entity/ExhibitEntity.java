@@ -7,7 +7,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -45,9 +47,9 @@ public class ExhibitEntity {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_exhibit",
             joinColumns = @JoinColumn(name = "exhibit_id"),
             inverseJoinColumns = @JoinColumn(name = "tour_id"))
-    private List<TourEntity> tourEntitySet = new ArrayList<>();
+    private Set<TourEntity> tourEntitySet = new HashSet<>();
 }

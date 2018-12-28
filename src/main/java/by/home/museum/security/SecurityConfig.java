@@ -39,13 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/whoiam").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/oauth/token").permitAll()
-                .antMatchers("/tour/**").authenticated()
-                .antMatchers("/guide/**").permitAll()
-                .antMatchers("/exhibit/**").permitAll()
-                .antMatchers("/visitor/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic().realmName("MUSEUM_REALM");

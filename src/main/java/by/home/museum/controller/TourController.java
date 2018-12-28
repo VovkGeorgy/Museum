@@ -20,13 +20,15 @@ import java.util.Set;
 @RequestMapping("/tour")
 public class TourController {
 
-    @Autowired
-    private TourService tourService;
-
-    @Autowired
-    private MessageSource messageSource;
-
+    private final TourService tourService;
+    private final MessageSource messageSource;
     private static final Logger logger = LoggerFactory.getLogger(TourController.class);
+
+    @Autowired
+    public TourController(TourService tourService, MessageSource messageSource) {
+        this.tourService = tourService;
+        this.messageSource = messageSource;
+    }
 
     /**
      * this method maps the following URL & http method
