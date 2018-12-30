@@ -6,16 +6,15 @@ import by.home.museum.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class VisitorServiceImpl implements VisitorService {
 
-    @Autowired
-    VisitorRepository repository;
+    private final VisitorRepository repository;
 
-//    @Autowired
-//    TourVisitorRepository TvRepository;
+    @Autowired
+    public VisitorServiceImpl(VisitorRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void delete(VisitorEntity deleted) {
@@ -24,7 +23,7 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public Iterable<VisitorEntity> findAll() {
-        return (List<VisitorEntity>) repository.findAll();
+        return repository.findAll();
     }
 
     @Override
@@ -41,14 +40,4 @@ public class VisitorServiceImpl implements VisitorService {
     public VisitorEntity findByUsername(String username) {
         return repository.findByUsername(username);
     }
-
-//    @Override
-//    public void addTourToVisitor(TourVisitorEntity tve) {
-//        TvRepository.save(tve);
-//    }
-
-//    @Override
-//    public void removeTourFromVisitor(TourVisitorEntity tve) {
-//        TvRepository.deleteTourOfVisitor(tve.getTourId(), tve.getVisitorId());
-//    }
 }

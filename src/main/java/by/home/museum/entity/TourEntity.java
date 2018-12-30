@@ -42,8 +42,6 @@ public class TourEntity {
     @Column(name = "image_url", length = -1)
     private String imageUrl;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "guide_id", nullable = false)
     private GuideEntity guideEntity;
@@ -55,14 +53,15 @@ public class TourEntity {
     @JoinTable(name = "tour_exhibit",
             joinColumns = @JoinColumn(name = "tour_id"),
             inverseJoinColumns = @JoinColumn(name = "exhibit_id"))
-    private Set<ExhibitEntity> exhibitEntityList = new HashSet<>();
+    private List<ExhibitEntity> exhibitEntityList = new ArrayList<>();
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_visitor",
             joinColumns = @JoinColumn(name = "tour_id"),
             inverseJoinColumns = @JoinColumn(name = "visitor_id"))
-    private List<VisitorEntity> visitorEntityList = new ArrayList<>();
+    private Set<VisitorEntity> visitorEntityList = new HashSet<>();
+
 }

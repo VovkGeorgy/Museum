@@ -20,31 +20,32 @@ public class VisitorEntity {
     private Long visitorId;
 
     @Basic
-    @Column(name = "username", nullable = true, length = -1)
+    @Column(name = "username", nullable = false, length = -1)
     private String username;
 
     @Basic
-    @Column(name = "password", nullable = true, length = -1)
+    @Column(name = "password", nullable = false, length = -1)
     private String password;
 
     @Basic
-    @Column(name = "fio", nullable = true, length = -1)
+    @Column(name = "fio", length = -1)
     private String fio;
 
     @Basic
-    @Column(name = "age", nullable = true)
+    @Column(name = "age")
     private Long age;
 
     @Basic
-    @Column(name = "email", nullable = true, length = -1)
+    @Column(name = "email", length = -1)
     private String email;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_visitor",
             joinColumns = @JoinColumn(name = "visitor_id"),
             inverseJoinColumns = @JoinColumn(name = "tour_id"))
     private Set<TourEntity> tourEntitySet = new HashSet<>();
+
 }

@@ -73,7 +73,7 @@ public class TourController {
     public ResponseEntity<?> getTourExhibits(@PathVariable long tourId) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);
-        Set<ExhibitEntity> exhibitList = tour.getExhibitEntityList();
+        List<ExhibitEntity> exhibitList = tour.getExhibitEntityList();
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibitList}, Locale.getDefault()));
         return new ResponseEntity<>(exhibitList, HttpStatus.OK);
     }

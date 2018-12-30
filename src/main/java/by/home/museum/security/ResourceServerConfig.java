@@ -18,6 +18,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/abo/**")
                 .antMatchers("/visitor/**")
                 .antMatchers("/exhibit/exhibits/**")
+                .antMatchers("/tour/**")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/visitor/delete").access("hasRole('ADMIN')")

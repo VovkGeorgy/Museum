@@ -56,6 +56,7 @@ INSERT INTO exhibit (title, dated, material, archive_num, description, image_url
 
 INSERT INTO visitor (username, password, fio, age, email) VALUES
   ('visitor', '11111', 'testVisitor', '99', 'test@test.test'),
+  ('visitor332', '11111', 'adwawdawd', '23231', 'wadawda@awdawd.awdaw'),
   ('Visitor1', '12345', 'Namiek F.A.', '22', 'namiek@mail.com'),
   ('Visitor2', '54321', 'Migewf K.R.', '42', 'migewf@mail.com'),
   ('Visitor3', '12r2121e', 'Kirmis L.D.', '53', 'kirmis53@mail.com'),
@@ -105,9 +106,22 @@ INSERT INTO users_roles (user_id, role_id) VALUES
   ('1', '3'),
   ('2', '1'),
   ('2', '2'),
-  ('3', '1');
-
-
+  ('3', '1'),
+  ('4', '1'),
+  ('5', '1'),
+  ('6', '1'),
+  ('7', '1'),
+  ('8', '1'),
+  ('8', '2'),
+  ('9', '1'),
+  ('9', '2'),
+  ('10', '1'),
+  ('10', '2'),
+  ('11', '1'),
+  ('11', '2'),
+  ('12', '1'),
+  ('12', '2'),
+  ('13', '1');
 
 
 

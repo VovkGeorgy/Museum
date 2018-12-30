@@ -13,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/visitor")
@@ -151,14 +148,13 @@ public class VisitorController {
     }
 
     @RequestMapping(value = "/visitors/addTour", method = RequestMethod.POST)
-    public ResponseEntity<?> addTourToVisitor(@RequestBody TourVisitorDao tVd) {
-        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
-        VisitorEntity visitorEntity = visitorService.findOne(tVd.getVisitorId());
-        Set<TourEntity> visitorToursSet = visitorEntity.getTourEntitySet();
-        visitorToursSet.add(tourService.findOne(tVd.getTourId()));
-        visitorEntity.setTourEntitySet(visitorToursSet);
+    public ResponseEntity<?> addTourToVisitor(@RequestBody TourVisitorDao tvd) {
+        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{tvd.getVisitorId()}, Locale.getDefault()));
+        VisitorEntity visitorEntity = visitorService.findOne(tvd.getVisitorId());
+        Set<TourEntity> set = visitorEntity.getTourEntitySet();
+        set.add(tourService.findOne(tvd.getTourId()));
         VisitorEntity updatedVisitor = visitorService.save(visitorEntity);
-        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{visitorToursSet}, Locale.getDefault()));
+        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedVisitor}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
