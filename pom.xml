@@ -34,7 +34,7 @@
 
         <!--JSON - data-->
         <javax.servlet-api.version>4.0.0-b07</javax.servlet-api.version>
-        <jackson-annotations.version>2.9.4</jackson-annotations.version>
+        <jackson-annotations.version>2.9.8</jackson-annotations.version>
 
         <!-- Angular -->
         <angular.project.path>.\src\main\webapp\museumFront\</angular.project.path>

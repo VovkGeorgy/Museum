@@ -1,0 +1,13 @@
+/target/
+/.classpath
+/.idea/
+/src.test/
+/lib/
+/museum.iml
+/src/main/webapp/*.bundle.js
+/src/main/webapp/*.bundle.js.map
+*.bat
+*.iml
+/oldwebgit
+/src/main/webapp/
+/src/main/webapp/assets/i18n/*.json

@@ -1,6 +1,5 @@
 package by.home.museum.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -41,7 +40,6 @@ public class VisitorEntity {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_visitor",
             joinColumns = @JoinColumn(name = "visitor_id"),

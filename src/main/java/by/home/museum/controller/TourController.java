@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -73,7 +73,7 @@ public class TourController {
     public ResponseEntity<?> getTourExhibits(@PathVariable long tourId) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);
-        List<ExhibitEntity> exhibitList = tour.getExhibitEntityList();
+        Set<ExhibitEntity> exhibitList = new HashSet<>(tour.getExhibitEntityList());
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibitList}, Locale.getDefault()));
         return new ResponseEntity<>(exhibitList, HttpStatus.OK);
     }
@@ -106,7 +106,7 @@ public class TourController {
     @RequestMapping(value = "/tours/update/{tourId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateTour(@PathVariable long tourId,
                                         @RequestBody TourEntity tour) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tour}, Locale.getDefault()));
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity updatedTour = tourService.save(tour);
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedTour}, Locale.getDefault()));
         return new ResponseEntity<>(updatedTour, HttpStatus.OK);
@@ -128,6 +128,4 @@ public class TourController {
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

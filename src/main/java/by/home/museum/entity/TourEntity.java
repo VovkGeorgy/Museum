@@ -42,6 +42,7 @@ public class TourEntity {
     @Column(name = "image_url", length = -1)
     private String imageUrl;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "guide_id", nullable = false)
     private GuideEntity guideEntity;

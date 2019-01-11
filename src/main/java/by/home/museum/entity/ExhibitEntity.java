@@ -1,14 +1,11 @@
 package by.home.museum.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,32 +18,31 @@ public class ExhibitEntity {
     private Long exhibitId;
 
     @Basic
-    @Column(name = "title", nullable = true, length = -1)
+    @Column(name = "title", length = -1)
     private String title;
 
     @Basic
-    @Column(name = "dated", nullable = true)
+    @Column(name = "dated")
     private String dated;
 
     @Basic
-    @Column(name = "material", nullable = true, length = -1)
+    @Column(name = "material", length = -1)
     private String material;
 
     @Basic
-    @Column(name = "archive_num", nullable = true, length = -1)
+    @Column(name = "archive_num", length = -1)
     private String archiveNum;
 
     @Basic
-    @Column(name = "description", nullable = true, length = -1)
+    @Column(name = "description", length = -1)
     private String description;
 
     @Basic
-    @Column(name = "image_url", nullable = true, length = -1)
+    @Column(name = "image_url", length = -1)
     private String imageUrl;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_exhibit",
             joinColumns = @JoinColumn(name = "exhibit_id"),
