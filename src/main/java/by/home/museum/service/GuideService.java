@@ -2,6 +2,9 @@ package by.home.museum.service;
 
 import by.home.museum.entity.GuideEntity;
 
+/**
+ * Guide service interface
+ */
 public interface GuideService extends EntityService<GuideEntity> {
 
     /**

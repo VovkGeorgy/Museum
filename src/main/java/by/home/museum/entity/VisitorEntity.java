@@ -40,7 +40,8 @@ public class VisitorEntity {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_visitor",
             joinColumns = @JoinColumn(name = "visitor_id"),
             inverseJoinColumns = @JoinColumn(name = "tour_id"))

@@ -18,6 +18,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Spring Mvc configuration class
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan("by.home.museum")
@@ -80,9 +83,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry
-                .addViewController("/**/{path:[^\\oauth/token]+}")
-                .setViewName("forward:/index.html");
+        registry.addViewController("/").setViewName("forward:/index.html");
+//                .addViewController("/**/{path:[^\\oauth/token]+}")
+        registry.addViewController("/exhibits").setViewName("forward:/index.html");
     }
 
     /**
@@ -92,7 +95,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper;
+        return new ObjectMapper();
     }
 }

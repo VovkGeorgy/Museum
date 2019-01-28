@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Jpa configuration class
+ */
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:app.properties")

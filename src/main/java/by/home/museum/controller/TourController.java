@@ -1,6 +1,7 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.ExhibitEntity;
+import by.home.museum.entity.GuideEntity;
 import by.home.museum.entity.TourEntity;
 import by.home.museum.service.TourService;
 import org.slf4j.Logger;
@@ -16,6 +17,9 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * Tour component rest controller
+ */
 @RestController
 @RequestMapping("/tour")
 public class TourController {
@@ -76,6 +80,15 @@ public class TourController {
         Set<ExhibitEntity> exhibitList = new HashSet<>(tour.getExhibitEntityList());
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibitList}, Locale.getDefault()));
         return new ResponseEntity<>(exhibitList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tours/guide/{tourId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getTourGuide(@PathVariable long tourId) {
+        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
+        TourEntity tour = tourService.findOne(tourId);
+        GuideEntity guide = tour.getGuideEntity();
+        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{guide}, Locale.getDefault()));
+        return new ResponseEntity<>(guide, HttpStatus.OK);
     }
 
     /**

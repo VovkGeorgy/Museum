@@ -14,9 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * Visitor component rest controller
+ */
 @RestController
 @RequestMapping("/visitor")
 public class VisitorController {
@@ -83,7 +87,8 @@ public class VisitorController {
     public ResponseEntity<?> addVisitor(@RequestBody VisitorEntity visitor) {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitor}, Locale.getDefault()));
         VisitorEntity newVisitor = visitorService.save(visitor);
-        UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword(), Arrays.asList(rolesService.getByName("VISITOR")));
+        UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword(), Collections.singletonList
+                (rolesService.getByName("VISITOR")));
         signupService.addUser(newUser);
         LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newVisitor}, Locale.getDefault()));
         return new ResponseEntity<>(newVisitor, HttpStatus.CREATED);
@@ -105,7 +110,8 @@ public class VisitorController {
         VisitorEntity updatedVisitor = visitorService.save(visitor);
         UsersEntity usersEntity = userService.findByUsername(updatedVisitor.getUsername());
         if (usersEntity == null) {
-            UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword(), Arrays.asList(rolesService.getByName("VISITOR")));
+            UsersEntity newUser = new UsersEntity(visitor.getUsername(), visitor.getPassword(), Collections.singletonList
+                    (rolesService.getByName("VISITOR")));
             signupService.addUser(newUser);
         } else {
             usersEntity.setPassword(updatedVisitor.getPassword());
@@ -126,8 +132,9 @@ public class VisitorController {
     public ResponseEntity<?> deleteVisitor(@PathVariable long visitorId) {
         LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);
-        visitorService.delete(visitor);
         UsersEntity usersEntity = userService.findByUsername(visitor.getUsername());
+        //TODO controller not delete entity with tours
+        visitorService.delete(visitor);
         signupService.delUser(usersEntity);
         LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);

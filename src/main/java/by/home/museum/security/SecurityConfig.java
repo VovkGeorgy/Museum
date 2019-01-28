@@ -1,5 +1,6 @@
 package by.home.museum.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,15 +21,16 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+/**
+ * Spring Web Security configuration class
+ */
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private ClientDetailsService clientDetailsService;
-
-    @Autowired
-    private MuseumUserDetailsService museumUserDetailsService;
+    private final ClientDetailsService clientDetailsService;
+    private final MuseumUserDetailsService museumUserDetailsService;
 
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)

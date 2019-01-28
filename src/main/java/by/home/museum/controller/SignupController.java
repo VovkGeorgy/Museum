@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
+/**
+ * SignUp component rest controller
+ */
 @RestController
 public class SignupController {
 
@@ -44,7 +48,7 @@ public class SignupController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody UsersEntity user) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
-        user.setRoles(Arrays.asList(rolesService.getByName("USER")));
+        user.setRoles(Collections.singletonList(rolesService.getByName("VISITOR")));
         UsersEntity newUser = signupService.addUser(user);
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newUser}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
@@ -80,7 +84,8 @@ public class SignupController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addAdmin(@RequestBody UsersEntity user) {
         logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
-        user.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("USER")));
+        user.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("GUIDE"), rolesService.getByName
+                ("VISITOR")));
         UsersEntity newUser = signupService.addUser(user);
         logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);

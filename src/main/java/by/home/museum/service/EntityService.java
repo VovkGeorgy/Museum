@@ -1,5 +1,8 @@
 package by.home.museum.service;
 
+/**
+ * Entity service interface
+ */
 public interface EntityService<T> {
     /**
      * Deletes a given entity.

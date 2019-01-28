@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.Locale;
 
+/**
+ * Guide component rest controller
+ */
 @RestController
 @RequestMapping("/guide")
 public class GuideController {

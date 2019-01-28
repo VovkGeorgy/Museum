@@ -3,20 +3,20 @@ package by.home.museum.service.impl;
 import by.home.museum.entity.TourEntity;
 import by.home.museum.repository.TourRepository;
 import by.home.museum.service.TourService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Tour service class
+ */
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TourServiceImpl implements TourService {
 
     private final TourRepository repository;
-
-    @Autowired
-    public TourServiceImpl(TourRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public void delete(TourEntity deleted) {

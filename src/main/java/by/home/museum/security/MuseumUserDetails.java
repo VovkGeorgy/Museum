@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Museum user details for security class
+ */
 public class MuseumUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -17,7 +20,7 @@ public class MuseumUserDetails implements UserDetails {
     private String password;
     private String username;
 
-    public MuseumUserDetails(UsersEntity user) {
+    MuseumUserDetails(UsersEntity user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.authorities = translate(user.getRoles());

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * Exhibit component rest controller
+ */
 @RestController
 @RequestMapping("/exhibit")
 public class ExhibitController {

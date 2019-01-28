@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 
+/**
+ * About component rest controller
+ */
 @RestController
 @RequestMapping("/abo")
 public class AboutController {
