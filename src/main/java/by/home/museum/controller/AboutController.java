@@ -1,5 +1,6 @@
 package by.home.museum.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,12 @@ import java.util.Locale;
 /**
  * About component rest controller
  */
+@Slf4j
 @RestController
 @RequestMapping("/abo")
 public class AboutController {
 
     private final MessageSource messageSource;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AboutController.class);
 
     @Autowired
     public AboutController(MessageSource messageSource) {
@@ -39,9 +40,9 @@ public class AboutController {
      */
     @RequestMapping(value = "/whoiam", method = RequestMethod.GET)
     public ResponseEntity<?> getRole() {
-        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{authentication}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{authentication}, Locale.getDefault()));
         return new ResponseEntity<>(authentication.getAuthorities(), HttpStatus.OK);
     }
 

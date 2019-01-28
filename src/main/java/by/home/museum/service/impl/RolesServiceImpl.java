@@ -18,12 +18,7 @@ public class RolesServiceImpl implements RolesService {
 
     private final RolesRepository rolesRepository;
 
-    /**
-     * Find entity by name
-     *
-     * @param name - name
-     * @return entity
-     */
+    @Override
     public RolesEntity getByName(String name) {
         return rolesRepository.findByName(name);
     }

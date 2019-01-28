@@ -3,8 +3,7 @@ package by.home.museum.controller;
 import by.home.museum.entity.ExhibitEntity;
 import by.home.museum.entity.TourEntity;
 import by.home.museum.service.ExhibitService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -18,13 +17,13 @@ import java.util.Set;
 /**
  * Exhibit component rest controller
  */
+@Slf4j
 @RestController
 @RequestMapping("/exhibit")
 public class ExhibitController {
 
     private final ExhibitService exhibitService;
     private final MessageSource messageSource;
-    private static final Logger logger = LoggerFactory.getLogger(ExhibitController.class);
 
     @Autowired
     public ExhibitController(ExhibitService exhibitService, MessageSource messageSource) {
@@ -41,9 +40,9 @@ public class ExhibitController {
      */
     @RequestMapping(value = "/exhibits", method = RequestMethod.GET)
     public ResponseEntity<?> getExhibits() {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         Iterable<ExhibitEntity> exhibitList = exhibitService.findAll();
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibitList}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibitList}, Locale.getDefault()));
         return new ResponseEntity<>(exhibitList, HttpStatus.OK);
     }
 
@@ -56,9 +55,9 @@ public class ExhibitController {
      */
     @RequestMapping(value = "/exhibits/{exhibitId}", method = RequestMethod.GET)
     public ResponseEntity<?> getExhibit(@PathVariable long exhibitId) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibit}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibit}, Locale.getDefault()));
         return new ResponseEntity<>(exhibit, HttpStatus.OK);
     }
 
@@ -71,10 +70,10 @@ public class ExhibitController {
      */
     @RequestMapping(value = "/exhibits/tours/{exhibitId}", method = RequestMethod.GET)
     public ResponseEntity<?> getExhibitTours(@PathVariable long exhibitId) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
         Set<TourEntity> tourSet = exhibit.getTourEntitySet();
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibit}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{exhibit}, Locale.getDefault()));
         return new ResponseEntity<>(tourSet, HttpStatus.OK);
     }
 
@@ -88,9 +87,9 @@ public class ExhibitController {
      */
     @RequestMapping(value = "/exhibits/add", method = RequestMethod.POST)
     public ResponseEntity<?> addExhibit(@RequestBody ExhibitEntity exhibit) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibit}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibit}, Locale.getDefault()));
         ExhibitEntity newExhibit = exhibitService.save(exhibit);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newExhibit}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newExhibit}, Locale.getDefault()));
         return new ResponseEntity<>(newExhibit, HttpStatus.CREATED);
     }
 
@@ -106,9 +105,9 @@ public class ExhibitController {
     @RequestMapping(value = "/exhibits/update/{exhibitId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateExhibit(@PathVariable long exhibitId,
                                            @RequestBody ExhibitEntity exhibit) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibit}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibit}, Locale.getDefault()));
         ExhibitEntity updatedExhibit = exhibitService.save(exhibit);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedExhibit}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedExhibit}, Locale.getDefault()));
         return new ResponseEntity<>(updatedExhibit, HttpStatus.OK);
     }
 
@@ -122,10 +121,10 @@ public class ExhibitController {
     @RequestMapping(value = "/exhibits/delete/{exhibitId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteExhibit(@PathVariable long exhibitId) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibitId}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibitId}, Locale.getDefault()));
         ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
         exhibitService.delete(exhibit);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
