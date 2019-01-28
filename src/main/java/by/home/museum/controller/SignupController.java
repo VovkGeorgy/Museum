@@ -3,6 +3,7 @@ package by.home.museum.controller;
 import by.home.museum.entity.UsersEntity;
 import by.home.museum.service.RolesService;
 import by.home.museum.service.SignupService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -23,18 +24,12 @@ import java.util.Locale;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SignupController {
 
     private final SignupService signupService;
     private final RolesService rolesService;
     private final MessageSource messageSource;
-
-    @Autowired
-    public SignupController(SignupService signupService, RolesService rolesService, MessageSource messageSource) {
-        this.signupService = signupService;
-        this.rolesService = rolesService;
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method

@@ -3,6 +3,7 @@ package by.home.museum.controller;
 import by.home.museum.entity.ExhibitEntity;
 import by.home.museum.entity.TourEntity;
 import by.home.museum.service.ExhibitService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -20,16 +21,11 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequestMapping("/exhibit")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ExhibitController {
 
     private final ExhibitService exhibitService;
     private final MessageSource messageSource;
-
-    @Autowired
-    public ExhibitController(ExhibitService exhibitService, MessageSource messageSource) {
-        this.exhibitService = exhibitService;
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method

@@ -1,8 +1,7 @@
 package by.home.museum.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -22,14 +21,10 @@ import java.util.Locale;
 @Slf4j
 @RestController
 @RequestMapping("/abo")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AboutController {
 
     private final MessageSource messageSource;
-
-    @Autowired
-    public AboutController(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method

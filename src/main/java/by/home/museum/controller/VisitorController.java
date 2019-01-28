@@ -5,6 +5,7 @@ import by.home.museum.entity.TourVisitorDao;
 import by.home.museum.entity.UsersEntity;
 import by.home.museum.entity.VisitorEntity;
 import by.home.museum.service.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -22,6 +23,7 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequestMapping("/visitor")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class VisitorController {
 
     private final VisitorService visitorService;
@@ -30,17 +32,6 @@ public class VisitorController {
     private final RolesService rolesService;
     private final SignupService signupService;
     private final MessageSource messageSource;
-
-    @Autowired
-    public VisitorController(VisitorService visitorService, TourService tourService, UserService userService, RolesService 
-            rolesService, SignupService signupService, MessageSource messageSource) {
-        this.visitorService = visitorService;
-        this.tourService = tourService;
-        this.userService = userService;
-        this.rolesService = rolesService;
-        this.signupService = signupService;
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method
@@ -155,6 +146,14 @@ public class VisitorController {
         return new ResponseEntity<>(neededVisitor, HttpStatus.OK);
     }
 
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/visitor/visitors/addTour
+     * HTTP method: POST
+     *
+     * @param tvd tour-visitor-dao entity
+     * @return updated visitor
+     */
     @RequestMapping(value = "/visitors/addTour", method = RequestMethod.POST)
     public ResponseEntity<?> addTourToVisitor(@RequestBody TourVisitorDao tvd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tvd.getVisitorId()}, Locale.getDefault()));
@@ -166,6 +165,14 @@ public class VisitorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/visitor/toursCheck
+     * HTTP method: POST
+     *
+     * @param tVd tour-visitor-dao entity
+     * @return result of checking
+     */
     @RequestMapping(value = "/toursCheck", method = RequestMethod.POST)
     public ResponseEntity<?> isTourInFavourites(@RequestBody TourVisitorDao tVd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
@@ -176,6 +183,14 @@ public class VisitorController {
         return new ResponseEntity<>(toursSet.contains(tourEntity), HttpStatus.OK);
     }
 
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/visitor/visitors/removeTour
+     * HTTP method: POST
+     *
+     * @param tVd tour-visitor-dao entity
+     * @return HTTP status OK
+     */
     @RequestMapping(value = "/visitors/removeTour", method = RequestMethod.POST)
     public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourVisitorDao tVd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
@@ -188,6 +203,14 @@ public class VisitorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/visitor/tours/findAll/
+     * HTTP method: GET
+     *
+     * @param visitorId id of visitor
+     * @return tours set from visitor
+     */
     @RequestMapping(value = "/tours/findAll/{visitorId}", method = RequestMethod.GET)
     public ResponseEntity<?> getVisitorTours(@PathVariable long visitorId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));

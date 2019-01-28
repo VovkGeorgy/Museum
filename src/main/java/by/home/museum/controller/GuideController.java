@@ -6,6 +6,7 @@ import by.home.museum.service.GuideService;
 import by.home.museum.service.RolesService;
 import by.home.museum.service.SignupService;
 import by.home.museum.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -23,6 +24,7 @@ import java.util.Locale;
 @Slf4j
 @RestController
 @RequestMapping("/guide")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GuideController {
 
     private final GuideService guideService;
@@ -30,16 +32,6 @@ public class GuideController {
     private final RolesService rolesService;
     private final SignupService signupService;
     private final MessageSource messageSource;
-
-    @Autowired
-    public GuideController(GuideService guideService, UserService userService, RolesService rolesService,
-                           SignupService signupService, MessageSource messageSource) {
-        this.guideService = guideService;
-        this.userService = userService;
-        this.rolesService = rolesService;
-        this.signupService = signupService;
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method

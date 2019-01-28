@@ -4,6 +4,7 @@ import by.home.museum.entity.ExhibitEntity;
 import by.home.museum.entity.GuideEntity;
 import by.home.museum.entity.TourEntity;
 import by.home.museum.service.TourService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -22,16 +23,11 @@ import java.util.Set;
 @Slf4j
 @RestController
 @RequestMapping("/tour")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TourController {
 
     private final TourService tourService;
     private final MessageSource messageSource;
-
-    @Autowired
-    public TourController(TourService tourService, MessageSource messageSource) {
-        this.tourService = tourService;
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method
