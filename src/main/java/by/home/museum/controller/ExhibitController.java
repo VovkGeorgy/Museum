@@ -2,7 +2,9 @@ package by.home.museum.controller;
 
 import by.home.museum.entity.ExhibitEntity;
 import by.home.museum.entity.TourEntity;
+import by.home.museum.entity.TourExhibitDao;
 import by.home.museum.service.ExhibitService;
+import by.home.museum.service.TourService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ public class ExhibitController {
 
     private final ExhibitService exhibitService;
     private final MessageSource messageSource;
+    private final TourService tourService;
 
     /**
      * this method maps the following URL & http method
@@ -121,6 +124,26 @@ public class ExhibitController {
         ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
         exhibitService.delete(exhibit);
         log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/exhibit/exhibits/removeTour
+     * HTTP method: POST
+     *
+     * @param ted tour-exhibit-dao entity
+     * @return HTTP status OK
+     */
+    @RequestMapping(value = "/exhibits/removeTour", method = RequestMethod.POST)
+    public ResponseEntity<?> removeTourFromExhibit(@RequestBody TourExhibitDao ted) {
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{ted}, Locale.getDefault()));
+        ExhibitEntity exhibitEntity = exhibitService.findOne(ted.getExhibitId());
+        Set<TourEntity> exhibitToursSet = exhibitEntity.getTourEntitySet();
+        exhibitToursSet.remove(tourService.findOne(ted.getTourId()));
+        exhibitEntity.setTourEntitySet(exhibitToursSet);
+        ExhibitEntity updatedExhibit = exhibitService.save(exhibitEntity);
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedExhibit}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

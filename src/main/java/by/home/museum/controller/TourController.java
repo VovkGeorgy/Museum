@@ -3,6 +3,7 @@ package by.home.museum.controller;
 import by.home.museum.entity.ExhibitEntity;
 import by.home.museum.entity.GuideEntity;
 import by.home.museum.entity.TourEntity;
+import by.home.museum.entity.VisitorEntity;
 import by.home.museum.service.TourService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,6 +78,14 @@ public class TourController {
         return new ResponseEntity<>(exhibitList, HttpStatus.OK);
     }
 
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/tour/tours/guide/{tourId}
+     * HTTP method: GET
+     *
+     * @param tourId tour id
+     * @return tour guide
+     */
     @RequestMapping(value = "/tours/guide/{tourId}", method = RequestMethod.GET)
     public ResponseEntity<?> getTourGuide(@PathVariable long tourId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
@@ -115,9 +124,15 @@ public class TourController {
     public ResponseEntity<?> updateTour(@PathVariable long tourId,
                                         @RequestBody TourEntity tour) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
-        TourEntity updatedTour = tourService.save(tour);
-        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedTour}, Locale.getDefault()));
-        return new ResponseEntity<>(updatedTour, HttpStatus.OK);
+        TourEntity tourEntity = tourService.findOne(tourId);
+        tourEntity.setTheme(tour.getTheme());
+        tourEntity.setTypeOfExhibits(tour.getTypeOfExhibits());
+        tourEntity.setDuration(tour.getDuration());
+        tourEntity.setCost(tour.getCost());
+        tourEntity.setImageUrl(tour.getImageUrl());
+        TourEntity savedEntity = tourService.save(tourEntity);
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{savedEntity}, Locale.getDefault()));
+        return new ResponseEntity<>(tourEntity, HttpStatus.OK);
     }
 
     /**
@@ -135,5 +150,21 @@ public class TourController {
         tourService.delete(tour);
         log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/tour/tours/visitors/{tourId}
+     * HTTP method: GET
+     *
+     * @param tourId - Id of tour which need delete
+     */
+    @RequestMapping(value = "/tours/visitors/{tourId}", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<?> getTourVisitors(@PathVariable long tourId) {
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
+        Set<VisitorEntity> visitorsSet = tourService.findOne(tourId).getVisitorEntitySet();
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        return new ResponseEntity<>(visitorsSet, HttpStatus.OK);
     }
 }

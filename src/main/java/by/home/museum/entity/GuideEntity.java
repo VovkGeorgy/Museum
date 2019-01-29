@@ -20,15 +20,15 @@ public class GuideEntity {
     private Long guideId;
 
     @Basic
-    @Column(name = "username", nullable = false, length = 10)
+    @Column(name = "username", nullable = false)
     private String username;
 
     @Basic
-    @Column(name = "password", nullable = false, length = 10)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Basic
-    @Column(name = "fio", length = -1)
+    @Column(name = "fio")
     public String fio;
 
     @Basic
@@ -40,7 +40,7 @@ public class GuideEntity {
     private Short experience;
 
     @Basic
-    @Column(name = "languages", length = -1)
+    @Column(name = "languages")
     private String languages;
 
     @ToString.Exclude

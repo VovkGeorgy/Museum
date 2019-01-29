@@ -18,7 +18,7 @@ public class RolesEntity {
     private Long id;
 
     @Basic
-    @Column(name = "name", nullable = false, length = -1)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ToString.Exclude

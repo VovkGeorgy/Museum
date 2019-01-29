@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -122,10 +123,10 @@ public class VisitorController {
     public ResponseEntity<?> deleteVisitor(@PathVariable long visitorId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);
-        UsersEntity usersEntity = userService.findByUsername(visitor.getUsername());
-        //TODO controller not delete entity with tours
+        visitor.setTourEntitySet(new HashSet<>());
+        visitorService.save(visitor);
         visitorService.delete(visitor);
-        signupService.delUser(usersEntity);
+        signupService.delUser(userService.findByUsername(visitor.getUsername()));
         log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }

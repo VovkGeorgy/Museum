@@ -18,7 +18,7 @@ public class ExhibitEntity {
     private Long exhibitId;
 
     @Basic
-    @Column(name = "title", length = -1)
+    @Column(name = "title")
     private String title;
 
     @Basic
@@ -26,19 +26,19 @@ public class ExhibitEntity {
     private String dated;
 
     @Basic
-    @Column(name = "material", length = -1)
+    @Column(name = "material")
     private String material;
 
     @Basic
-    @Column(name = "archive_num", length = -1)
+    @Column(name = "archive_num")
     private String archiveNum;
 
     @Basic
-    @Column(name = "description", length = -1)
+    @Column(name = "description")
     private String description;
 
     @Basic
-    @Column(name = "image_url", length = -1)
+    @Column(name = "image_url")
     private String imageUrl;
 
     @ToString.Exclude
