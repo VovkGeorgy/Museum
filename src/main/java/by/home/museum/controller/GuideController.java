@@ -1,11 +1,10 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.GuideEntity;
+import by.home.museum.entity.TourEntity;
+import by.home.museum.entity.TourGuideDao;
 import by.home.museum.entity.UsersEntity;
-import by.home.museum.service.GuideService;
-import by.home.museum.service.RolesService;
-import by.home.museum.service.SignupService;
-import by.home.museum.service.UserService;
+import by.home.museum.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import java.util.Locale;
 public class GuideController {
 
     private final GuideService guideService;
+    private final TourService tourService;
     private final UserService userService;
     private final RolesService rolesService;
     private final SignupService signupService;
@@ -121,7 +121,7 @@ public class GuideController {
      *
      * @param guideId - Id of guide which need delete
      */
-    @RequestMapping(value = "/guides/delete/{guideId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/guides/delete/{guideId}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteGuide(@PathVariable long guideId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guideId}, Locale.getDefault()));
@@ -147,5 +147,22 @@ public class GuideController {
         GuideEntity guide = guideService.findByUsername(username);
         log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(guide, HttpStatus.OK);
+    }
+
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/guide/guides/removeTour
+     * HTTP method: POST
+     *
+     * @param tgd tour-guide-dao entity
+     * @return HTTP status OK
+     */
+    @RequestMapping(value = "/guides/removeTour", method = RequestMethod.POST)
+    public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourGuideDao tgd) {
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tgd}, Locale.getDefault()));
+        TourEntity tourEntity = tourService.findOne(tgd.getTourId());
+        tourEntity.setGuideEntity(null);
+        TourEntity updatedEntity = tourService.save(tourEntity);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
