@@ -67,22 +67,3 @@ CREATE TABLE users_roles (
   role_id BIGINT REFERENCES roles (id),
   CONSTRAINT uni_user_role UNIQUE (user_id, role_id)
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

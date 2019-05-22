@@ -11,7 +11,12 @@
             <pattern>%-4r [%t] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
-    <root level="debug">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%black(%d{ISO8601}) %highlight(%-5level) %yellow(%C{1.}): %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="info">
         <appender-ref ref="FILE"/>
     </root>
 </configuration>
