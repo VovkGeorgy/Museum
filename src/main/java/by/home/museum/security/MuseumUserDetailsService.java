@@ -2,17 +2,21 @@ package by.home.museum.security;
 
 import by.home.museum.entity.UsersEntity;
 import by.home.museum.repository.UsersRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Museum user details service class
+ */
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class MuseumUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UsersRepository userRepository;
+    private final UsersRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

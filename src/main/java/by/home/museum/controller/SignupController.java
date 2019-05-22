@@ -3,8 +3,8 @@ package by.home.museum.controller;
 import by.home.museum.entity.UsersEntity;
 import by.home.museum.service.RolesService;
 import by.home.museum.service.SignupService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -16,22 +16,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
+/**
+ * SignUp component rest controller
+ */
+@Slf4j
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SignupController {
 
     private final SignupService signupService;
     private final RolesService rolesService;
     private final MessageSource messageSource;
-    private static final Logger logger = LoggerFactory.getLogger(SignupController.class);
-
-    @Autowired
-    public SignupController(SignupService signupService, RolesService rolesService, MessageSource messageSource) {
-        this.signupService = signupService;
-        this.rolesService = rolesService;
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method
@@ -43,10 +41,10 @@ public class SignupController {
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody UsersEntity user) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
-        user.setRoles(Arrays.asList(rolesService.getByName("USER")));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
+        user.setRoles(Collections.singletonList(rolesService.getByName("VISITOR")));
         UsersEntity newUser = signupService.addUser(user);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newUser}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newUser}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -61,9 +59,9 @@ public class SignupController {
     @RequestMapping(value = "/delUser", method = RequestMethod.POST)
     @PreAuthorize("hasRole('GUIDE')")
     public ResponseEntity<?> delUser(@RequestBody UsersEntity user) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
         signupService.delUser(user);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -79,10 +77,11 @@ public class SignupController {
     @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addAdmin(@RequestBody UsersEntity user) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
-        user.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("USER")));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{user}, Locale.getDefault()));
+        user.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("GUIDE"), rolesService.getByName
+                ("VISITOR")));
         UsersEntity newUser = signupService.addUser(user);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

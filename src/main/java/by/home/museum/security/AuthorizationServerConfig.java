@@ -1,7 +1,7 @@
 package by.home.museum.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +14,12 @@ import org.springframework.security.oauth2.provider.approval.UserApprovalHandler
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
+/**
+ * Authorization configuration class
+ */
 @Configuration
 @EnableAuthorizationServer
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private static final int TEN_DAYS = 60 * 60 * 24 * 10;
@@ -30,15 +34,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Value("${security.oauthServer.realm}")
     private String realm;
-
-    @Autowired
-    public AuthorizationServerConfig(TokenStore tokenStore, JwtAccessTokenConverter jwtTokenEnhancer, UserApprovalHandler userApprovalHandler, @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, MuseumUserDetailsService museumUserDetailsService) {
-        this.tokenStore = tokenStore;
-        this.jwtTokenEnhancer = jwtTokenEnhancer;
-        this.userApprovalHandler = userApprovalHandler;
-        this.authenticationManager = authenticationManager;
-        this.museumUserDetailsService = museumUserDetailsService;
-    }
 
     /**
      * Method create inMemory client details for authorization

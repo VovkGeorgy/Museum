@@ -1,13 +1,12 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.GuideEntity;
+import by.home.museum.entity.TourEntity;
+import by.home.museum.entity.TourGuideDao;
 import by.home.museum.entity.UsersEntity;
-import by.home.museum.service.GuideService;
-import by.home.museum.service.RolesService;
-import by.home.museum.service.SignupService;
-import by.home.museum.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import by.home.museum.service.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -18,26 +17,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.Locale;
 
+/**
+ * Guide component rest controller
+ */
+@Slf4j
 @RestController
 @RequestMapping("/guide")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GuideController {
 
     private final GuideService guideService;
+    private final TourService tourService;
     private final UserService userService;
     private final RolesService rolesService;
     private final SignupService signupService;
     private final MessageSource messageSource;
-    private static final Logger logger = LoggerFactory.getLogger(GuideController.class);
-
-    @Autowired
-    public GuideController(GuideService guideService, UserService userService, RolesService rolesService,
-                           SignupService signupService, MessageSource messageSource) {
-        this.guideService = guideService;
-        this.userService = userService;
-        this.rolesService = rolesService;
-        this.signupService = signupService;
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method
@@ -48,9 +42,9 @@ public class GuideController {
      */
     @RequestMapping(value = "/guides", method = RequestMethod.GET)
     public ResponseEntity<?> getGuides() {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         Iterable<GuideEntity> guideList = guideService.findAll();
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{guideList}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{guideList}, Locale.getDefault()));
         return new ResponseEntity<>(guideList, HttpStatus.OK);
     }
 
@@ -64,9 +58,9 @@ public class GuideController {
      */
     @RequestMapping(value = "/guides/{guideId}", method = RequestMethod.GET)
     public ResponseEntity<?> getGuide(@PathVariable long guideId) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         GuideEntity guide = guideService.findOne(guideId);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{guide}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{guide}, Locale.getDefault()));
         return new ResponseEntity<>(guide, HttpStatus.OK);
     }
 
@@ -81,12 +75,12 @@ public class GuideController {
      */
     @RequestMapping(value = "/guides/add", method = RequestMethod.POST)
     public ResponseEntity<?> addGuide(@RequestBody GuideEntity guide) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
         GuideEntity newGuide = guideService.save(guide);
         UsersEntity newAdmin = new UsersEntity(guide.getUsername(), guide.getPassword());
         newAdmin.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("USER")));
         signupService.addUser(newAdmin);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newGuide}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{newGuide}, Locale.getDefault()));
         return new ResponseEntity<>(newGuide, HttpStatus.OK);
     }
 
@@ -104,7 +98,7 @@ public class GuideController {
     @RequestMapping(value = "/guides/update/{guideId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateGuide(@PathVariable long guideId,
                                          @RequestBody GuideEntity guide) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
         GuideEntity updatedGuide = guideService.save(guide);
         UsersEntity usersEntity = userService.findByUsername(updatedGuide.getUsername());
         if (usersEntity == null) {
@@ -115,7 +109,7 @@ public class GuideController {
             usersEntity.setPassword(updatedGuide.getPassword());
             signupService.addUser(usersEntity);
         }
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedGuide}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedGuide}, Locale.getDefault()));
         return new ResponseEntity<>(updatedGuide, HttpStatus.OK);
     }
 
@@ -127,15 +121,15 @@ public class GuideController {
      *
      * @param guideId - Id of guide which need delete
      */
-    @RequestMapping(value = "/guides/delete/{guideId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/guides/delete/{guideId}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteGuide(@PathVariable long guideId) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{guideId}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guideId}, Locale.getDefault()));
         GuideEntity guide = guideService.findOne(guideId);
         guideService.delete(guide);
         UsersEntity usersEntity = userService.findByUsername(guide.getUsername());
         signupService.delUser(usersEntity);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -149,9 +143,26 @@ public class GuideController {
      */
     @RequestMapping(value = "/guides/getByUsername", method = RequestMethod.POST)
     public ResponseEntity<?> getByUsername(@RequestBody String username) {
-        logger.debug(messageSource.getMessage("controller.getRequest", new Object[]{username}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{username}, Locale.getDefault()));
         GuideEntity guide = guideService.findByUsername(username);
-        logger.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(guide, HttpStatus.OK);
+    }
+
+    /**
+     * this method maps the following URL & http method
+     * URL: http://hostname:port/guide/guides/removeTour
+     * HTTP method: POST
+     *
+     * @param tgd tour-guide-dao entity
+     * @return HTTP status OK
+     */
+    @RequestMapping(value = "/guides/removeTour", method = RequestMethod.POST)
+    public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourGuideDao tgd) {
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tgd}, Locale.getDefault()));
+        TourEntity tourEntity = tourService.findOne(tgd.getTourId());
+        tourEntity.setGuideEntity(null);
+        TourEntity updatedEntity = tourService.save(tourEntity);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

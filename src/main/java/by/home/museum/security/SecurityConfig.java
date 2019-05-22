@@ -1,5 +1,6 @@
 package by.home.museum.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,16 +20,23 @@ import org.springframework.security.oauth2.provider.request.DefaultOAuth2Request
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+import java.util.Collections;
+
+/**
+ * Spring Web Security configuration class
+ */
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private ClientDetailsService clientDetailsService;
-
-    @Autowired
-    private MuseumUserDetailsService museumUserDetailsService;
+    private final ClientDetailsService clientDetailsService;
+    private final MuseumUserDetailsService museumUserDetailsService;
 
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -37,10 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable()
+                .cors()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/exhibits").permitAll()
+                .antMatchers("/exhibit/exhibits").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic().realmName("MUSEUM_REALM");

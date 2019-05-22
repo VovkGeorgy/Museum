@@ -1,7 +1,7 @@
 package by.home.museum.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -15,17 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
 
+/**
+ * About component rest controller
+ */
+@Slf4j
 @RestController
 @RequestMapping("/abo")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AboutController {
 
     private final MessageSource messageSource;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AboutController.class);
-
-    @Autowired
-    public AboutController(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
 
     /**
      * this method maps the following URL & http method
@@ -36,9 +35,9 @@ public class AboutController {
      */
     @RequestMapping(value = "/whoiam", method = RequestMethod.GET)
     public ResponseEntity<?> getRole() {
-        LOGGER.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LOGGER.debug(messageSource.getMessage("controller.returnResponse", new Object[]{authentication}, Locale.getDefault()));
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{authentication}, Locale.getDefault()));
         return new ResponseEntity<>(authentication.getAuthorities(), HttpStatus.OK);
     }
 

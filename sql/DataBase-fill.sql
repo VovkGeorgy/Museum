@@ -1,3 +1,11 @@
+INSERT INTO guide (username, password, fio, age, experience, languages) VALUES
+  ('guide', '11111', 'testGuide', 99, 1, 'Labudabudab'),
+  ('guide1', '11111', 'Guide 1 1', 21, 2, 'EN,FR'),
+  ('guide2', '11111', 'Guide 2 2', 22, 3, 'EN,FR,PL'),
+  ('guide3', '11111', 'Guide 3 3', 23, 4, 'EN'),
+  ('guide4', '11111', 'Guide 4 4', 23, 4, 'RU,CHN'),
+  ('guide5', '11111', 'Guide 5 5', 23, 4, 'EN,RU,CHN');
+
 INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url, guide_id) VALUES
   ('Italian Renaissance', 'paintings', '1', 300.30,
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338',
@@ -10,15 +18,6 @@ INSERT INTO tour (theme, type_of_exhibits, duration, cost, image_url, guide_id) 
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_64583.jpg?1308124152', 4),
   ('Osiris, An Ancient Egyptian God', 'antiquities', '1', 150.75,
    'https://www.louvre.fr/sites/default/files/imagecache/278x370/image_1308_0.jpg?1309860410', 5);
-
-INSERT INTO guide (username, password, fio, age, experience, languages) VALUES
-  ('guide', '11111', 'testGuide', 99, 1, 'Labudabudab'),
-  ('guide1', '11111', 'Guide 1 1', 21, 2, 'EN,FR'),
-  ('guide2', '11111', 'Guide 2 2', 22, 3, 'EN,FR,PL'),
-  ('guide3', '11111', 'Guide 3 3', 23, 4, 'EN'),
-  ('guide4', '11111', 'Guide 4 4', 23, 4, 'RU,CHN'),
-  ('guide5', '11111', 'Guide 5 5', 23, 4, 'EN,RU,CHN');
-
 
 INSERT INTO exhibit (title, dated, material, archive_num, description, image_url) VALUES
   ('St. Francis of Assisi Receiving the Stigmata', '1300', 'canvas', 'as2d21s',
@@ -79,7 +78,35 @@ INSERT INTO tour_exhibit (tour_id, exhibit_id) VALUES
 INSERT INTO tour_visitor (tour_id, visitor_id) VALUES
   ('1', '1'),
   ('1', '2'),
-  ('1', '3');
+  ('1', '3'),
+  ('1', '4'),
+  ('1', '5'),
+  ('1', '6'),
+  ('2', '1'),
+  ('2', '2'),
+  ('2', '3'),
+  ('2', '4'),
+  ('2', '5'),
+  ('2', '6'),
+  ('3', '1'),
+  ('3', '2'),
+  ('3', '3'),
+  ('3', '4'),
+  ('3', '5'),
+  ('3', '6'),
+  ('4', '1'),
+  ('4', '2'),
+  ('4', '3'),
+  ('4', '4'),
+  ('4', '5'),
+  ('4', '6'),
+  ('5', '1'),
+  ('5', '1'),
+  ('5', '2'),
+  ('5', '3'),
+  ('5', '4'),
+  ('5', '5'),
+  ('5', '6');
 
 INSERT INTO users (username, password) VALUES
   ('admin', '11111'),
@@ -120,12 +147,5 @@ INSERT INTO users_roles (user_id, role_id) VALUES
   ('11', '1'),
   ('11', '2'),
   ('12', '1'),
-  ('12', '2'),
-  ('13', '1');
-
-
-
-
-
-
+  ('12', '2');
 

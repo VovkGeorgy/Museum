@@ -9,20 +9,33 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Spring Mvc configuration class
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan("by.home.museum")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+    /**
+     * Method allow CORS
+     *
+     * @param registry cors registry
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
     /**
      * Add to converters a json message converter
      *
@@ -80,9 +93,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry
-                .addViewController("/**/{path:[^\\oauth/token]+}")
-                .setViewName("forward:/index.html");
+        registry.addViewController("/").setViewName("forward:/index.html");
+        registry.addViewController("/exhibits").setViewName("forward:/index.html");
     }
 
     /**
@@ -92,7 +104,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper;
+        return new ObjectMapper();
     }
 }

@@ -19,11 +19,11 @@ public class VisitorEntity {
     private Long visitorId;
 
     @Basic
-    @Column(name = "username", nullable = false, length = -1)
+    @Column(name = "username", nullable = false)
     private String username;
 
     @Basic
-    @Column(name = "password", nullable = false, length = -1)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Basic
@@ -40,7 +40,7 @@ public class VisitorEntity {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_visitor",
             joinColumns = @JoinColumn(name = "visitor_id"),
             inverseJoinColumns = @JoinColumn(name = "tour_id"))

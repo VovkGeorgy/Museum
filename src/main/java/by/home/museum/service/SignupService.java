@@ -2,6 +2,9 @@ package by.home.museum.service;
 
 import by.home.museum.entity.UsersEntity;
 
+/**
+ * SignUp service interface
+ */
 public interface SignupService {
 
     /**

@@ -2,6 +2,9 @@ package by.home.museum.service;
 
 import by.home.museum.entity.RolesEntity;
 
+/**
+ * Roles service interface
+ */
 public interface RolesService {
 
     /**

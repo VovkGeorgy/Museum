@@ -23,11 +23,11 @@ public class TourEntity {
     private Long tourId;
 
     @Basic
-    @Column(name = "theme", length = -1)
+    @Column(name = "theme")
     private String theme;
 
     @Basic
-    @Column(name = "type_of_exhibits", length = -1)
+    @Column(name = "type_of_exhibits")
     private String typeOfExhibits;
 
     @Basic
@@ -39,30 +39,32 @@ public class TourEntity {
     private Double cost;
 
     @Basic
-    @Column(name = "image_url", length = -1)
+    @Column(name = "image_url")
     private String imageUrl;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "guide_id", nullable = false)
-    private GuideEntity guideEntity;
-
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "guide_id")
+    private GuideEntity guideEntity;
+
     @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_exhibit",
             joinColumns = @JoinColumn(name = "tour_id"),
             inverseJoinColumns = @JoinColumn(name = "exhibit_id"))
     private List<ExhibitEntity> exhibitEntityList = new ArrayList<>();
 
+    @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "tour_visitor",
             joinColumns = @JoinColumn(name = "tour_id"),
             inverseJoinColumns = @JoinColumn(name = "visitor_id"))
-    private Set<VisitorEntity> visitorEntityList = new HashSet<>();
+    private Set<VisitorEntity> visitorEntitySet = new HashSet<>();
 
 }

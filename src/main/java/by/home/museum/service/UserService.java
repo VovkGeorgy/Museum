@@ -2,13 +2,16 @@ package by.home.museum.service;
 
 import by.home.museum.entity.UsersEntity;
 
+/**
+ * User service interface
+ */
 public interface UserService {
 
     /**
-     * Find entity by username
+     * Find user entity by username
      *
      * @param username - username
-     * @return entity
+     * @return deleted entity
      */
     UsersEntity findByUsername(String username);
 

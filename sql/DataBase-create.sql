@@ -1,13 +1,3 @@
-CREATE TABLE tour (
-  tour_id          BIGSERIAL PRIMARY KEY,
-  theme            TEXT,
-  type_of_exhibits TEXT,
-  duration         SMALLINT,
-  cost             DOUBLE PRECISION CONSTRAINT positive_price CHECK (cost > 0),
-  image_url        TEXT,
-  guide_id         BIGINT REFERENCES guide (guide_id)
-);
-
 CREATE TABLE guide (
   guide_id   BIGSERIAL PRIMARY KEY,
   username   TEXT NOT NULL UNIQUE,
@@ -16,6 +6,16 @@ CREATE TABLE guide (
   age        SMALLINT CONSTRAINT adult_only CHECK (age > 18),
   experience SMALLINT,
   languages  TEXT
+);
+
+CREATE TABLE tour (
+  tour_id          BIGSERIAL PRIMARY KEY,
+  theme            TEXT,
+  type_of_exhibits TEXT,
+  duration         SMALLINT,
+  cost             DOUBLE PRECISION CONSTRAINT positive_price CHECK (cost > 0),
+  image_url        TEXT,
+  guide_id         BIGINT REFERENCES guide (guide_id)
 );
 
 CREATE TABLE exhibit (
@@ -67,23 +67,3 @@ CREATE TABLE users_roles (
   role_id BIGINT REFERENCES roles (id),
   CONSTRAINT uni_user_role UNIQUE (user_id, role_id)
 );
-
-
-DROP TABLE exhibit, guide, tour_exhibit, tour_visitor, tour, visitor, users, roles, users_roles;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
