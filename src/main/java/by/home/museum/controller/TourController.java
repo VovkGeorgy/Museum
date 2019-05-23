@@ -23,7 +23,7 @@ import java.util.Set;
  */
 @Slf4j
 @RestController
-@RequestMapping("/tour")
+@RequestMapping("/api/tour")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TourController {
 

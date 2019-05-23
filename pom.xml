@@ -37,7 +37,7 @@
         <jackson-annotations.version>2.9.8</jackson-annotations.version>
 
         <!-- Angular -->
-        <angular.project.path>.\src\main\webapp\museumFront\</angular.project.path>
+        <angular.project.path>.\museumFront\</angular.project.path>
 
         <!-- Nodejs -->
         <node.install.directory>C:\Program Files\</node.install.directory>

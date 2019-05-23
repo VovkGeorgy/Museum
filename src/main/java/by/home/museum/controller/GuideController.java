@@ -22,7 +22,7 @@ import java.util.Locale;
  */
 @Slf4j
 @RestController
-@RequestMapping("/guide")
+@RequestMapping("/api/guide")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GuideController {
 
