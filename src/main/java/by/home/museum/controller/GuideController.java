@@ -56,7 +56,7 @@ public class GuideController {
      * @param guideId - id of needed guide
      * @return guide by Id
      */
-    @RequestMapping(value = "/guides/{guideId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{guideId}", method = RequestMethod.GET)
     public ResponseEntity<?> getGuide(@PathVariable long guideId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         GuideEntity guide = guideService.findOne(guideId);
@@ -73,7 +73,7 @@ public class GuideController {
      * @param guide - entity to save
      * @return saved guide
      */
-    @RequestMapping(value = "/guides/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> addGuide(@RequestBody GuideEntity guide) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
         GuideEntity newGuide = guideService.save(guide);
@@ -95,7 +95,7 @@ public class GuideController {
      * @return updated guide
      */
     @SuppressWarnings("Duplicates")
-    @RequestMapping(value = "/guides/update/{guideId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/{guideId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateGuide(@PathVariable long guideId,
                                          @RequestBody GuideEntity guide) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
@@ -121,7 +121,7 @@ public class GuideController {
      *
      * @param guideId - Id of guide which need delete
      */
-    @RequestMapping(value = "/guides/delete/{guideId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{guideId}", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteGuide(@PathVariable long guideId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guideId}, Locale.getDefault()));
@@ -141,7 +141,7 @@ public class GuideController {
      *
      * @param username - username of guide which need
      */
-    @RequestMapping(value = "/guides/getByUsername", method = RequestMethod.POST)
+    @RequestMapping(value = "/getByUsername", method = RequestMethod.POST)
     public ResponseEntity<?> getByUsername(@RequestBody String username) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{username}, Locale.getDefault()));
         GuideEntity guide = guideService.findByUsername(username);
@@ -157,7 +157,7 @@ public class GuideController {
      * @param tgd tour-guide-dao entity
      * @return HTTP status OK
      */
-    @RequestMapping(value = "/guides/removeTour", method = RequestMethod.POST)
+    @RequestMapping(value = "/removeTour", method = RequestMethod.POST)
     public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourGuideDao tgd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tgd}, Locale.getDefault()));
         TourEntity tourEntity = tourService.findOne(tgd.getTourId());

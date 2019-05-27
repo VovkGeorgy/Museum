@@ -52,7 +52,7 @@ public class ExhibitController {
      *
      * @return exhibit of it Id
      */
-    @RequestMapping(value = "/exhibits/{exhibitId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{exhibitId}", method = RequestMethod.GET)
     public ResponseEntity<?> getExhibit(@PathVariable long exhibitId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
@@ -67,7 +67,7 @@ public class ExhibitController {
      *
      * @return toursList - all tours of current exhibit
      */
-    @RequestMapping(value = "/exhibits/tours/{exhibitId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/tours/{exhibitId}", method = RequestMethod.GET)
     public ResponseEntity<?> getExhibitTours(@PathVariable long exhibitId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{null}, Locale.getDefault()));
         ExhibitEntity exhibit = exhibitService.findOne(exhibitId);
@@ -84,7 +84,7 @@ public class ExhibitController {
      * @param exhibit - exhibit entity
      * @return newExhibit - saved exhibit entity
      */
-    @RequestMapping(value = "/exhibits/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> addExhibit(@RequestBody ExhibitEntity exhibit) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibit}, Locale.getDefault()));
         ExhibitEntity newExhibit = exhibitService.save(exhibit);
@@ -101,7 +101,7 @@ public class ExhibitController {
      * @param exhibitId - Id of exhibit which need update
      * @return updated exhibit
      */
-    @RequestMapping(value = "/exhibits/update/{exhibitId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/{exhibitId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateExhibit(@PathVariable long exhibitId,
                                            @RequestBody ExhibitEntity exhibit) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibit}, Locale.getDefault()));
@@ -117,7 +117,7 @@ public class ExhibitController {
      *
      * @param exhibitId - Id of exhibit which need delete
      */
-    @RequestMapping(value = "/exhibits/delete/{exhibitId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{exhibitId}", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteExhibit(@PathVariable long exhibitId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{exhibitId}, Locale.getDefault()));
@@ -135,7 +135,7 @@ public class ExhibitController {
      * @param ted tour-exhibit-dao entity
      * @return HTTP status OK
      */
-    @RequestMapping(value = "/exhibits/removeTour", method = RequestMethod.POST)
+    @RequestMapping(value = "/removeTour", method = RequestMethod.POST)
     public ResponseEntity<?> removeTourFromExhibit(@RequestBody TourExhibitDao ted) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{ted}, Locale.getDefault()));
         ExhibitEntity exhibitEntity = exhibitService.findOne(ted.getExhibitId());

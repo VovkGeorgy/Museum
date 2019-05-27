@@ -57,7 +57,7 @@ public class VisitorController {
      * @param visitorId - id of needed visitor
      * @return visitor by Id
      */
-    @RequestMapping(value = "/visitors/{visitorId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{visitorId}", method = RequestMethod.GET)
     public ResponseEntity<?> getVisitor(@PathVariable long visitorId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);
@@ -74,7 +74,7 @@ public class VisitorController {
      * @param visitor - entity to save
      * @return saved visitor
      */
-    @RequestMapping(value = "/visitors/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> addVisitor(@RequestBody VisitorEntity visitor) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitor}, Locale.getDefault()));
         VisitorEntity newVisitor = visitorService.save(visitor);
@@ -94,7 +94,7 @@ public class VisitorController {
      * @param visitor - entity to update
      * @return updated visitor
      */
-    @RequestMapping(value = "/visitors/update/{visitorId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/{visitorId}", method = RequestMethod.POST)
     public ResponseEntity<?> updateVisitor(@PathVariable long visitorId,
                                            @RequestBody VisitorEntity visitor) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitor}, Locale.getDefault()));
@@ -119,7 +119,7 @@ public class VisitorController {
      *
      * @param visitorId - Id of visitor which need delete
      */
-    @RequestMapping(value = "/visitors/delete/{visitorId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{visitorId}", method = RequestMethod.POST)
     public ResponseEntity<?> deleteVisitor(@PathVariable long visitorId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);
@@ -139,7 +139,7 @@ public class VisitorController {
      * @param username - username of visitor which need get
      * @return visitor by username
      */
-    @RequestMapping(value = "/visitors/getByUsername", method = RequestMethod.POST)
+    @RequestMapping(value = "/getByUsername", method = RequestMethod.POST)
     public ResponseEntity<?> getVisitorByUsername(@RequestBody String username) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{username}, Locale.getDefault()));
         VisitorEntity neededVisitor = visitorService.findByUsername(username);
@@ -155,7 +155,7 @@ public class VisitorController {
      * @param tvd tour-visitor-dao entity
      * @return updated visitor
      */
-    @RequestMapping(value = "/visitors/addTour", method = RequestMethod.POST)
+    @RequestMapping(value = "/addTour", method = RequestMethod.POST)
     public ResponseEntity<?> addTourToVisitor(@RequestBody TourVisitorDao tvd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tvd.getVisitorId()}, Locale.getDefault()));
         VisitorEntity visitorEntity = visitorService.findOne(tvd.getVisitorId());
@@ -192,7 +192,7 @@ public class VisitorController {
      * @param tVd tour-visitor-dao entity
      * @return HTTP status OK
      */
-    @RequestMapping(value = "/visitors/removeTour", method = RequestMethod.POST)
+    @RequestMapping(value = "/removeTour", method = RequestMethod.POST)
     public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourVisitorDao tVd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
         VisitorEntity visitorEntity = visitorService.findOne(tVd.getVisitorId());
@@ -212,7 +212,7 @@ public class VisitorController {
      * @param visitorId id of visitor
      * @return tours set from visitor
      */
-    @RequestMapping(value = "/tours/findAll/{visitorId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findAll/{visitorId}", method = RequestMethod.GET)
     public ResponseEntity<?> getVisitorTours(@PathVariable long visitorId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitorId}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(visitorId);
