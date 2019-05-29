@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Locale;
 
 /**
@@ -122,10 +122,11 @@ public class GuideController {
      * @param guideId - Id of guide which need delete
      */
     @RequestMapping(value = "/delete/{guideId}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteGuide(@PathVariable long guideId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guideId}, Locale.getDefault()));
         GuideEntity guide = guideService.findOne(guideId);
+        guide.setTourEntitySet(new HashSet<>());
+        guideService.save(guide);
         guideService.delete(guide);
         UsersEntity usersEntity = userService.findByUsername(guide.getUsername());
         signupService.delUser(usersEntity);
@@ -158,7 +159,7 @@ public class GuideController {
      * @return HTTP status OK
      */
     @RequestMapping(value = "/removeTour", method = RequestMethod.POST)
-    public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourGuideDao tgd) {
+    public ResponseEntity<?> removeTourFromGuide(@RequestBody TourGuideDao tgd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tgd}, Locale.getDefault()));
         TourEntity tourEntity = tourService.findOne(tgd.getTourId());
         tourEntity.setGuideEntity(null);

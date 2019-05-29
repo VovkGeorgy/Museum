@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -69,7 +68,7 @@ public class TourController {
      * @param tourId - id of needed tour
      * @return exhibit List by tour Id
      */
-    @RequestMapping(value = "/{tourId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/exhibits/{tourId}", method = RequestMethod.GET)
     public ResponseEntity<?> getTourExhibits(@PathVariable long tourId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);
@@ -143,7 +142,6 @@ public class TourController {
      * @param tourId - Id of tour which need delete
      */
     @RequestMapping(value = "/delete/{tourId}", method = RequestMethod.POST)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteTour(@PathVariable long tourId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         TourEntity tour = tourService.findOne(tourId);
@@ -160,7 +158,6 @@ public class TourController {
      * @param tourId - Id of tour which need delete
      */
     @RequestMapping(value = "/visitors/{tourId}", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> getTourVisitors(@PathVariable long tourId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tourId}, Locale.getDefault()));
         Set<VisitorEntity> visitorsSet = tourService.findOne(tourId).getVisitorEntitySet();
