@@ -128,8 +128,10 @@ public class GuideController {
         guide.setTourEntitySet(new HashSet<>());
         guideService.save(guide);
         guideService.delete(guide);
-        UsersEntity usersEntity = userService.findByUsername(guide.getUsername());
-        signupService.delUser(usersEntity);
+        if (guideService.findOne(guideId) == null) {
+            UsersEntity usersEntity = userService.findByUsername(guide.getUsername());
+            signupService.delUser(usersEntity);
+        }
         log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -163,7 +165,7 @@ public class GuideController {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tgd}, Locale.getDefault()));
         TourEntity tourEntity = tourService.findOne(tgd.getTourId());
         tourEntity.setGuideEntity(null);
-        TourEntity updatedEntity = tourService.save(tourEntity);
+        tourService.save(tourEntity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
