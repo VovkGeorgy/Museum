@@ -24,15 +24,6 @@ import java.util.Locale;
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     /**
-     * Method allow CORS
-     *
-     * @param registry cors registry
-     */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
-    /**
      * Add to converters a json message converter
      *
      * @param converters - converters
@@ -90,6 +81,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("forward:/index.html");
+        registry.addViewController("/login").setViewName("forward:/index.html");
+        registry.addViewController("/signup").setViewName("forward:/index.html");
+        registry.addViewController("/about").setViewName("forward:/index.html");
         registry.addViewController("/exhibits").setViewName("forward:/index.html");
     }
 
