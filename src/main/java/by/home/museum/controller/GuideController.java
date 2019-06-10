@@ -96,14 +96,13 @@ public class GuideController {
      */
     @SuppressWarnings("Duplicates")
     @RequestMapping(value = "/update/{guideId}", method = RequestMethod.POST)
-    public ResponseEntity<?> updateGuide(@PathVariable long guideId,
-                                         @RequestBody GuideEntity guide) {
+    public ResponseEntity<?> updateGuide(@PathVariable long guideId, @RequestBody GuideEntity guide) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
         GuideEntity updatedGuide = guideService.save(guide);
         UsersEntity usersEntity = userService.findByUsername(updatedGuide.getUsername());
         if (usersEntity == null) {
             UsersEntity newUser = new UsersEntity(guide.getUsername(), guide.getPassword());
-            newUser.setRoles(Arrays.asList(rolesService.getByName("ADMIN"), rolesService.getByName("USER")));
+            newUser.setRoles(Arrays.asList(rolesService.getByName("GUIDE"), rolesService.getByName("USER")));
             signupService.addUser(newUser);
         } else {
             usersEntity.setPassword(updatedGuide.getPassword());

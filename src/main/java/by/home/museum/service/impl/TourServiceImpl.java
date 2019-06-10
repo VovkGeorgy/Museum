@@ -25,7 +25,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<TourEntity> findAll() {
-        return (List<TourEntity>) repository.findAll();
+        return repository.findAllByOrderByTheme();
     }
 
     @Override

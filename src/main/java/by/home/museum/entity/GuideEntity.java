@@ -45,6 +45,6 @@ public class GuideEntity {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "guideEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "guideEntity", fetch = FetchType.EAGER)
     private Set<TourEntity> tourEntitySet = new HashSet<>();
 }

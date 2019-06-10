@@ -23,7 +23,7 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public Iterable<VisitorEntity> findAll() {
-        return repository.findAll();
+        return repository.findAllByOrderByFio();
     }
 
     @Override

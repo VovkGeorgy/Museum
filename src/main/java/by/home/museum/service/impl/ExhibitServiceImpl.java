@@ -23,7 +23,7 @@ public class ExhibitServiceImpl implements ExhibitService {
 
     @Override
     public Iterable<ExhibitEntity> findAll() {
-        return repository.findAll();
+        return repository.findAllByOrderByTitle();
     }
 
     @Override

@@ -25,7 +25,7 @@ public class GuideServiceImpl implements GuideService {
 
     @Override
     public List<GuideEntity> findAll() {
-        return (List<GuideEntity>) repository.findAll();
+        return repository.findAllByOrderByFio();
     }
 
     @Override
