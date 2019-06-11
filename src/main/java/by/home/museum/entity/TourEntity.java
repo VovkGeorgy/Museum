@@ -45,7 +45,7 @@ public class TourEntity {
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "guide_id")
     private GuideEntity guideEntity;
 

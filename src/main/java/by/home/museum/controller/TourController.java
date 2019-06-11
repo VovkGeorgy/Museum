@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -163,5 +164,18 @@ public class TourController {
         Set<VisitorEntity> visitorsSet = tourService.findOne(tourId).getVisitorEntitySet();
         log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(visitorsSet, HttpStatus.OK);
+    }
+
+    /**
+     * Get tours without guides
+     *
+     * @return list of tours
+     */
+    @RequestMapping(value = "/tours/withoutGuide", method = RequestMethod.GET)
+    public ResponseEntity<?> getTourVisitors() {
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{}, Locale.getDefault()));
+        List<TourEntity> toursWithoutGuide = tourService.getAllByGuideEntityIsNull();
+        log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
+        return new ResponseEntity<>(toursWithoutGuide, HttpStatus.OK);
     }
 }

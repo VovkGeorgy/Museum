@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class TourGuideDto {
-    private Long tourId;
+    private Long[] tourIdsArray;
     private Long guideId;
 }

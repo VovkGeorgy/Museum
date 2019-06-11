@@ -1,10 +1,11 @@
 package by.home.museum.controller;
 
+import by.home.museum.dto.TourGuideDto;
 import by.home.museum.entity.GuideEntity;
-import by.home.museum.entity.TourEntity;
-import by.home.museum.entity.TourGuideDao;
 import by.home.museum.entity.UsersEntity;
-import by.home.museum.service.*;
+import by.home.museum.service.GuideService;
+import by.home.museum.service.RolesService;
+import by.home.museum.service.SignupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Locale;
 
 /**
@@ -27,8 +27,6 @@ import java.util.Locale;
 public class GuideController {
 
     private final GuideService guideService;
-    private final TourService tourService;
-    private final UserService userService;
     private final RolesService rolesService;
     private final SignupService signupService;
     private final MessageSource messageSource;
@@ -88,28 +86,17 @@ public class GuideController {
      * this method maps the following URL & http method
      * URL: http://hostname:port//guides/update/guideId
      * HTTP method: POST
-     * Method update guide as a entity, and as ADMIN
+     * Method update updatedGuide as a entity, and as ADMIN
      *
-     * @param guide   - entity to update
-     * @param guideId - id of needed guide
-     * @return updated guide
+     * @param updatedGuide - entity to update
+     * @return updated updatedGuide
      */
-    @SuppressWarnings("Duplicates")
-    @RequestMapping(value = "/update/{guideId}", method = RequestMethod.POST)
-    public ResponseEntity<?> updateGuide(@PathVariable long guideId, @RequestBody GuideEntity guide) {
-        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guide}, Locale.getDefault()));
-        GuideEntity updatedGuide = guideService.save(guide);
-        UsersEntity usersEntity = userService.findByUsername(updatedGuide.getUsername());
-        if (usersEntity == null) {
-            UsersEntity newUser = new UsersEntity(guide.getUsername(), guide.getPassword());
-            newUser.setRoles(Arrays.asList(rolesService.getByName("GUIDE"), rolesService.getByName("USER")));
-            signupService.addUser(newUser);
-        } else {
-            usersEntity.setPassword(updatedGuide.getPassword());
-            signupService.addUser(usersEntity);
-        }
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResponseEntity<?> updateGuide(@RequestBody GuideEntity updatedGuide) {
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{updatedGuide}, Locale.getDefault()));
+        GuideEntity persistGuide = guideService.updateGuide(updatedGuide);
         log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{updatedGuide}, Locale.getDefault()));
-        return new ResponseEntity<>(updatedGuide, HttpStatus.OK);
+        return new ResponseEntity<>(persistGuide, HttpStatus.OK);
     }
 
     /**
@@ -123,14 +110,7 @@ public class GuideController {
     @RequestMapping(value = "/delete/{guideId}", method = RequestMethod.GET)
     public ResponseEntity<?> deleteGuide(@PathVariable long guideId) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{guideId}, Locale.getDefault()));
-        GuideEntity guide = guideService.findOne(guideId);
-        guide.setTourEntitySet(new HashSet<>());
-        guideService.save(guide);
-        guideService.delete(guide);
-        if (guideService.findOne(guideId) == null) {
-            UsersEntity usersEntity = userService.findByUsername(guide.getUsername());
-            signupService.delUser(usersEntity);
-        }
+        guideService.delete(guideService.findOne(guideId));
         log.debug(messageSource.getMessage("controller.returnResponse", new Object[]{null}, Locale.getDefault()));
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -156,15 +136,26 @@ public class GuideController {
      * URL: http://hostname:port/guide/guides/removeTour
      * HTTP method: POST
      *
-     * @param tgd tour-guide-dao entity
+     * @param tgd tours-guide-dao entity
      * @return HTTP status OK
      */
-    @RequestMapping(value = "/removeTour", method = RequestMethod.POST)
-    public ResponseEntity<?> removeTourFromGuide(@RequestBody TourGuideDao tgd) {
+    @RequestMapping(value = "/removeTours", method = RequestMethod.POST)
+    public ResponseEntity<?> removeTourFromGuide(@RequestBody TourGuideDto tgd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tgd}, Locale.getDefault()));
-        TourEntity tourEntity = tourService.findOne(tgd.getTourId());
-        tourEntity.setGuideEntity(null);
-        tourService.save(tourEntity);
-        return new ResponseEntity<>(HttpStatus.OK);
+        GuideEntity updatedGuide = guideService.removeTours(tgd);
+        return new ResponseEntity<>(updatedGuide, HttpStatus.OK);
+    }
+
+    /**
+     * Add tour to guide
+     *
+     * @param tgd tour-guide dto
+     * @return updated guide
+     */
+    @RequestMapping(value = "/addTours", method = RequestMethod.POST)
+    public ResponseEntity<?> addTourToGuide(@RequestBody TourGuideDto tgd) {
+        log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tgd}, Locale.getDefault()));
+        GuideEntity updatedGuide = guideService.addTours(tgd);
+        return new ResponseEntity<>(updatedGuide, HttpStatus.OK);
     }
 }

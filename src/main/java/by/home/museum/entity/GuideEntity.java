@@ -45,6 +45,16 @@ public class GuideEntity {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "guideEntity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "guideEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<TourEntity> tourEntitySet = new HashSet<>();
+
+    public GuideEntity update(GuideEntity updateGuide) {
+        this.username = updateGuide.getUsername();
+        this.password = updateGuide.getPassword();
+        this.fio = updateGuide.getFio();
+        this.age = updateGuide.getAge();
+        this.experience = updateGuide.getExperience();
+        this.languages = updateGuide.getLanguages();
+        return this;
+    }
 }

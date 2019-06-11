@@ -11,4 +11,6 @@ import java.util.List;
 public interface TourRepository extends CrudRepository<TourEntity, Long> {
 
     List<TourEntity> findAllByOrderByTheme();
+
+    List<TourEntity> findAllByGuideEntityIsNull();
 }

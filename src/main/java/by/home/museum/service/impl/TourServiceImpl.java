@@ -37,4 +37,9 @@ public class TourServiceImpl implements TourService {
     public TourEntity save(TourEntity persisted) {
         return repository.save(persisted);
     }
+
+    @Override
+    public List<TourEntity> getAllByGuideEntityIsNull() {
+        return repository.findAllByGuideEntityIsNull();
+    }
 }
