@@ -20,7 +20,7 @@
         <spring.security.version>4.2.5.RELEASE</spring.security.version>
         <springsecurityoauth2.version>2.0.16.RELEASE</springsecurityoauth2.version>
         <spring-security-jwt.version>1.0.5.RELEASE</spring-security-jwt.version>
-        <spring-data-jpa.version>1.11.4.RELEASE</spring-data-jpa.version>
+        <spring-data-jpa.version>1.11.22.RELEASE</spring-data-jpa.version>
         <!--<spring-data-jpa.version>2.1.2.RELEASE</spring-data-jpa.version>-->
         <spring-test.version>4.3.9.RELEASE</spring-test.version>
 
@@ -34,7 +34,7 @@
 
         <!--JSON - data-->
         <javax.servlet-api.version>4.0.0-b07</javax.servlet-api.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.9.9</jackson.version>
 
         <!-- Angular -->
         <angular.project.path>.\museumFront\</angular.project.path>

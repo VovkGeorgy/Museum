@@ -1,9 +1,9 @@
-package by.home.museum.entity;
+package by.home.museum.dto;
 
 import lombok.Data;
 
 @Data
-public class TourExhibitDao {
+public class TourExhibitDto {
     private Long tourId;
     private Long exhibitId;
 }

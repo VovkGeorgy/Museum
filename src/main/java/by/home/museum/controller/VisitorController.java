@@ -1,7 +1,7 @@
 package by.home.museum.controller;
 
 import by.home.museum.entity.TourEntity;
-import by.home.museum.entity.TourVisitorDao;
+import by.home.museum.dto.TourVisitorDto;
 import by.home.museum.entity.UsersEntity;
 import by.home.museum.entity.VisitorEntity;
 import by.home.museum.service.*;
@@ -95,8 +95,7 @@ public class VisitorController {
      * @return updated visitor
      */
     @RequestMapping(value = "/update/{visitorId}", method = RequestMethod.POST)
-    public ResponseEntity<?> updateVisitor(@PathVariable long visitorId,
-                                           @RequestBody VisitorEntity visitor) {
+    public ResponseEntity<?> updateVisitor(@PathVariable long visitorId, @RequestBody VisitorEntity visitor) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{visitor}, Locale.getDefault()));
         VisitorEntity updatedVisitor = visitorService.save(visitor);
         UsersEntity usersEntity = userService.findByUsername(updatedVisitor.getUsername());
@@ -156,7 +155,7 @@ public class VisitorController {
      * @return updated visitor
      */
     @RequestMapping(value = "/addTour", method = RequestMethod.POST)
-    public ResponseEntity<?> addTourToVisitor(@RequestBody TourVisitorDao tvd) {
+    public ResponseEntity<?> addTourToVisitor(@RequestBody TourVisitorDto tvd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tvd.getVisitorId()}, Locale.getDefault()));
         VisitorEntity visitorEntity = visitorService.findOne(tvd.getVisitorId());
         Set<TourEntity> set = visitorEntity.getTourEntitySet();
@@ -175,7 +174,7 @@ public class VisitorController {
      * @return result of checking
      */
     @RequestMapping(value = "/toursCheck", method = RequestMethod.POST)
-    public ResponseEntity<?> isTourInFavourites(@RequestBody TourVisitorDao tVd) {
+    public ResponseEntity<?> isTourInFavourites(@RequestBody TourVisitorDto tVd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
         VisitorEntity visitor = visitorService.findOne(tVd.getVisitorId());
         Set<TourEntity> toursSet = visitor.getTourEntitySet();
@@ -193,7 +192,7 @@ public class VisitorController {
      * @return HTTP status OK
      */
     @RequestMapping(value = "/removeTour", method = RequestMethod.POST)
-    public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourVisitorDao tVd) {
+    public ResponseEntity<?> removeTourFromVisitor(@RequestBody TourVisitorDto tVd) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{tVd}, Locale.getDefault()));
         VisitorEntity visitorEntity = visitorService.findOne(tVd.getVisitorId());
         Set<TourEntity> visitorToursSet = visitorEntity.getTourEntitySet();

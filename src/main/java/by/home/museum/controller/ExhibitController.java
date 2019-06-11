@@ -2,7 +2,7 @@ package by.home.museum.controller;
 
 import by.home.museum.entity.ExhibitEntity;
 import by.home.museum.entity.TourEntity;
-import by.home.museum.entity.TourExhibitDao;
+import by.home.museum.dto.TourExhibitDto;
 import by.home.museum.service.ExhibitService;
 import by.home.museum.service.TourService;
 import lombok.RequiredArgsConstructor;
@@ -136,7 +136,7 @@ public class ExhibitController {
      * @return HTTP status OK
      */
     @RequestMapping(value = "/removeTour", method = RequestMethod.POST)
-    public ResponseEntity<?> removeTourFromExhibit(@RequestBody TourExhibitDao ted) {
+    public ResponseEntity<?> removeTourFromExhibit(@RequestBody TourExhibitDto ted) {
         log.debug(messageSource.getMessage("controller.getRequest", new Object[]{ted}, Locale.getDefault()));
         ExhibitEntity exhibitEntity = exhibitService.findOne(ted.getExhibitId());
         Set<TourEntity> exhibitToursSet = exhibitEntity.getTourEntitySet();
