@@ -35,6 +35,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Value("${security.oauthServer.realm}")
     private String realm;
 
+    @Value("${security.oauthServer.clientId}")
+    private String clientId;
+
+    @Value("${security.oauthServer.clientSecret}")
+    private String clientSecret;
+
     /**
      * Method create inMemory client details for authorization
      *
@@ -44,8 +50,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("Client")
-                .secret("Secret")
+                .withClient(clientId)
+                .secret(clientSecret)
                 .authorizedGrantTypes("password", "refresh_token")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
@@ -56,12 +62,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * Configure the properties and enhanced functionality of the Authorization Server endpoints.
      *
-     * @param endpoints
-     * @throws Exception
+     * @param endpoints AuthorizationServerEndpointsConfigurer
      */
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore).tokenEnhancer(jwtTokenEnhancer).userApprovalHandler(userApprovalHandler)
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        endpoints.tokenStore(tokenStore)
+                .tokenEnhancer(jwtTokenEnhancer)
+                .userApprovalHandler(userApprovalHandler)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(museumUserDetailsService);
     }
@@ -69,11 +76,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * Config authorization server realm
      *
-     * @param oauthServer
-     * @throws Exception
+     * @param oauthServer AuthorizationServerSecurityConfigurer
      */
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer.realm(realm);
     }
 }
