@@ -11,9 +11,11 @@
 
     <properties>
 
-        <!-- Hibernate / JPA -->
-        <!--<hibernate.version>5.2.13.Final</hibernate.version>-->
+        <liquibase.version>3.6.2</liquibase.version>
+
+        <!-- Database -->
         <hibernate.version>5.3.6.Final</hibernate.version>
+        <postgresql.version>42.2.18</postgresql.version>
 
         <!-- Spring -->
         <spring.version>4.3.18.RELEASE</spring.version>
@@ -21,16 +23,11 @@
         <springsecurityoauth2.version>2.0.16.RELEASE</springsecurityoauth2.version>
         <spring-security-jwt.version>1.0.5.RELEASE</spring-security-jwt.version>
         <spring-data-jpa.version>1.11.22.RELEASE</spring-data-jpa.version>
-        <!--<spring-data-jpa.version>2.1.2.RELEASE</spring-data-jpa.version>-->
         <spring-test.version>4.3.9.RELEASE</spring-test.version>
 
         <!-- Logging -->
         <slf4j.version>1.7.3</slf4j.version>
         <logback.version>1.1.2</logback.version>
-
-        <!--PostgreSQL-->
-        <!--<postgresql.version>9.3-1102-jdbc41</postgresql.version>-->
-        <postgresql.version>9.1-901.jdbc4</postgresql.version>
 
         <!--JSON - data-->
         <javax.servlet-api.version>4.0.0-b07</javax.servlet-api.version>
@@ -57,11 +54,10 @@
         <json-path.version>2.2.0</json-path.version>
         <junit.version>4.12</junit.version>
 
-        <!--ProjectLombok-->
         <projectlombok.version>1.18.2</projectlombok.version>
 
-
     </properties>
+
     <build>
         <resources>
             <resource>
@@ -77,6 +73,19 @@
             </testResource>
         </testResources>
         <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <propertyFile>${profile.propertyFile}</propertyFile>
+                    <changeLogFile>${profile.changeLogFile}</changeLogFile>
+                    <dataDir>${profile.dataDir}</dataDir>
+                    <verbose>${profile.verbose}</verbose>
+                    <logging>${profile.logging}</logging>
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -128,11 +137,49 @@
         </plugins>
     </build>
 
+    <profiles>
+        <!-- Development settings, -Denv=dev -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>env</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+            <properties>
+                <profile.propertyFile>src/main/resources/dev/liquibase.properties</profile.propertyFile>
+                <profile.changeLogFile>src/main/resources/dev/db.changelog-master.xml</profile.changeLogFile>
+                <profile.dataDir>src/main/resources/dev/data</profile.dataDir>
+                <profile.verbose>true</profile.verbose>
+                <profile.logging>debug</profile.logging>
+            </properties>
+        </profile>
+        <!-- Production settings, -Denv=prod -->
+        <profile>
+            <id>prod</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>prod</value>
+                </property>
+            </activation>
+            <properties>
+                <profile.propertyFile>src/main/resources/prod/liquibase.properties</profile.propertyFile>
+                <profile.changeLogFile>src/main/resources/prod/db.changelog-master.xml</profile.changeLogFile>
+                <profile.dataDir>src/main/resources/prod/data</profile.dataDir>
+                <profile.verbose>false</profile.verbose>
+                <profile.logging>info</profile.logging>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
 
         <!--DATABASE-->
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
@@ -145,6 +192,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
         </dependency>
 
         <!--SPRING-->

@@ -1,0 +1,173 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-1">
+        <createTable tableName="exhibit">
+            <column autoIncrement="true" name="exhibit_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="exhibit_pkey"/>
+            </column>
+            <column name="title" type="TEXT"/>
+            <column name="dated" type="TEXT"/>
+            <column name="material" type="TEXT"/>
+            <column name="archive_num" type="TEXT"/>
+            <column name="description" type="TEXT"/>
+            <column name="image_url" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-2">
+        <createTable tableName="guide">
+            <column autoIncrement="true" name="guide_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="guide_pkey"/>
+            </column>
+            <column name="username" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fio" type="TEXT"/>
+            <column name="age" type="SMALLINT"/>
+            <column name="experience" type="SMALLINT"/>
+            <column name="languages" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-3">
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="roles_pkey"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-4">
+        <createTable tableName="tour">
+            <column autoIncrement="true" name="tour_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="tour_pkey"/>
+            </column>
+            <column name="theme" type="TEXT"/>
+            <column name="type_of_exhibits" type="TEXT"/>
+            <column name="duration" type="SMALLINT"/>
+            <column name="cost" type="FLOAT8"/>
+            <column name="image_url" type="TEXT"/>
+            <column name="guide_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-5">
+        <createTable tableName="tour_exhibit">
+            <column autoIncrement="true" name="tour_exhibit_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="tour_exhibit_pkey"/>
+            </column>
+            <column name="tour_id" type="BIGINT"/>
+            <column name="exhibit_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-6">
+        <createTable tableName="tour_visitor">
+            <column autoIncrement="true" name="tour_visitor_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="tour_visitor_pkey"/>
+            </column>
+            <column name="tour_id" type="BIGINT"/>
+            <column name="visitor_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-7">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="users_pkey"/>
+            </column>
+            <column name="username" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-8">
+        <createTable tableName="users_roles">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="users_roles_pkey"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+            <column name="role_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-9">
+        <createTable tableName="visitor">
+            <column autoIncrement="true" name="visitor_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="visitor_pkey"/>
+            </column>
+            <column name="username" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fio" type="TEXT"/>
+            <column name="age" type="BIGINT"/>
+            <column name="email" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-10">
+        <addUniqueConstraint columnNames="archive_num" constraintName="exhibit_archive_num_key" tableName="exhibit"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-11">
+        <addUniqueConstraint columnNames="username" constraintName="guide_username_key" tableName="guide"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-12">
+        <addUniqueConstraint columnNames="name" constraintName="roles_name_key" tableName="roles"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-13">
+        <addUniqueConstraint columnNames="user_id, role_id" constraintName="uni_user_role" tableName="users_roles"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-14">
+        <addUniqueConstraint columnNames="username" constraintName="users_username_key" tableName="users"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-15">
+        <addUniqueConstraint columnNames="username" constraintName="visitor_username_key" tableName="visitor"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-16">
+        <addForeignKeyConstraint baseColumnNames="exhibit_id" baseTableName="tour_exhibit"
+                                 constraintName="tour_exhibit_exhibit_id_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="exhibit_id" referencedTableName="exhibit" validate="true"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-17">
+        <addForeignKeyConstraint baseColumnNames="tour_id" baseTableName="tour_exhibit"
+                                 constraintName="tour_exhibit_tour_id_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="tour_id"
+                                 referencedTableName="tour" validate="true"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-18">
+        <addForeignKeyConstraint baseColumnNames="guide_id" baseTableName="tour" constraintName="tour_guide_id_fkey"
+                                 deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="guide_id" referencedTableName="guide" validate="true"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-19">
+        <addForeignKeyConstraint baseColumnNames="tour_id" baseTableName="tour_visitor"
+                                 constraintName="tour_visitor_tour_id_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="tour_id"
+                                 referencedTableName="tour" validate="true"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-20">
+        <addForeignKeyConstraint baseColumnNames="visitor_id" baseTableName="tour_visitor"
+                                 constraintName="tour_visitor_visitor_id_fkey" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="visitor_id" referencedTableName="visitor" validate="true"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-21">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users_roles"
+                                 constraintName="users_roles_role_id_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="roles" validate="true"/>
+    </changeSet>
+    <changeSet author="Heorhi Vovk (generated)" id="1612268958655-22">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles"
+                                 constraintName="users_roles_user_id_fkey" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="users" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

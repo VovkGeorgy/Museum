@@ -1,0 +1,120 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Heorhi Vovk" id="insert data to guide_table">
+        <insert tableName="guide">
+            <column name="username" value="guide1"/>
+            <column name="password" value="11111"/>
+            <column name="fio" value="Guide 1"/>
+            <column name="age" value="99"/>
+            <column name="experience" value="1"/>
+            <column name="languages" value="EN,FR,PL"/>
+        </insert>
+        <insert tableName="guide">
+            <column name="username" value="guide2"/>
+            <column name="password" value="11111"/>
+            <column name="fio" value="Guide 2"/>
+            <column name="age" value="32"/>
+            <column name="experience" value="2"/>
+            <column name="languages" value="EN,FR"/>
+        </insert>
+        <insert tableName="guide">
+            <column name="username" value="guide3"/>
+            <column name="password" value="11111"/>
+            <column name="fio" value="Guide 3"/>
+            <column name="age" value="33"/>
+            <column name="experience" value="3"/>
+            <column name="languages" value="EN,RU,CHN"/>
+        </insert>
+        <insert tableName="guide">
+            <column name="username" value="guide4"/>
+            <column name="password" value="11111"/>
+            <column name="fio" value="Guide 4"/>
+            <column name="age" value="34"/>
+            <column name="experience" value="4"/>
+            <column name="languages" value="EN,RU,CHN"/>
+        </insert>
+        <insert tableName="guide">
+            <column name="username" value="guide5"/>
+            <column name="password" value="11111"/>
+            <column name="fio" value="Guide 5"/>
+            <column name="age" value="35"/>
+            <column name="experience" value="5"/>
+            <column name="languages" value="EN,RU,CHN"/>
+        </insert>
+    </changeSet>
+
+
+    <changeSet author="Heorhi Vovk" id="insert data to tour_table">
+        <insert tableName="tour">
+            <column name="theme" value="Italian Renaissance"/>
+            <column name="type_of_exhibits" value="paintings"/>
+            <column name="duration" value="1"/>
+            <column name="cost" value="300.30"/>
+            <column name="image_url"
+                    value="https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-jean-baptiste_3.jpg?1321828338"/>
+            <column name="guide_id" valueComputed="(SELECT guide_id from guide where fio='Guide 1')"/>
+        </insert>
+        <insert tableName="tour">
+            <column name="theme" value="The Art of Eating"/>
+            <column name="type_of_exhibits" value="paintings"/>
+            <column name="duration" value="2"/>
+            <column name="cost" value="200.50"/>
+            <column name="image_url"
+                    value="https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60854.jpg?1308122198"/>
+            <column name="guide_id" valueComputed="(SELECT guide_id from guide where fio='Guide 2')"/>
+        </insert>
+        <insert tableName="tour">
+            <column name="theme" value="On Horseback through the Louvre"/>
+            <column name="type_of_exhibits" value="different"/>
+            <column name="duration" value="1"/>
+            <column name="cost" value="100.99"/>
+            <column name="image_url"
+                    value="https://www.louvre.fr/sites/default/files/imagecache/278x370/image_60111.jpeg?1308120727"/>
+            <column name="guide_id" valueComputed="(SELECT guide_id from guide where fio='Guide 3')"/>
+        </insert>
+        <insert tableName="tour">
+            <column name="theme" value="The Da Vinci Code"/>
+            <column name="type_of_exhibits" value="paintings"/>
+            <column name="duration" value="3"/>
+            <column name="cost" value="404.44"/>
+            <column name="image_url"
+                    value="https://www.louvre.fr/sites/default/files/imagecache/278x370/image_64583.jpg?1308124152"/>
+            <column name="guide_id" valueComputed="(SELECT guide_id from guide where fio='Guide 4')"/>
+        </insert>
+        <insert tableName="tour">
+            <column name="theme" value="Osiris, An Ancient Egyptian God"/>
+            <column name="type_of_exhibits" value="antiquities"/>
+            <column name="duration" value="1"/>
+            <column name="cost" value="123.12"/>
+            <column name="image_url"
+                    value="https://www.louvre.fr/sites/default/files/imagecache/278x370/image_1308_0.jpg?1309860410"/>
+            <column name="guide_id" valueComputed="(SELECT guide_id from guide where fio='Guide 5')"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Heorhi Vovk" id="insert data to exhibit_table">
+        <insert tableName="exhibit">
+            <column name="title" value="St. Francis of Assisi Receiving the Stigmata"/>
+            <column name="dated" value="1300"/>
+            <column name="material" value="canvas"/>
+            <column name="archive_num" value="as2d21s"/>
+            <column name="description"
+                    value="The theme of this altarpiece, painted in 1300 for a church in Pisa, is a well-known episode from the life of St. Francis of Assisi related by his companions: the miracle of the stigmata on Mount La Verna. Giotto's vision was in harmony with Franciscan spirituality, and having to appeal to the greatest number of believers, he set the main scene in a landscape of trees and rocks."/>
+            <column name="image_url"
+                    value="https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-saint-francois-d039assise-recevant.jpg?1519275049"/>
+        </insert>
+        <insert tableName="exhibit">
+            <column name="title" value="The Coronation of the Virgin"/>
+            <column name="dated" value="321"/>
+            <column name="material" value="canvas"/>
+            <column name="archive_num" value="12eae321r"/>
+            <column name="description"
+                    value="Painted before 1435 for the church of San Domenico in Fiesole, where Fra Angelico had taken his vows, the theme of this altarpiece was not drawn from the canonical Gospels, but from the Apocrypha. The scene occurs in Paradise, and the Virgin is crowned by Christ, surrounded by the heavenly host of angelic musicians, saints and martyrs."/>
+            <column name="image_url"
+                    value="https://www.louvre.fr/sites/default/files/imagecache/278x370/medias/medias_images/images/louvre-couronnement-vierge_0.jpg?1519274996"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
+<!-- todo add more data-->
